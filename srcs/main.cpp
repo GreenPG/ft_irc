@@ -12,11 +12,11 @@
 
 void *get_in_addr(struct sockaddr *sa)
 {
-    if (sa->sa_family == AF_INET) {
-        return &(((struct sockaddr_in*)sa)->sin_addr);
-    }
+	if (sa->sa_family == AF_INET) {
+		return &(((struct sockaddr_in*)sa)->sin_addr);
+	}
 
-    return &(((struct sockaddr_in6*)sa)->sin6_addr);
+	return &(((struct sockaddr_in6*)sa)->sin6_addr);
 }
 
 int main(int argc, char **argv) {
@@ -69,9 +69,11 @@ int main(int argc, char **argv) {
 
 	int fd_max = listener;
 	int new_fd;
+	int nbytes;
 	socklen_t	addrlen;
 	struct sockaddr_storage remoteaddr;
 	char remoteIP[INET6_ADDRSTRLEN];
+	char	buf[256];
 
 	while(1) {
 		readfds = master;
@@ -94,7 +96,31 @@ int main(int argc, char **argv) {
 					}
 					printf("selectserver: new connection from %s on socket %d\n", inet_ntop(remoteaddr.ss_family,  get_in_addr((struct sockaddr*)&remoteaddr), remoteIP, INET6_ADDRSTRLEN), new_fd);
 				}
+
+				else {
+					if ((nbytes = recv(i, buf, sizeof(buf), 0)) <= 0) {
+						if (nbytes == 0)
+							printf("selectserver: socket %d hung up\n", i);
+						else 
+							perror("recv:");
+						close(i);
+						FD_CLR(i, &master);
+					}
+					else {
+						for (int j = 0; j <= fd_max; j++) {
+							if (FD_ISSET(j, &master)) {
+								if (j != listener && j != i) {
+									printf("j = %i\n", j);
+									if (send(j, buf, nbytes, 0) == -1)
+										perror("send");
+								}
+							}
+						}
+					}
+				}
 			}
 		}
 	}
+	close(listener);
+	return (1);
 }
