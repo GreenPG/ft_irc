@@ -6,11 +6,11 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:30:55 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/09 16:47:57 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/09 17:29:20 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "user.hpp"
+# include "../includes/user.hpp"
 
 user::user()
 {
