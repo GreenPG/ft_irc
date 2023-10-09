@@ -8,18 +8,19 @@ SRCS		:=	main.cpp
 
 SRCS		:= $(SRCS:%=srcs/%)
 
-OBJS		:=	$(addprefix $(DIR_OBJ)/, $(SRCS:%.c=%.o))
+OBJS		:=	$(addprefix $(DIR_OBJ)/, $(SRCS:%.cpp=%.o))
 
 CC			:= c++
 
 all:  $(NAME)
 
 $(NAME): $(OBJS)
+	$(info $(OBJS))
 	@$(CC) $(OBJS) -o $@
 	@clear
-	# @make header --no-print-directory
 
-$(DIR_OBJ)/%.o: %.c 
+$(DIR_OBJ)/%.o: %.cpp 
+	$(info $(OBJS))
 	@mkdir -p $(@D)
 	@$(CC) $(CPPFLAGS)  -c $< -o $@   
 
