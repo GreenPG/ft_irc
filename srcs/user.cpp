@@ -6,11 +6,12 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:30:55 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/09 17:29:20 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/10 16:00:37 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../includes/user.hpp"
+# include "../includes/irc.hpp"
 
 user::user()
 {
@@ -22,7 +23,62 @@ user::~user()
 	return ;
 }
 
-void	user::set_fd_socket(int fd)
+int		user::check_register()
+{
+	if (_password == "")
+		return (1);
+	if (_nickname == "")
+		return (2);
+	if (_username == "")
+		return (3);
+	return (0);
+}
+
+void	user::register_user(char *s)
+{
+	int i;
+
+	i = check_register();
+	if (i == 1)
+	{
+		_password = s;
+		send(_fd_socket, "Send nickname now dude\n", 24, 0);
+		std::cout << "Receved password from " << _fd_socket << "\n" << std::endl;
+	}
+
+	if (i == 2)
+	{
+		_nickname = s;
+		send(_fd_socket, "Send username now comrade\n", 27, 0);
+	}
+	if (i == 3)
+	{
+		_username = s;
+		send(_fd_socket, "You are now registered\n", 24, 0);
+		std::cout << "User " << _fd_socket << " is registered\n" << _password + "\n" << _nickname + "\n" << _username + "\n" << std::endl;
+	}
+}
+
+user	*search_user_by_socket(std::vector<user> *user_list, int fd)
+{
+	std::vector<user>::iterator	list;
+	std::size_t						i;
+
+	i = 0;
+	list = user_list->begin();
+	while (i < user_list->size())
+	{
+		if (list[i].get_fd_socket() == fd)
+			return (&list[i]);
+		i++;
+	}
+	return (&list[i]);
+}
+
+
+
+
+void	user::set_fd_socket(int &fd)
 {
 	_fd_socket = fd;
 }
