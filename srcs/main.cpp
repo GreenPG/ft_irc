@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpasquet <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 17:16:22 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/09 17:26:36 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/10 15:58:37 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,13 +88,19 @@ void	receiveError(const int &nbytes, int &socketFd, fd_set &master) {
 	FD_CLR(socketFd, &master);
 }
 
-void	receiveData(fd_set &master, int &listener, int &fdMax, int &socketFd) {
-	int 	nbytes;
-	char	buf[256];
-
+void	receiveData(fd_set &master, int &listener, int &fdMax, int &socketFd, std::vector<user> *user_list) {
+	int 				nbytes;
+	char				buf[256];
+	user				new_user;
 
 	if (socketFd == listener) {
 		newConnection(master, listener, fdMax);
+		new_user.set_fd_socket(fdMax);
+		user_list->insert(user_list->end(), new_user);
+		std::cout << "Asking password to " << new_user.get_fd_socket() << std::endl;
+		send(fdMax, "Send password bro\n", 18, 0);
+
+
 	}
 	else {
 		if ((nbytes = recv(socketFd, buf, sizeof(buf), 0)) <= 0)
@@ -102,8 +108,12 @@ void	receiveData(fd_set &master, int &listener, int &fdMax, int &socketFd) {
 		else {
 			for (int j = 0; j <= fdMax; j++) {
 				if (FD_ISSET(j, &master)) {
-					if (j != listener && j != socketFd) {
-						if (send(j, buf, nbytes, 0) == -1)
+					if (search_user_by_socket(user_list, j)->get_fd_socket() == socketFd && search_user_by_socket(user_list, j)->check_register() != 0)
+					{
+							search_user_by_socket(user_list, j)->register_user(buf);
+					}
+					else if (j != listener && j != socketFd && search_user_by_socket(user_list, j)->check_register() == 0) {
+						if (send(j, buf, nbytes, 0) == -1 && search_user_by_socket(user_list, j)->check_register() == 0)
 							perror("send");
 					}
 				}
@@ -112,18 +122,21 @@ void	receiveData(fd_set &master, int &listener, int &fdMax, int &socketFd) {
 	}
 }
 
-void	readLoop(fd_set &master, fd_set &readFds, int &listener, int &fdMax) {
+void	readLoop(fd_set &master, fd_set &readFds, int &listener, int &fdMax, std::vector<user> *user_list) {
 	for (int i = 0; i <= fdMax; i++) {
 		if (FD_ISSET(i, &readFds))
-			receiveData(master, listener, fdMax, i);
+			receiveData(master, listener, fdMax, i, user_list);
 	}
 }
+
+
 
 int main(int argc, char **argv) {
 	int 	listener;
 	fd_set	master;
 	fd_set	readFds;
 	int 	fdMax;
+	std::vector<user>	user_list;
 
 	if (argc != 2) {
 		std::cout << "Port number expected" << std::endl;
@@ -138,7 +151,7 @@ int main(int argc, char **argv) {
 			perror("Select:");
 			exit(1);
 		}
-		readLoop(master, readFds, listener, fdMax);
+		readLoop(master, readFds, listener, fdMax, &user_list);
 	}
 	FD_ZERO(&master);
 	FD_ZERO(&readFds);
