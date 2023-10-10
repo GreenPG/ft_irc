@@ -1,10 +1,10 @@
 NAME		=	ircserv	
 
-CPPFLAGS	=	-Wall -Werror -Wextra -std=c++98 -g -fno-limit-debug-info
+CPPFLAGS	=	-Wall -Werror -Wextra -std=c++98 -g# -fno-limit-debug-info
 
 DIR_OBJ		=	obj
 
-SRCS		:=	main.cpp user.cpp channel.cpp
+SRCS		:=	main.cpp user.cpp channel.cpp parser.cpp
 
 SRCS		:= $(SRCS:%=srcs/%)
 
@@ -16,13 +16,13 @@ all:  $(NAME)
 
 $(NAME): $(OBJS)
 	$(info $(OBJS))
-	@$(CC) $(OBJS) -o $@
+	@$(CC) $(CPPFLAGS) $(OBJS) -o $@
 	@clear
 
 $(DIR_OBJ)/%.o: %.cpp 
 	$(info $(OBJS))
 	@mkdir -p $(@D)
-	@$(CC) $(CPPFLAGS)  -c $< -o $@   
+	@$(CC) $(CPPFLAGS) -c $< -o $@   
 
 clean: 
 	@rm -rf $(DIR_OBJ) 

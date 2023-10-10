@@ -6,7 +6,7 @@
 /*   By: gpasquet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 17:16:49 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/09 17:29:22 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/10 16:12:16 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,7 @@
 #include <cstdio>
 #include "user.hpp"
 #include "channel.hpp"
+
+void	parser(const std::string &input);
 
 #endif

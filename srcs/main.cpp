@@ -6,7 +6,7 @@
 /*   By: gpasquet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 17:16:22 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/09 17:26:36 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/10 16:15:16 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,12 @@ struct addrinfo initHints(void) {
 
 int	initServer(const char *portNb) {
 	int	listener;
-	int rv;
 	struct addrinfo	 hints;
 	struct addrinfo	 *servinfo;
 	struct addrinfo *p;
 
 	hints = initHints();
-	rv = getaddrinfo(NULL, portNb, &hints, &servinfo); 
+	getaddrinfo(NULL, portNb, &hints, &servinfo); 
 	for (p = servinfo; p != NULL; p = p->ai_next) {
 		if ((listener = socket(p->ai_family, p->ai_socktype, p->ai_protocol)) == -1) {
 			perror("socket:");
@@ -100,6 +99,7 @@ void	receiveData(fd_set &master, int &listener, int &fdMax, int &socketFd) {
 		if ((nbytes = recv(socketFd, buf, sizeof(buf), 0)) <= 0)
 			receiveError(nbytes, socketFd, master);
 		else {
+			parser(buf);
 			for (int j = 0; j <= fdMax; j++) {
 				if (FD_ISSET(j, &master)) {
 					if (j != listener && j != socketFd) {
