@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 17:16:49 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/10 17:01:47 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/10 17:53:14 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 class user;
 
 
-void	parser(const std::string &input, user &currentUser);
+void	parser(const std::string input, user &currentUser);
+int		sendMessage(const char *message, user &receiver);
 
 #endif

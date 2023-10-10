@@ -4,7 +4,11 @@ CPPFLAGS	=	-Wall -Werror -Wextra -std=c++98 -g# -fno-limit-debug-info
 
 DIR_OBJ		=	obj
 
-SRCS		:=	main.cpp user.cpp channel.cpp parser.cpp
+SRCS		=	main.cpp \
+				user.cpp \
+				channel.cpp \
+				parser.cpp \
+				sendMessage.cpp
 
 SRCS		:= $(SRCS:%=srcs/%)
 

@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 17:16:22 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/10 17:01:42 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/10 17:54:38 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,11 +115,14 @@ void	receiveData(fd_set &master, int &listener, int &fdMax, int &socketFd, std::
 
 	}
 	else {
+		std::cout << "before recv: " << buf << std::endl;
 		currentUser = identifyUser(socketFd, user_list);
 		if ((nbytes = recv(socketFd, buf, sizeof(buf), 0)) <= 0)
 			receiveError(nbytes, socketFd, master);
 		else {
+			std::cout << "after recv: " << buf << std::endl;
 			parser(buf, currentUser);
+			std::cout << buf << std::endl;
 			for (int j = 0; j <= fdMax; j++) {
 				if (FD_ISSET(j, &master)) {
 					if (search_user_by_socket(user_list, j)->get_fd_socket() == socketFd && search_user_by_socket(user_list, j)->check_register() != 0)
@@ -127,12 +130,13 @@ void	receiveData(fd_set &master, int &listener, int &fdMax, int &socketFd, std::
 							search_user_by_socket(user_list, j)->register_user(buf);
 					}
 					else if (j != listener && j != socketFd && search_user_by_socket(user_list, j)->check_register() == 0) {
-						if (send(j, buf, nbytes, 0) == -1 && search_user_by_socket(user_list, j)->check_register() == 0)
+						if (currentUser.check_register() == 0 && sendMessage(buf, *search_user_by_socket(user_list, j)) == -1)
 							perror("send");
 					}
 				}
 			}
 		}
+		memset(&buf, 0, 256);
 	}
 }
 
