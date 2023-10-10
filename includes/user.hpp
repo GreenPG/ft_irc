@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:27:50 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/10 15:20:14 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/10 16:44:52 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,6 @@ class user
 
 };
 
-user	*search_user_by_socket(std::vector<user> *user_list, int fd);
+user	*search_user_by_socket(std::vector<user> &user_list, int fd);
 
 #endif

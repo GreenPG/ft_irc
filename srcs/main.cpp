@@ -6,11 +6,21 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 17:16:22 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/10 16:19:10 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/10 17:01:42 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/irc.hpp"
+
+user	&identifyUser(const int userFd, std::vector<user> &userList) {
+	unsigned int i;
+
+	for (i = 0; i < userList.size(); i++) {
+		if (userFd == userList[i].get_fd_socket())
+			break;
+	}
+	return (userList[i]);
+}
 
 struct addrinfo initHints(void) {
 	struct addrinfo	 hints;
@@ -61,7 +71,7 @@ void	initFdsets(fd_set &master, fd_set &readFds, int &listener) {
 	FD_SET(listener, &master);
 }
 
-void	newConnection(fd_set &master, int &listener, int &fdMax) {
+int	newConnection(fd_set &master, int &listener, int &fdMax) {
 	struct sockaddr_storage remoteAddr;
 	socklen_t	addrLen;
 	int newFd;
@@ -76,6 +86,7 @@ void	newConnection(fd_set &master, int &listener, int &fdMax) {
 		if (newFd > fdMax)
 			fdMax = newFd;
 	}
+	return (newFd);
 }
 
 void	receiveError(const int &nbytes, int &socketFd, fd_set &master) {
@@ -87,25 +98,28 @@ void	receiveError(const int &nbytes, int &socketFd, fd_set &master) {
 	FD_CLR(socketFd, &master);
 }
 
-void	receiveData(fd_set &master, int &listener, int &fdMax, int &socketFd, std::vector<user> *user_list) {
+void	receiveData(fd_set &master, int &listener, int &fdMax, int &socketFd, std::vector<user> &user_list) {
 	int 				nbytes;
+	int 				newUserFd;
 	char				buf[256];
 	user				new_user;
+	user				currentUser;
 
 	if (socketFd == listener) {
-		newConnection(master, listener, fdMax);
-		new_user.set_fd_socket(fdMax);
-		user_list->insert(user_list->end(), new_user);
+		newUserFd = newConnection(master, listener, fdMax);
+		new_user.set_fd_socket(newUserFd);
+		user_list.insert(user_list.end(), new_user);
 		std::cout << "Asking password to " << new_user.get_fd_socket() << std::endl;
 		send(fdMax, "Send password bro\n", 18, 0);
 
 
 	}
 	else {
+		currentUser = identifyUser(socketFd, user_list);
 		if ((nbytes = recv(socketFd, buf, sizeof(buf), 0)) <= 0)
 			receiveError(nbytes, socketFd, master);
 		else {
-			parser(buf);
+			parser(buf, currentUser);
 			for (int j = 0; j <= fdMax; j++) {
 				if (FD_ISSET(j, &master)) {
 					if (search_user_by_socket(user_list, j)->get_fd_socket() == socketFd && search_user_by_socket(user_list, j)->check_register() != 0)
@@ -122,7 +136,7 @@ void	receiveData(fd_set &master, int &listener, int &fdMax, int &socketFd, std::
 	}
 }
 
-void	readLoop(fd_set &master, fd_set &readFds, int &listener, int &fdMax, std::vector<user> *user_list) {
+void	readLoop(fd_set &master, fd_set &readFds, int &listener, int &fdMax, std::vector<user> &user_list) {
 	for (int i = 0; i <= fdMax; i++) {
 		if (FD_ISSET(i, &readFds))
 			receiveData(master, listener, fdMax, i, user_list);
@@ -151,7 +165,7 @@ int main(int argc, char **argv) {
 			perror("Select:");
 			exit(1);
 		}
-		readLoop(master, readFds, listener, fdMax, &user_list);
+		readLoop(master, readFds, listener, fdMax, user_list);
 	}
 	FD_ZERO(&master);
 	FD_ZERO(&readFds);
