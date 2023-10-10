@@ -6,7 +6,7 @@
 /*   By: gpasquet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 13:33:01 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/10 16:17:32 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/10 16:22:43 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	parser(const std::string &input) {
 
 	spaceIdx = input.find(' ');
 	cmd = input.substr(0, spaceIdx);
+	args = input.substr(spaceIdx + 1, input.size() - spaceIdx);
 	for (i = 0; i < cmdsVec.size(); i++) { 
 		if (cmdsVec[i] == cmd) {
 			std::cout << "command " << cmdsVec[i] << std::endl; 
@@ -31,8 +32,4 @@ void	parser(const std::string &input) {
 	}
 	if (i == cmdsVec.size())
 		std::cout << "Unknown command" << std::endl;
-	else {
-		args = input.substr(spaceIdx + 1, input.size() - spaceIdx);
-		std::cout << "args: " << args << std::endl;
-	}
 }
