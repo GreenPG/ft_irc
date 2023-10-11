@@ -6,11 +6,10 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:30:55 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/10 16:00:37 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/11 14:50:46 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../includes/user.hpp"
 # include "../includes/irc.hpp"
 
 user::user()
@@ -75,7 +74,21 @@ user	*search_user_by_socket(std::vector<user> *user_list, int fd)
 	return (&list[i]);
 }
 
+user	*search_user_by_nickname(std::vector<user> *user_list, std::string name)
+{
+	std::vector<user>::iterator	list;
+	std::size_t						i;
 
+	i = 0;
+	list = user_list->begin();
+	while (i < user_list->size())
+	{
+		if (list[i].get_nickname() == name)
+			return (&list[i]);
+		i++;
+	}
+	return (&list[i]);
+}
 
 
 void	user::set_fd_socket(int &fd)

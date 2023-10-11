@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 17:16:49 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/10 16:19:27 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/11 14:52:19 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,39 @@
 #include "user.hpp"
 #include "channel.hpp"
 
-void	parser(const std::string &input);
+void	parser(const std::string &input, std::vector<channel> *channel_list, user *user);
+
+user	*search_user_by_socket(std::vector<user> *user_list, int fd);
+user	*search_user_by_nickname(std::vector<user> *user_list, std::string name);
+
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////JOIN.CPP FUNCTION///////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+int join(std::string args, std::vector<channel> *list, user *user);
+int	search_if_exist(std::string args, std::vector<channel> *list);
+channel	*search_channel_by_name(std::vector<channel> *channel_list, std::string name);
+
+
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////PASS.CPP FUNCTION///////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+void    pass(std::string args, user *user);
+
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////NICK.CPP FUNCTION///////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+
+void    nick(std::string args, user *user);
+
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////USER_COMMAND.CPP FUNCTION///////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+
+void    user_command(std::string args, user *user);
+
 
 #endif

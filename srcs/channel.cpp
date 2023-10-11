@@ -6,11 +6,11 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:30:55 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/09 17:27:09 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/11 14:59:00 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../includes/channel.hpp"
+# include "../includes/irc.hpp"
 
 channel::channel()
 {
@@ -21,6 +21,40 @@ channel::~channel()
 {
 	return ;
 }
+
+void	channel::add_user_to_channel(std::string user)
+{
+	std::size_t		i;
+
+	i = 0;
+	while (i < _user_list.size())
+	{
+		if (_user_list[i] == user)
+			return ;
+		i++;
+	}
+	_user_list.insert(_user_list.end(), user);
+	std::cout << user << std::endl;
+}
+
+
+
+void	channel::print_every_user()
+{
+	std::size_t	i;
+
+	i = 0;
+	while (i < _user_list.size())
+	{
+		std::cout << _user_list[i] << std::endl;
+		i++;
+	}
+}
+
+
+
+
+
 
 
 
