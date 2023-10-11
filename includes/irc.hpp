@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 17:16:49 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/11 16:38:55 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/11 17:24:52 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void		user_command(std::string args, user &user);
 
 
 void		receiveData(fd_set &master, int &listener, int &fdMax, int &socketFd, std::vector<user> &user_list, std::vector<channel> &channel_list);
-void		parser(const std::string &input, std::vector<channel> &channel_list, user &user);
+void		parser(const std::string &input, std::vector<channel> &channel_list, user &currentUser);
 int			sendMessage(const char *message, user &receiver);
 void		readLoop(fd_set &master, fd_set &readFds, int &listener, int &fdMax, std::vector<user> &user_list, std::vector<channel> &channel_list);
 

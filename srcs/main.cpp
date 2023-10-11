@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 17:16:22 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/11 16:40:20 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/11 17:31:09 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ struct addrinfo initHints(void) {
 	hints.ai_family	= AF_UNSPEC;
 	hints.ai_socktype = SOCK_STREAM;
 	hints.ai_flags = AI_PASSIVE;
+	hints.ai_protocol = IPPROTO_TCP;
 	return (hints);	
 }
 
@@ -114,13 +115,11 @@ void	receiveData(fd_set &master, int &listener, int &fdMax, int &socketFd, std::
 
 	}
 	else {
-		std::cout << "before recv: " << buf << std::endl;
 		currentUser = identifyUser(socketFd, user_list);
 		if ((nbytes = recv(socketFd, buf, sizeof(buf), 0)) <= 0)
 			receiveError(nbytes, socketFd, master);
 		else {
-			std::cout << "after recv: " << buf << std::endl;
-			parser(buf, channel_list, *search_user_by_socket(user_list, socketFd));
+			parser(buf, channel_list, currentUser);
 			std::cout << buf << std::endl;
 			for (int j = 0; j <= fdMax; j++) {
 				if (FD_ISSET(j, &master)) {
