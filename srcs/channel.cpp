@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:30:55 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/11 14:59:00 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/11 16:20:25 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ void	channel::add_user_to_channel(std::string user)
 		i++;
 	}
 	_user_list.insert(_user_list.end(), user);
-	std::cout << user << std::endl;
 }
 
 

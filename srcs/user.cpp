@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:30:55 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/11 14:50:46 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/11 16:38:37 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,14 @@ void	user::register_user(char *s)
 	}
 }
 
-user	*search_user_by_socket(std::vector<user> *user_list, int fd)
+user	*search_user_by_socket(std::vector<user> &user_list, const int fd)
 {
 	std::vector<user>::iterator	list;
 	std::size_t						i;
 
 	i = 0;
-	list = user_list->begin();
-	while (i < user_list->size())
+	list = user_list.begin();
+	while (i < user_list.size())
 	{
 		if (list[i].get_fd_socket() == fd)
 			return (&list[i]);
