@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 13:33:01 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/12 12:16:13 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/12 13:40:41 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,11 @@ void	parser(const std::string &input, Server &server, user &currentUser) {
 		spaceIdx = cmdList[i].find(' ');
 		cmd = cmdList[i].substr(0, spaceIdx);
 		args = cmdList[i].substr(spaceIdx + 1, input.size() - spaceIdx);
-			std::cout << "command " << cmdsVec[i] << " from socket: " << currentUser.get_fd_socket() << ", nick: " << currentUser.get_nickname() << std::endl;
+			std::cout << "command " << cmd << " from socket: " << currentUser.get_fd_socket() << ", nick: " << currentUser.get_nickname() << std::endl;
 		std::cout << args << '\n' << "TTTTTTTTTTTTTT" << std::endl;
 		for (j = 0; j < cmdsVec.size(); j++) { 
-			if (cmdsVec[i] == cmdList[i]) {
-				(*cmds[i])(args, server, currentUser);
+			if (cmdsVec[j] == cmd) {
+				(*cmds[j])(args, server, currentUser);
 				break;
 			}
 		}
