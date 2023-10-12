@@ -6,7 +6,7 @@
 #    By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/10 16:47:27 by tlarraze          #+#    #+#              #
-#    Updated: 2023/10/12 10:00:43 by gpasquet         ###   ########.fr        #
+#    Updated: 2023/10/12 12:27:11 by gpasquet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,10 +17,12 @@ CPPFLAGS	=	-Wall -Werror -Wextra -std=c++98 -g -fno-limit-debug-info
 DIR_OBJ		=	obj
 
 SRCS		=	main.cpp \
+				server.cpp \
 				user.cpp \
 				channel.cpp \
-				parser.cpp \
 				sendMessage.cpp \
+				parser.cpp \
+				commands/cap.cpp \
 				commands/join.cpp \
 				commands/pass.cpp \
 				commands/nick.cpp \
@@ -29,7 +31,7 @@ SRCS		=	main.cpp \
 				commands/mode.cpp \
 				commands/invite.cpp \
 				commands/topic.cpp \
-				commands/kick.cpp
+				commands/kick.cpp 
 
 SRCS		:= $(SRCS:%=srcs/%)
 

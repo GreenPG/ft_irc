@@ -6,12 +6,11 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 13:33:01 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/12 10:20:26 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/12 12:16:13 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/irc.hpp"
-
 
 static std::vector<std::string>	splitInput(std::string input) {
 	size_t						end;
@@ -27,7 +26,7 @@ static std::vector<std::string>	splitInput(std::string input) {
 	return (cmdList);
 }
 
-void	parser(const std::string &input, std::vector<channel> &channel_list, user &currentUser) {
+void	parser(const std::string &input, Server &server, user &currentUser) {
 	std::vector<std::string>	cmdList;
 	std::string 				cmd;
 	std::string					args;
@@ -36,7 +35,8 @@ void	parser(const std::string &input, std::vector<channel> &channel_list, user &
 
 	const std::string			cmdArr[] = {"CAP", "PASS", "NICK", "USER", "PRIVMSG", "JOIN", "MODE", "INVITE", "TOPIC", "KICK"};
 	std::vector<std::string> 	cmdsVec(cmdArr, cmdArr + sizeof(cmdArr) / sizeof(cmdArr[0]));
-	cmdFunctions				cmdFunctions[] = {&cap, &pass, &nick, &user_command, &privmsg, &join,  &mode, &invite, &topic, &kick};
+	cmdFunctions				cmds[] = {&cap, &pass, &nick, &user_command, &privmsg, &join, &mode, &invite, &topic, &kick};
+
 	cmdList = splitInput(input);
 	for (unsigned int i = 0; i < cmdList.size(); i++) {
 		spaceIdx = cmdList[i].find(' ');
@@ -45,24 +45,8 @@ void	parser(const std::string &input, std::vector<channel> &channel_list, user &
 			std::cout << "command " << cmdsVec[i] << " from socket: " << currentUser.get_fd_socket() << ", nick: " << currentUser.get_nickname() << std::endl;
 		std::cout << args << '\n' << "TTTTTTTTTTTTTT" << std::endl;
 		for (j = 0; j < cmdsVec.size(); j++) { 
-			if (cmdsVec[i] == "JOIN") {
-				join(args, channel_list, currentUser);
-				break;
-			}
-			if (cmdsVec[i] == "PASS") {
-				pass(args, currentUser);
-				break;
-			}
-			if (cmdsVec[i] == "NICK") {
-				nick(args, currentUser);
-				break;
-			}
-			if (cmdsVec[i] == "USER") {
-				user_command(args, currentUser);
-				break;
-			}
-			if (cmdsVec[i] == "CAP") {
-				cap(currentUser);
+			if (cmdsVec[i] == cmdList[i]) {
+				(*cmds[i])(args, server, currentUser);
 				break;
 			}
 		}

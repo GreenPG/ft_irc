@@ -6,23 +6,21 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 16:29:04 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/12 09:40:08 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/12 11:48:56 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/irc.hpp"
 
-int join(std::string args, std::vector<channel> &list, user &user)
+void	join(std::string args, Server &server, user &user)
 {
 	int i;
+	std::vector<channel>	list = server.getChannelList();
 	channel new_channel;
 
 	i = 0;
 	if (user.check_register() != 0)
-	{
 		std::cout << user.check_register() << std::endl;
-		return (1);
-	}
 	// while (args[0] == ' ')
 	// 	args = args.erase(0, 1);
 
@@ -38,7 +36,6 @@ int join(std::string args, std::vector<channel> &list, user &user)
 	}
 	std::cout << "User having access to the channel " + args << std::endl;
 	search_channel_by_name(list, args).print_every_user();
-	return (0);
 }
 
 int search_if_exist(std::string args, std::vector<channel> &list)
