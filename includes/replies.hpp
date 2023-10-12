@@ -6,13 +6,15 @@
 /*   By: gpasquet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 13:43:58 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/12 15:17:10 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/12 16:05:17 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef REPLIES_HPP
 # define REPLIES_HPP
 
+
+#define	PRIVMSG(sender, target, msg) (":" + sender + " PRIVMSG " + target + " :" + msg )
 
 //////////////////////////////RPL MESSAGES///////////////////////////////////////////////////
 # define RPL_WELCOME(nick, user) ("001 " + nick " :Welcome to the ircserv Network, " + nick + "!" + user)

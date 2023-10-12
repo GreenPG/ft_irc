@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 17:16:49 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/12 15:24:02 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/12 16:08:41 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ class Server;
 
 
 user		*search_user_by_socket(std::vector<user> &user_list, int fd);
-user		*search_user_by_nickname(std::vector<user> &user_list, std::string name);
+user		*search_user_by_nickname(std::vector<user> *user_list, std::string name);
 
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////JOIN.CPP FUNCTION///////////////////////////////

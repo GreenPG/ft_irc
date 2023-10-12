@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:30:55 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/12 15:18:07 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/12 16:42:15 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ user	*search_user_by_nickname(std::vector<user> *user_list, std::string name)
 			return (&list[i]);
 		i++;
 	}
-	return (&list[i]);
+	return (NULL);
 }
 
 
