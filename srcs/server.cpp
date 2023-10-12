@@ -6,11 +6,13 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 10:49:17 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/12 15:29:02 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/12 15:36:15 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/server.hpp"
+#include <asm-generic/socket.h>
+#include <sys/socket.h>
 
 Server::Server(): _listener(-1), _fdMax(-1) {
 	FD_ZERO(&this->_master);
@@ -52,6 +54,7 @@ void					Server::initServer(const char *portNb) {
 	struct addrinfo	 hints;
 	struct addrinfo	 *servinfo;
 	struct addrinfo *p;
+	int	yes = 1;
 
 	hints = initHints();
 	getaddrinfo(NULL, portNb, &hints, &servinfo); 
@@ -60,6 +63,7 @@ void					Server::initServer(const char *portNb) {
 			perror("socket:");
 			continue;
 		}
+		setsockopt(this->_listener, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(int));
 		if (bind(this->_listener, p->ai_addr, p->ai_addrlen) == -1) {
 			close(this->_listener);
 			perror("bind:");
