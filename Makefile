@@ -6,13 +6,13 @@
 #    By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/10 16:47:27 by tlarraze          #+#    #+#              #
-#    Updated: 2023/10/11 16:15:43 by tlarraze         ###   ########.fr        #
+#    Updated: 2023/10/12 10:00:43 by gpasquet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	ircserv	
 
-CPPFLAGS	=	-Wall -Werror -Wextra -std=c++98 -g# -fno-limit-debug-info
+CPPFLAGS	=	-Wall -Werror -Wextra -std=c++98 -g -fno-limit-debug-info
 
 DIR_OBJ		=	obj
 
@@ -21,10 +21,15 @@ SRCS		=	main.cpp \
 				channel.cpp \
 				parser.cpp \
 				sendMessage.cpp \
-				join.cpp \
-				pass.cpp \
-				nick.cpp \
-				user_command.cpp
+				commands/join.cpp \
+				commands/pass.cpp \
+				commands/nick.cpp \
+				commands/user_command.cpp \
+				commands/privmsg.cpp \
+				commands/mode.cpp \
+				commands/invite.cpp \
+				commands/topic.cpp \
+				commands/kick.cpp
 
 SRCS		:= $(SRCS:%=srcs/%)
 

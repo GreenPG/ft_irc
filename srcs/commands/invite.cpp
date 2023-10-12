@@ -1,18 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pass.cpp                                           :+:      :+:    :+:   */
+/*   invite.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gpasquet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/11 14:32:19 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/11 16:29:12 by tlarraze         ###   ########.fr       */
+/*   Created: 2023/10/12 10:00:54 by gpasquet          #+#    #+#             */
+/*   Updated: 2023/10/12 10:01:44 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/irc.hpp"
+#include "../../includes/irc.hpp"
 
-void	pass(std::string args, user &user)
-{
-	user.set_password(args);
+void	invite() {
+
 }

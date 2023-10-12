@@ -6,11 +6,11 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 16:29:04 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/11 16:26:24 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/12 09:40:08 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/irc.hpp"
+#include "../../includes/irc.hpp"
 
 int join(std::string args, std::vector<channel> &list, user &user)
 {
