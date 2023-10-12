@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 17:16:49 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/12 12:26:00 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/12 15:24:02 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 #include "user.hpp"
 #include "channel.hpp"
 #include "server.hpp"
+#include "replies.hpp"
 
 class Server;
 
