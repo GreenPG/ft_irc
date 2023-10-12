@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 13:33:01 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/12 13:40:41 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/12 15:17:54 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,14 @@ void	parser(const std::string &input, Server &server, user &currentUser) {
 		cmd = cmdList[i].substr(0, spaceIdx);
 		args = cmdList[i].substr(spaceIdx + 1, input.size() - spaceIdx);
 			std::cout << "command " << cmd << " from socket: " << currentUser.get_fd_socket() << ", nick: " << currentUser.get_nickname() << std::endl;
-		std::cout << args << '\n' << "TTTTTTTTTTTTTT" << std::endl;
 		for (j = 0; j < cmdsVec.size(); j++) { 
 			if (cmdsVec[j] == cmd) {
-				(*cmds[j])(args, server, currentUser);
-				break;
+				if (cmd == "PASS" || currentUser.get_password_check() == 0)
+					(*cmds[j])(args, server, currentUser);
+						break;
 			}
 		}
-		if (j == cmdsVec.size())
+		if (j == cmdsVec.size() && currentUser.get_password_check() == 0)
 			std::cout << "Unknown command" << std::endl;
 	}
 }

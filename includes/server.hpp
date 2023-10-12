@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpasquet <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 10:25:28 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/12 11:43:55 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/12 14:04:30 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 class	Server 
 {
 	private:
-		
+
 		Server(const Server &copy);
 		Server &operator=(const Server &copy);
 		
@@ -26,6 +26,7 @@ class	Server
 		int						_fdMax;
 		fd_set					_master;
 		fd_set					_readFds;
+		std::string				_password;
 		std::vector<user>		_userList;
 		std::vector<channel>	_channelList;
 
@@ -37,7 +38,7 @@ class	Server
 		void	readLoop();
 
 	public:
-		
+
 		Server();
 		~Server();		
 
@@ -45,9 +46,11 @@ class	Server
 		int						&getFdMax();
 		fd_set					&getMaster();
 		fd_set					&getReadFds();
+		std::string				&getPassword();
 		std::vector<user>		&getUserList();
 		std::vector<channel>	&getChannelList();
 
+		void					setPassword(std::string Pass);
 		void					initServer(const char *portNb);
 		void					listenLoop();
 };

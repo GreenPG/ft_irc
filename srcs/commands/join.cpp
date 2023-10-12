@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 16:29:04 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/12 11:48:56 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/12 15:19:38 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,7 @@ void	join(std::string args, Server &server, user &user)
 	channel new_channel;
 
 	i = 0;
-	if (user.check_register() != 0)
-		std::cout << user.check_register() << std::endl;
-	// while (args[0] == ' ')
-	// 	args = args.erase(0, 1);
 
-	std::cout << user.get_password() << '\n' << user.get_nickname() << '\n' << user.get_username() << '\n' << "t" + args + "t" << '\n' << std::endl;	
 	if (search_if_exist(args, list) == 0)
 		search_channel_by_name(list, args).add_user_to_channel(user.get_nickname());
 	else

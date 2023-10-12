@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpasquet <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 10:49:17 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/12 11:42:30 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/12 15:17:16 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,9 @@
 Server::Server(): _listener(-1), _fdMax(-1) {
 	FD_ZERO(&this->_master);
 	FD_ZERO(&this->_readFds);
-	
+	_password = "1";
 }
+
 Server::~Server() {
 	close(this->_listener);
 	FD_ZERO(&this->_master);
@@ -92,13 +93,19 @@ void	Server::listenLoop() {
 }
 
 user	&Server::identifyUser(const int userFd) {
-	unsigned int i;
 
-	for (i = 0; i < this->_userList.size(); i++) {
-		if (userFd == this->_userList[i].get_fd_socket())
-			break;
+	std::vector<user>::iterator		list;
+	std::size_t						i;
+
+	i = 0;
+	list = _userList.begin();
+	while (i < _userList.size())
+	{
+		if (list[i].get_fd_socket() == userFd)
+			return (list[i]);
+		i++;
 	}
-	return (this->_userList[i]);
+	return (list[i]);
 }
 
 struct addrinfo Server::initHints(void) {
@@ -145,7 +152,7 @@ void	Server::receiveData(int &socketFd) {
 	int 				newUserFd;
 	char				buf[256];
 	user				new_user;
-	user				currentUser;
+	user				*currentUser;
 
 	if (socketFd == this->_listener) {
 		newUserFd = newConnection();
@@ -153,24 +160,15 @@ void	Server::receiveData(int &socketFd) {
 		this->_userList.insert(this->_userList.end(), new_user);
 		std::cout << "Asking password to " << new_user.get_fd_socket() << std::endl;
 		send(this->_fdMax, "Send password bro\n", 18, 0);
-
 	}
 	else {
-		currentUser = identifyUser(socketFd);
+		currentUser = &identifyUser(socketFd);
 		if ((nbytes = recv(socketFd, buf, sizeof(buf), 0)) <= 0)
 			receiveError(nbytes, socketFd);
 		else {
-			parser(buf, *this, currentUser);
+			parser(buf, *this, *currentUser);
 			std::cout << buf << std::endl;
-			for (int j = 0; j <= this->_fdMax; j++) {
-				if (FD_ISSET(j, &this->_master)) {
-					if (j != this->_listener && j != socketFd ) {
-						if (currentUser.check_register() == 0 && sendMessage(buf, *search_user_by_socket(this->_userList, j)) == -1)
-							perror("send");
-					}
-				}
 			}
-		}
 		memset(&buf, 0, 256);
 	}
 }
@@ -180,4 +178,14 @@ void	Server::readLoop() {
 		if (FD_ISSET(i, &this->_readFds))
 			receiveData(i);
 	}
+}
+
+std::string	&Server::getPassword()
+{
+	return (_password);
+}
+
+void	Server::setPassword(std::string Pass)
+{
+	_password = Pass;
 }

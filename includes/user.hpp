@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:27:50 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/11 16:02:32 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/12 14:16:12 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,24 +22,23 @@ class user
 						~user();
 
 	int					check_register();
-	void				register_user(char *s);
 
 	int					get_fd_socket();
 	std::string			get_nickname();
 	std::string			get_username();
-	std::string			get_password();
+	int					get_password_check();
 
 	void				set_fd_socket(int &fd);
 	void				set_nickname(std::string s);
 	void				set_username(std::string s);
-	void				set_password(std::string s);
+	void				set_password_check();
 
 	private :
 
+	int					_password_check; // -1 if not check || 0 if checked
 	int					_fd_socket;
 	std::string			_nickname;
 	std::string			_username;
-	std::string			_password;
 
 };
 #endif
