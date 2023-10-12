@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:27:50 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/11 14:59:20 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/12 16:08:21 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define CHANNEL_HPP
 
 #include "../includes/irc.hpp"
+class	Server;
 
 class channel
 {
@@ -22,8 +23,9 @@ class channel
 						~channel();
 
 	void				add_user_to_channel(std::string user);
-
 	void				print_every_user();
+	int					send_message_to_channel(std::string msg, Server &server);
+
 	std::string			get_channel_name();
 	std::string			get_password();
 
