@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 17:16:49 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/12 15:24:02 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/12 16:09:39 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@
 #include "replies.hpp"
 
 class Server;
+class user;
+class channel;
 
 
 
@@ -68,7 +70,7 @@ void	nick(std::string args, Server &server, user &user);
 void	user_command(std::string args, Server &server, user &user);
 
 ////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////USER_COMMAND.CPP FUNCTION///////////////////////
+////////////////////////////////CAP.CPP FUNCTION///////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
 

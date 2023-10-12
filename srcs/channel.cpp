@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:30:55 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/11 16:20:25 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/12 16:16:33 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,18 @@ void	channel::print_every_user()
 	}
 }
 
+int		channel::send_message_to_channel(std::string msg, Server &server)
+{
+	std::size_t	i;
 
-
-
-
-
-
+	i = 0;
+	while (i < _user_list.size())
+	{
+		sendMessage(msg.c_str(), *search_user_by_nickname(server.getUserList(), _user_list[i]));
+		i++;
+	}
+	return (0);
+}
 
 void channel::set_channel_name(std::string s)
 {
