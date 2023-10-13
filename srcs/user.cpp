@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:30:55 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/13 14:01:05 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/13 15:46:40 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,11 @@ user::~user()
 	return ;
 }
 
-int		user::check_register()
+bool	user::check_register()
 {
-	if (_nickname == "")
-		return (1);
-	if (_username == "")
-		return (2);
-	return (0);
+	if (_nickname.empty() || _username.empty() || _password_check == -1) 
+		return (false);
+	return (true);
 }
 
 user	*search_user_by_socket(std::vector<user> &user_list, const int fd)
@@ -80,6 +78,11 @@ void user::set_username(std::string s)
 	_username = s;
 }
 
+void user::set_realname(std::string s)
+{
+	_realname = s;
+}
+
 int	user::get_fd_socket(void)
 {
 	return (_fd_socket);
@@ -93,6 +96,11 @@ std::string user::get_nickname()
 std::string user::get_username()
 {
 	return (_username);
+}
+
+std::string user::get_realname()
+{
+	return (_realname);
 }
 
 void	user::set_password_check()

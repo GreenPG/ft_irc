@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 14:32:19 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/13 14:11:05 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/13 15:42:51 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,6 @@ void	nick(std::string args, Server &server, user &currentUser)
 		return ;
 	}
 	currentUser.set_nickname(args);
+	if (currentUser.check_register() == true)
+		sendMessage(RPL_WELCOME(currentUser.get_nickname(), currentUser.get_username()).c_str(), currentUser);
 }
