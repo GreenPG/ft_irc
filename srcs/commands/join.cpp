@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 16:29:04 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/13 14:25:34 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/13 14:49:32 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ void	join(std::string args, Server &server, user &user)
 
 	if (args == "" || args[0] != '#')
 	{
-		//sendMessage(ERR_BADCHANMASK())
-		
+		sendMessage(ERR_BADCHANMASK(user.get_nickname(), args).c_str(), user);
+			return ;
 	}
 	if (search_if_exist(args, list) == 0)
 		search_channel_by_name(list, args)->add_user_to_channel(user);
