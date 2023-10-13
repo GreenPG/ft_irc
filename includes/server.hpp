@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 10:25:28 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/12 15:54:13 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/13 13:38:24 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ class	Server
 		fd_set					&getMaster();
 		fd_set					&getReadFds();
 		std::string				&getPassword();
-		std::vector<user>		&getUserList();
-		std::vector<channel>	&getChannelList();
+		std::vector<user>		*getUserList();
+		std::vector<channel>	*getChannelList();
 
 		void					setPassword(std::string Pass);
 		void					initServer(const char *portNb);

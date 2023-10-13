@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 10:49:17 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/12 15:36:45 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/13 13:43:27 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,12 @@ fd_set					&Server::getReadFds() {
 	return (this->_readFds);
 }
 
-std::vector<user>		&Server::getUserList() {
-	return (this->_userList);
+std::vector<user>		*Server::getUserList() {
+	return (&_userList);
 }
 
-std::vector<channel>	&Server::getChannelList() {
-	return (this->_channelList);
+std::vector<channel>	*Server::getChannelList() {
+	return (&_channelList);
 }
 
 void					Server::initServer(const char *portNb) {

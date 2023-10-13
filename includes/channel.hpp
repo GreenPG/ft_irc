@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:27:50 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/13 09:28:38 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/13 14:00:29 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ class channel
 
 	void				add_user_to_channel(user &user);
 	void				print_every_user();
-	int					send_message_to_channel(std::string msg, Server &server);
+	int					send_message_to_channel(std::string msg, Server *server);
 
 	std::string			get_channel_name();
 	std::string			get_password();
