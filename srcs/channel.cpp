@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:30:55 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/13 15:03:07 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/13 16:55:03 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	channel::add_user_to_channel(user &user)
 	i = 0;
 	while (i < _user_list.size())
 	{
-		if (_user_list[i].get_username() == user.get_username())
+		if (_user_list[i].get_nickname() == user.get_nickname())
 			return ;
 		i++;
 	}
@@ -57,7 +57,7 @@ void	channel::print_every_user()
 	i = 0;
 	while (i < _user_list.size())
 	{
-		std::cout << _user_list[i].get_username() << std::endl;
+		std::cout << _user_list[i].get_nickname() << std::endl;
 		i++;
 	}
 }

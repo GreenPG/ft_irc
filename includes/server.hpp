@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 10:25:28 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/13 13:38:24 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/13 16:33:15 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ class	Server
 		fd_set					_readFds;
 		std::string				_password;
 		std::vector<user>		_userList;
-		std::vector<channel>	_channelList;
+		std::vector<channel *>	_channelList;
 
 		user	&identifyUser(const int userFd); 
 		struct	addrinfo initHints(void);
@@ -48,7 +48,7 @@ class	Server
 		fd_set					&getReadFds();
 		std::string				&getPassword();
 		std::vector<user>		*getUserList();
-		std::vector<channel>	*getChannelList();
+		std::vector<channel *>	*getChannelList();
 
 		void					setPassword(std::string Pass);
 		void					initServer(const char *portNb);
