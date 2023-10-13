@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 16:29:04 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/13 14:49:32 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/13 15:03:32 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	join(std::string args, Server &server, user &user)
 		new_channel.set_channel_name(args);
 		list->insert(list->end(), new_channel);
 		search_channel_by_name(list, args)->add_user_to_channel(user);
+		search_channel_by_name(list, args)->add_user_as_operator(user);
 	}
 	std::cout << "User having access to the channel " + args << std::endl;
 	search_channel_by_name(list, args)->print_every_user();

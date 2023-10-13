@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:30:55 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/13 14:41:59 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/13 15:03:07 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,20 @@ void	channel::add_user_to_channel(user &user)
 		i++;
 	}
 	_user_list.insert(_user_list.end(), user);
+}
+
+void	channel::add_user_as_operator(user &user)
+{
+	std::size_t		i;
+
+	i = 0;
+	while (i < _operator_list.size())
+	{
+		if (_operator_list[i].get_username() == user.get_username())
+			return ;
+		i++;
+	}
+	_operator_list.insert(_operator_list.end(), user);
 }
 
 void	channel::print_every_user()

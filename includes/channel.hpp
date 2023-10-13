@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:27:50 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/13 14:00:29 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/13 15:06:06 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ class channel
 						~channel();
 
 	void				add_user_to_channel(user &user);
+	void				add_user_as_operator(user &user);
 	void				print_every_user();
 	int					send_message_to_channel(std::string msg, Server *server);
 
@@ -34,9 +35,10 @@ class channel
 
 	private :
     std::vector<user>	_user_list;
+    std::vector<user>	_operator_list;
 	std::string			_channel_name;
 	std::string			_password;
-//	int					_invite_only;
+	//int					_invite_only;
 
 };
 
