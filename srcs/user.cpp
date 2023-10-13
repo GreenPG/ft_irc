@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:30:55 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/12 16:45:56 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/13 14:01:05 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,14 @@ user	*search_user_by_socket(std::vector<user> &user_list, const int fd)
 	return (&list[i]);
 }
 
-user	*search_user_by_nickname(std::vector<user> &user_list, std::string name)
+user	*search_user_by_nickname(std::vector<user> *user_list, std::string name)
 {
 	std::vector<user>::iterator	list;
 	std::size_t						i;
 
 	i = 0;
-	list = user_list.begin();
-	while (i < user_list.size())
+	list = user_list->begin();
+	while (i < user_list->size())
 	{
 		if (list[i].get_nickname() == name)
 			return (&list[i]);

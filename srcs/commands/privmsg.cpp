@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   privmsg.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpasquet <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 10:06:35 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/13 11:11:47 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/13 14:06:29 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/irc.hpp"
 
 static void	privmsgToChannel(std::string target, std::string msg, user &currentUser, Server &server) {
-	channel	targetChannel;
+	channel	*targetChannel;
 
 	if ((search_if_exist(target, server.getChannelList()) == 0))
 		targetChannel = search_channel_by_name(server.getChannelList(), target);
@@ -24,10 +24,10 @@ static void	privmsgToChannel(std::string target, std::string msg, user &currentU
 	if (msg.empty())
 		sendMessage(ERR_NOTEXTTOSEND(currentUser.get_nickname()).c_str(), currentUser);
 	else
-		targetChannel.send_message_to_channel(RPL_PRIVMSG(currentUser.get_nickname(), target, msg).c_str(), server);
+		targetChannel->send_message_to_channel(RPL_PRIVMSG(currentUser.get_nickname(), target, msg).c_str(), &server);
 }
 
-static void	privmsgToUser(std::string target, std::string msg, user &currentUser, std::vector<user> userList) {
+static void	privmsgToUser(std::string target, std::string msg, user &currentUser, std::vector<user> *userList) {
 	user	*targetUser;
 
 	if ((targetUser = search_user_by_nickname(userList, target)) == NULL)
