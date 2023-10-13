@@ -6,7 +6,7 @@
 /*   By: gpasquet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 13:43:58 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/13 10:29:14 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/13 14:07:19 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@
 # define ERR_BADCHANNELKEY(nick, channel) ("405 " + nick + " " + channel + " :Cannot join channel (+k)")
 # define ERR_NORECIPIENT(nick, cmd) ("411 " + nick + " :No recipient given (" + cmd + ")" )
 # define ERR_NOTEXTTOSEND(nick) ("412 " + nick + " :No text to send")
-# define ERR_NONICKNAMEGIVEN(nick) ("431 " + nick " :No nickname given")
-# define ERR_ERRONEUSNICKNAME(oldNick, newNick) ("432 " + oldNick + " " + newNick " :Erroneus nickname")
-# define ERR_NICKNAMEINUSE(oldNick, newNick) ("433 " + oldNick + " " newNick + " :Nickname is already in use")
+# define ERR_NONICKNAMEGIVEN(nick) ("431 " + nick + " :No nickname given")
+# define ERR_ERRONEUSNICKNAME(oldNick, newNick) ("432 " + oldNick + " " + newNick + " :Erroneus nickname")
+# define ERR_NICKNAMEINUSE(oldNick, newNick) ("433 " + oldNick + " " + newNick + " :Nickname is already in use")
 # define ERR_USERNOTINCHANNEL(nick, target, channel) ("441 " + nick + " " + target + " " + channel + " :They aren't on that channel" )
 # define ERR_NOTONCHANNEL(nick, channel) ("442 " + nick + " " + channel + " :You're not ont that channel")
 # define ERR_USERONCHANNEL(nick, invited, channel) ("443 " + nick + " " + invited + " " + channel + " :is already on channel")

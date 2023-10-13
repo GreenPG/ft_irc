@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 14:32:19 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/12 15:33:57 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/13 13:45:35 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	pass(std::string args, Server &server, user &user)
 {
 	if (user.get_password_check() == 0)
-		sendMessage("ERR_ALREADYREGISTERED\n", user);
+		sendMessage(ERR_ALREADYREGISTERED(user.get_nickname()).c_str(), user);
 	else if (args != server.getPassword())
 	{
 		sendMessage(ERR_PASSWDMISMATCH(user.get_nickname()).c_str(), user);
