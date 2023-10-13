@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 10:49:17 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/13 17:09:53 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/13 17:32:12 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ std::vector<User>		*Server::getUserList() {
 	return (&_userList);
 }
 
-std::vector<Channel>	*Server::getChannelList() {
+std::vector<Channel *>	*Server::getChannelList() {
 	return (&_channelList);
 }
 

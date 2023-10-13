@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 17:16:49 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/13 17:10:46 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/13 17:35:34 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ User		*search_user_by_nickname(std::vector<User> *user_list, std::string name);
 ////////////////////////////////////////////////////////////////////////////////
 
 void		join(std::string args, Server &server, User &user);
-int			search_if_exist(std::string args, std::vector<Channel> *list);
-Channel		*search_channel_by_name(std::vector<Channel> *channel_list, std::string name);
+int			search_if_exist(std::string args, std::vector<Channel *> *list);
+Channel		*search_channel_by_name(std::vector<Channel *> *channel_list, std::string name);
 
 
 ////////////////////////////////////////////////////////////////////////////////
