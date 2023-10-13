@@ -6,7 +6,7 @@
 /*   By: gpasquet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 10:06:35 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/13 10:07:05 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/13 10:29:37 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	privmsgToUser(std::string target, std::string msg, user &currentUser
 		if (msg.empty()) 
 			sendMessage(ERR_NOTEXTTOSEND(currentUser.get_nickname()).c_str(), currentUser);
 		else 
-			sendMessage(RPL_PRIVMSG(currentUser.get_nickname(), currentUser.get_username(), target, msg).c_str(), *targetUser );
+			sendMessage(RPL_PRIVMSG(currentUser.get_nickname(), target, msg).c_str(), *targetUser );
 	}
 }
 

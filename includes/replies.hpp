@@ -6,7 +6,7 @@
 /*   By: gpasquet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 13:43:58 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/13 10:06:14 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/13 10:29:14 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define REPLIES_HPP
 
 
-#define	RPL_PRIVMSG(sender, username, target, msg) (":" + sender + "!" + username + "@localhost PRIVMSG " + target + " " + msg + "\r\n")
+#define	RPL_PRIVMSG(sender, target, msg) (":" + sender + " PRIVMSG " + target + " :" + msg + "\r\n")
 
 //////////////////////////////RPL MESSAGES///////////////////////////////////////////////////
 # define RPL_WELCOME(nick, user) ("001 " + nick " :Welcome to the ircserv Network, " + nick + "!" + user)
@@ -27,7 +27,7 @@
 
 
 ///////////////////////////////ERRORS MESSAGES/////////////////////////////////////////////
-# define ERR_NOSUCHNICK(nick, name) ("401 " + nick + " " + name + " :No su nick/channel")
+# define ERR_NOSUCHNICK(nick, name) ("401 " + nick + " " + name + " :No such nick/channel")
 # define ERR_NOSUCHCHANNEL(nick, channel) ("403 " + nick + " " + channel + " :No such channel")
 # define ERR_CANNOTSENDTOCHAN(nick, channel) ("404 " + nick + " " + channe  " :Cannot send to channel")
 # define ERR_BADCHANNELKEY(nick, channel) ("405 " + nick + " " + channel + " :Cannot join channel (+k)")
