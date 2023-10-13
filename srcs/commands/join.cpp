@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 16:29:04 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/12 15:19:38 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/13 09:31:03 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ void	join(std::string args, Server &server, user &user)
 	i = 0;
 
 	if (search_if_exist(args, list) == 0)
-		search_channel_by_name(list, args).add_user_to_channel(user.get_nickname());
+		search_channel_by_name(list, args).add_user_to_channel(user);
 	else
 	{
 		std::cout << "CHANNEL DONT EXIST BUT IS BEING CREATED" << std::endl;
 		new_channel.set_channel_name(args);
 		list.insert(list.end(), new_channel);
-		search_channel_by_name(list, args).add_user_to_channel(user.get_nickname());
+		search_channel_by_name(list, args).add_user_to_channel(user);
 	}
 	std::cout << "User having access to the channel " + args << std::endl;
 	search_channel_by_name(list, args).print_every_user();

@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:30:55 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/12 16:16:33 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/13 09:58:43 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@ channel::~channel()
 	return ;
 }
 
-void	channel::add_user_to_channel(std::string user)
+void	channel::add_user_to_channel(user &user)
 {
 	std::size_t		i;
 
 	i = 0;
 	while (i < _user_list.size())
 	{
-		if (_user_list[i] == user)
+		if (_user_list[i].get_username() == user.get_username())
 			return ;
 		i++;
 	}
@@ -45,7 +45,7 @@ void	channel::print_every_user()
 	i = 0;
 	while (i < _user_list.size())
 	{
-		std::cout << _user_list[i] << std::endl;
+		std::cout << _user_list[i].get_username() << std::endl;
 		i++;
 	}
 }
@@ -57,7 +57,7 @@ int		channel::send_message_to_channel(std::string msg, Server &server)
 	i = 0;
 	while (i < _user_list.size())
 	{
-		sendMessage(msg.c_str(), *search_user_by_nickname(server.getUserList(), _user_list[i]));
+		sendMessage(msg.c_str(), *search_user_by_nickname(server.getUserList(), _user_list[i].get_username()));
 		i++;
 	}
 	return (0);
