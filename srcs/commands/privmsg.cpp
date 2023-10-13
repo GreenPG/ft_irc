@@ -6,13 +6,25 @@
 /*   By: gpasquet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 10:06:35 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/13 10:29:37 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/13 11:11:47 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/irc.hpp"
 
-static void	privmsgToChannel() {
+static void	privmsgToChannel(std::string target, std::string msg, user &currentUser, Server &server) {
+	channel	targetChannel;
+
+	if ((search_if_exist(target, server.getChannelList()) == 0))
+		targetChannel = search_channel_by_name(server.getChannelList(), target);
+	else {
+		sendMessage(ERR_NOSUCHNICK(currentUser.get_nickname(), target).c_str(), currentUser);
+		return ;
+	}
+	if (msg.empty())
+		sendMessage(ERR_NOTEXTTOSEND(currentUser.get_nickname()).c_str(), currentUser);
+	else
+		targetChannel.send_message_to_channel(RPL_PRIVMSG(currentUser.get_nickname(), target, msg).c_str(), server);
 }
 
 static void	privmsgToUser(std::string target, std::string msg, user &currentUser, std::vector<user> userList) {
@@ -48,7 +60,7 @@ void	privmsg(std::string args, Server &server, user &currentUser){
 	start = args.find_first_not_of(" 	", end);
 	msg = args.substr(start, args.size() - start);
 	if (target[0] == '#')
-		privmsgToChannel();
+		privmsgToChannel(target, msg, currentUser, server);
 	else 
 		privmsgToUser(target, msg, currentUser, server.getUserList());
 }
