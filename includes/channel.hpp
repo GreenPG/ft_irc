@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:27:50 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/13 15:06:06 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/13 17:22:50 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,27 +15,34 @@
 
 #include "../includes/irc.hpp"
 class	Server;
+class	User;
 
-class channel
+class Channel
 {
 	public :
-						channel();
-						~channel();
+						Channel();
+						~Channel();
 
-	void				add_user_to_channel(user &user);
-	void				add_user_as_operator(user &user);
+	void				add_user_to_channel(User &user);
+	void				kick_user_from_channel(std::vector<User> list, std::string user);
+	void				add_user_as_operator(User &user);
+	int					is_user_op(std::string name);
+	int					is_user_in_channel(std::string name);
+
 	void				print_every_user();
 	int					send_message_to_channel(std::string msg, Server *server);
 
 	std::string			get_channel_name();
 	std::string			get_password();
+	std::vector<User>	get_chan_user_list();
+	std::vector<User>	get_chan_op_list();
 
 	void				set_channel_name(std::string s);
 	void				set_password(std::string s);
 
 	private :
-    std::vector<user>	_user_list;
-    std::vector<user>	_operator_list;
+    std::vector<User>	_user_list;
+    std::vector<User>	_operator_list;
 	std::string			_channel_name;
 	std::string			_password;
 	//int					_invite_only;

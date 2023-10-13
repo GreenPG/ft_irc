@@ -6,14 +6,14 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 10:06:35 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/13 14:09:45 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/13 17:11:56 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/irc.hpp"
 
-static void	privmsgToChannel(std::string target, std::string msg, user &currentUser, Server &server) {
-	channel	*targetChannel;
+static void	privmsgToChannel(std::string target, std::string msg, User &currentUser, Server &server) {
+	Channel	*targetChannel;
 
 	if ((search_if_exist(target, server.getChannelList()) == 0))
 		targetChannel = search_channel_by_name(server.getChannelList(), target);
@@ -27,8 +27,8 @@ static void	privmsgToChannel(std::string target, std::string msg, user &currentU
 		targetChannel->send_message_to_channel(RPL_PRIVMSG(currentUser.get_nickname(), target, msg).c_str(), &server);
 }
 
-static void	privmsgToUser(std::string target, std::string msg, user &currentUser, std::vector<user> *userList) {
-	user	*targetUser;
+static void	privmsgToUser(std::string target, std::string msg, User &currentUser, std::vector<User> *userList) {
+	User	*targetUser;
 
 	if ((targetUser = search_user_by_nickname(userList, target)) == NULL)
 		sendMessage(ERR_NOSUCHNICK(currentUser.get_nickname(), target).c_str(), currentUser);
@@ -40,7 +40,7 @@ static void	privmsgToUser(std::string target, std::string msg, user &currentUser
 	}
 }
 
-void	privmsg(std::string args, Server &server, user &currentUser){
+void	privmsg(std::string args, Server &server, User &currentUser){
 	int start;
 	int	end;
 	std::string	target;

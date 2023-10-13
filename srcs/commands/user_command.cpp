@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 14:32:19 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/13 15:43:18 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/13 17:07:31 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int handleMidParams(std::string args, int *start, int *end) {
 	return (0);
 }
 
-void	user_command(std::string args, Server &server, user &user)
+void	user_command(std::string args, Server &server, User &user)
 {
 	std::string	userName;
 	std::string realName;

@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 13:33:01 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/12 16:24:25 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/13 17:02:33 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static std::vector<std::string>	splitInput(std::string input) {
 	return (cmdList);
 }
 
-void	parser(const std::string &input, Server &server, user &currentUser) {
+void	parser(const std::string &input, Server &server, User &currentUser) {
 	std::vector<std::string>	cmdList;
 	std::string 				cmd;
 	std::string					args;

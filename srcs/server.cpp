@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 10:49:17 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/13 14:53:44 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/13 17:09:53 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,11 @@ fd_set					&Server::getReadFds() {
 	return (this->_readFds);
 }
 
-std::vector<user>		*Server::getUserList() {
+std::vector<User>		*Server::getUserList() {
 	return (&_userList);
 }
 
-std::vector<channel>	*Server::getChannelList() {
+std::vector<Channel>	*Server::getChannelList() {
 	return (&_channelList);
 }
 
@@ -96,9 +96,9 @@ void	Server::listenLoop() {
 	}
 }
 
-user	&Server::identifyUser(const int userFd) {
+User	&Server::identifyUser(const int userFd) {
 
-	std::vector<user>::iterator		list;
+	std::vector<User>::iterator		list;
 	std::size_t						i;
 
 	i = 0;
@@ -155,8 +155,8 @@ void	Server::receiveData(int &socketFd) {
 	int 				nbytes;
 	int 				newUserFd;
 	char				buf[256];
-	user				new_user;
-	user				*currentUser;
+	User				new_user;
+	User				*currentUser;
 
 	if (socketFd == this->_listener) {
 		newUserFd = newConnection();

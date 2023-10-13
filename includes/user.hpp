@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:27:50 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/13 15:40:56 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/13 16:54:31 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 
 # include "../includes/irc.hpp"
 
-class user
+class User
 {
 	public :
-						user();
-						~user();
+						User();
+						~User();
 
 	bool				check_register();
 

@@ -6,17 +6,17 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 16:29:04 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/13 15:03:32 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/13 17:10:24 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/irc.hpp"
 
-void	join(std::string args, Server &server, user &user)
+void	join(std::string args, Server &server, User &user)
 {
 	int i;
-	std::vector<channel>	*list = server.getChannelList();
-	channel new_channel;
+	std::vector<Channel>	*list = server.getChannelList();
+	Channel new_channel;
 
 	i = 0;
 
@@ -39,9 +39,9 @@ void	join(std::string args, Server &server, user &user)
 	search_channel_by_name(list, args)->print_every_user();
 }
 
-int search_if_exist(std::string args, std::vector<channel> *list)
+int search_if_exist(std::string args, std::vector<Channel> *list)
 {
-	std::vector<channel>::iterator it;
+	std::vector<Channel>::iterator it;
 	std::size_t i;
 
 	i = 0;
@@ -55,10 +55,10 @@ int search_if_exist(std::string args, std::vector<channel> *list)
 	return (1);
 }
 
-channel *search_channel_by_name(std::vector<channel> *channel_list, std::string name)
+Channel *search_channel_by_name(std::vector<Channel> *channel_list, std::string name)
 {
 	std::size_t i;
-	std::vector<channel>::iterator it;
+	std::vector<Channel>::iterator it;
 
 	i = 0;
 	it = channel_list->begin();
@@ -68,5 +68,5 @@ channel *search_channel_by_name(std::vector<channel> *channel_list, std::string 
 			return (&it[i]);
 		i++;
 	}
-	return (&it[i]);
+	return (NULL);
 }
