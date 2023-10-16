@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:30:55 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/13 16:55:52 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/16 16:03:03 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ User	*search_user_by_nickname(std::vector<User> *user_list, std::string name)
 	}
 	return (NULL);
 }
-
 
 void	User::set_fd_socket(int &fd)
 {

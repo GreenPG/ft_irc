@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 17:16:49 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/16 11:08:39 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/16 16:29:45 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,12 @@ void	privmsg(std::string args, Server &server, User &currentUser);
 void	topic(std::string args, Server &server, User &currentUser);
 
 ////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////SQUIT.CPP FUNCTION///////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+void	squit(std::string args, Server &server, User &currentUser);
+
+////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////COMMAND POINTER TYPEDEF///////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -115,5 +121,5 @@ typedef void	(*cmdFunctions)(std::string args, Server &server, User &currentUser
 
 void		parser(const std::string &input, Server &server, User &currentUser);
 int			sendMessage(const char *message, User &receiver);
-
+int         get_chan_pos(std::vector<Channel *> *channel_list, Channel *chan);
 #endif
