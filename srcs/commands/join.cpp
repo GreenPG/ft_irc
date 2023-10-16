@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 16:29:04 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/16 14:57:46 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/16 16:24:27 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,10 @@ void	join(std::string args, Server &server, User &user)
 	}
 	if (search_if_exist(args, list) == 0) {
 		currentChannel = search_channel_by_name(list, args);
+		if (currentChannel->get_invite_only() == true && currentChannel->is_user_invited(user.get_nickname()) == 1) {
+			sendMessage(ERR_INVITEONLYCHAN(user.get_nickname(), args).c_str(), user);
+			return;
+		}
 		currentChannel->add_user_to_channel(user);
 	}
 	else
