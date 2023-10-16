@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 13:43:58 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/16 15:21:19 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/16 15:23:00 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 
 #define	RPL_PRIVMSG(sender, target, msg) (":" + sender + " PRIVMSG " + target + " " + msg + "\r\n")
 #define	RPL_JOIN(joiner, channel) (":" + joiner + " JOIN " + channel + "\r\n")
+#define	RPL_KICK(kicked, channel) (":Command to kick " + kicked + " from " + channel + "\r\n")
+#define	RPL_KICK_REASON(kicked, channel, reason) (":Command to kick " + kicked + " from " + channel + " reason \"" + reason + "\"" + "\r\n")
 
 //////////////////////////////RPL MESSAGES///////////////////////////////////////////////////
 # define RPL_WELCOME(nick, user) (": 001 " + nick +  " :Welcome to the ircserv Network, " + nick + "!" + user + "\r\n")

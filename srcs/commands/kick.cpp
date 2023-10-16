@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 10:03:43 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/13 17:39:05 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/16 14:59:42 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,17 @@ void	kick(std::string args, Server &server, User &user) {
 		sendMessage(ERR_USERNOTINCHANNEL(user.get_nickname(), user_arg, channel_arg).c_str(), user);
 		return ;
 	}
-	else if (search_channel_by_name(server.getChannelList(), channel_arg)->is_user_op(user_arg) != 0)
+	else if (search_channel_by_name(server.getChannelList(), channel_arg)->is_user_op(user.get_nickname()) != 0)
 	{
 		sendMessage(ERR_CHANOPRIVSNEEDED(user.get_nickname(), channel_arg).c_str(), user);
 		return ;
 	}
 	search_channel_by_name(server.getChannelList(), channel_arg)->kick_user_from_channel(search_channel_by_name(server.getChannelList(), channel_arg)->get_chan_user_list(), user_arg);
 	search_channel_by_name(server.getChannelList(), channel_arg)->kick_user_from_channel(search_channel_by_name(server.getChannelList(), channel_arg)->get_chan_op_list(), user_arg);
+	if (msg_arg == "")
+		sendMessage(RPL_KICK(user_arg, channel_arg).c_str(), user);
+	else
+		sendMessage(RPL_KICK_REASON(user_arg, channel_arg, msg_arg).c_str(), user);
 
 	std::cout << "NEED TO ADD MESSAGE, DIDNT HAVE TIME LAST TIME SORRY" << args << "\n" << std::endl;
 
