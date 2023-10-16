@@ -1,25 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   squit.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/09 17:16:22 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/16 15:03:10 by tlarraze         ###   ########.fr       */
+/*   Created: 2023/10/16 15:15:31 by tlarraze          #+#    #+#             */
+/*   Updated: 2023/10/16 15:16:48 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/irc.hpp"
+#include "../../includes/irc.hpp"
 
-int main(int argc, char **argv) {
-	Server	server;	
-
-	if (argc != 2) {
-		std::cout << "Port number expected" << std::endl;
-		exit(1);
-	}
-	server.initServer(argv[1]);
-	server.listenLoop();
-	return (0);
+void	squit(std::string args, Server &server, User &currentUser) {
+	(void)args;
+	(void)server;
+	(void)currentUser;
 }

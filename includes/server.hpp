@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 10:25:28 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/13 17:33:01 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/16 15:21:00 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ class	Server
 		Server(const Server &copy);
 		Server &operator=(const Server &copy);
 		
+		int						_quit;
 		int						_listener;
 		int						_fdMax;
 		fd_set					_master;
