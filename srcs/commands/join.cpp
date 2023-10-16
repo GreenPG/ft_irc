@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 16:29:04 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/16 09:25:58 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/16 11:08:46 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,9 @@ void	join(std::string args, Server &server, User &user)
 		search_channel_by_name(list, args)->add_user_as_operator(user);
 	}
 	currentChannel->send_message_to_channel(RPL_JOIN(user.get_nickname(), args), &server);
+	if (currentChannel->get_topic().empty() == false)
+		sendMessage(RPL_TOPIC(user.get_nickname(), currentChannel->get_channel_name(), currentChannel->get_topic()).c_str(), user);
+	//send RPL_NAREPLY
 }
 
 int search_if_exist(std::string args, std::vector<Channel *> *list)
@@ -59,15 +62,13 @@ int search_if_exist(std::string args, std::vector<Channel *> *list)
 Channel *search_channel_by_name(std::vector<Channel *> *channel_list, std::string name)
 {
 	std::size_t i;
-	std::vector<Channel *>::iterator it;
-
+	std::vector<Channel *> channelList = *channel_list;
 	i = 0;
-	it = channel_list->begin();
-	while (i < channel_list->size())
+	while (i < channelList.size())
 	{
-		if (it[i]->get_channel_name() == name)
-			return (it[i]);
+		if (channelList[i]->get_channel_name() == name)
+			return (channelList[i]);
 		i++;
 	}
-	return (it[i]);
+	return (NULL);
 	}

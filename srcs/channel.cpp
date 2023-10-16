@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:30:55 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/13 17:41:14 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/16 10:59:44 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 
 Channel::Channel()
 {
+	_channel_name = "";
+	_password = "";
+	_topic = "";
 	return ;
 }
 
@@ -132,23 +135,32 @@ void Channel::set_password(std::string s)
 	_password = s;
 }
 
-std::string Channel::get_channel_name()
+void Channel::set_topic(std::string s)
+{
+	_topic = s;
+}
+
+std::string &Channel::get_channel_name()
 {
 	return (_channel_name);
 }
 
-std::string Channel::get_password()
+std::string &Channel::get_password()
 {
 	return (_password);
 }
 
-std::vector<User>	Channel::get_chan_user_list()
+std::string	&Channel::get_topic()
+{
+	return (_topic);
+}
+std::vector<User>	&Channel::get_chan_user_list()
 {
 	return (_user_list);
 }
 
 
-std::vector<User>	Channel::get_chan_op_list()
+std::vector<User>	&Channel::get_chan_op_list()
 {
 	return (_operator_list);
 }
