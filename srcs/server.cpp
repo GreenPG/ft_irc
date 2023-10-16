@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 10:49:17 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/13 17:32:12 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/16 17:08:37 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ Server::Server(): _listener(-1), _fdMax(-1) {
 	FD_ZERO(&this->_master);
 	FD_ZERO(&this->_readFds);
 	_password = "1";
+	_quit = 0;
 }
 
 Server::~Server() {
@@ -86,7 +87,7 @@ void					Server::initServer(const char *portNb) {
 }
 
 void	Server::listenLoop() {
-	while(1) {
+	while(getQuit() == 0) {
 		this->_readFds = this->_master;
 		if (select(this->_fdMax + 1, &this->_readFds, NULL, NULL, NULL) == -1) {
 			perror("Select:");
@@ -192,4 +193,14 @@ std::string	&Server::getPassword()
 void	Server::setPassword(std::string Pass)
 {
 	_password = Pass;
+}
+
+void	Server::setQuit()
+{
+	_quit = 1;
+}
+
+int	Server::getQuit()
+{
+	return (_quit);
 }

@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 10:25:28 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/16 15:21:00 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/16 17:07:33 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ class	Server
 		Server();
 		~Server();		
 
+		int						getQuit();
 		int						&getListener();
 		int						&getFdMax();
 		fd_set					&getMaster();
@@ -51,6 +52,7 @@ class	Server
 		std::vector<User>		*getUserList();
 		std::vector<Channel *>	*getChannelList();
 
+		void					setQuit();
 		void					setPassword(std::string Pass);
 		void					initServer(const char *portNb);
 		void					listenLoop();

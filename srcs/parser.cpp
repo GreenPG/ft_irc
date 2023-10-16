@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 13:33:01 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/16 15:18:37 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/16 17:02:21 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ void	parser(const std::string &input, Server &server, User &currentUser) {
 	unsigned int				j; 
 	int							spaceIdx;
 
-	const std::string			cmdArr[] = {"CAP", "PASS", "NICK", "USER", "PRIVMSG", "JOIN", "MODE", "INVITE", "SQUIT", "TOPIC", "KICK"};
+	const std::string			cmdArr[] = {"CAP", "PASS", "NICK", "USER", "PRIVMSG", "JOIN", "MODE", "INVITE", "TOPIC", "KICK", "SQUIT"};
 	std::vector<std::string> 	cmdsVec(cmdArr, cmdArr + sizeof(cmdArr) / sizeof(cmdArr[0]));
-	cmdFunctions				cmds[] = {&cap, &pass, &nick, &user_command, &privmsg, &join, &mode, &invite, &topic, &squit, &kick};
+	cmdFunctions				cmds[] = {&cap, &pass, &nick, &user_command, &privmsg, &join, &mode, &invite, &topic, &kick, &squit};
 
 	cmdList = splitInput(input);
 	for (unsigned int i = 0; i < cmdList.size(); i++) {
