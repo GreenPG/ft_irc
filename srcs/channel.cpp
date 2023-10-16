@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:30:55 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/16 10:59:44 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/16 16:20:51 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ Channel::Channel()
 	_channel_name = "";
 	_password = "";
 	_topic = "";
+	_invite_only = false;
 	return ;
 }
 
@@ -51,6 +52,14 @@ void	Channel::add_user_as_operator(User &user)
 		i++;
 	}
 	_operator_list.insert(_operator_list.end(), user);
+}
+
+void	Channel::add_user_as_invited(User &user) {
+	for(size_t i = 0; i < _invite_list.size(); i++) {
+		if (_invite_list[i].get_nickname() == user.get_nickname())
+			return ;
+	}
+	_invite_list.push_back(user);
 }
 
 void	Channel::kick_user_from_channel(std::vector<User> list, std::string user)
@@ -112,6 +121,14 @@ int	Channel::is_user_in_channel(std::string name)
 	return (1);
 }
 
+int	Channel::is_user_invited(std::string nick) {
+	for (size_t i = 0; i < _invite_list.size(); i++) {
+		if (_invite_list[i].get_nickname() == nick)
+			return (0);
+	}
+	return (1);
+}
+
 int		Channel::send_message_to_channel(std::string msg, Server *server)
 {
 	std::size_t	i;
@@ -140,6 +157,10 @@ void Channel::set_topic(std::string s)
 	_topic = s;
 }
 
+void Channel::set_invite_only(bool b) {
+	_invite_only = b;
+}
+
 std::string &Channel::get_channel_name()
 {
 	return (_channel_name);
@@ -159,8 +180,11 @@ std::vector<User>	&Channel::get_chan_user_list()
 	return (_user_list);
 }
 
-
 std::vector<User>	&Channel::get_chan_op_list()
 {
 	return (_operator_list);
+}
+
+bool				&Channel::get_invite_only() {
+	return (_invite_only);
 }

@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 13:43:58 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/16 15:23:00 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/16 16:24:52 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 # define REPLIES_HPP
 
 
-#define	RPL_PRIVMSG(sender, target, msg) (":" + sender + " PRIVMSG " + target + " " + msg + "\r\n")
-#define	RPL_JOIN(joiner, channel) (":" + joiner + " JOIN " + channel + "\r\n")
-#define	RPL_KICK(kicked, channel) (":Command to kick " + kicked + " from " + channel + "\r\n")
-#define	RPL_KICK_REASON(kicked, channel, reason) (":Command to kick " + kicked + " from " + channel + " reason \"" + reason + "\"" + "\r\n")
+# define RPL_PRIVMSG(sender, target, msg) (":" + sender + " PRIVMSG " + target + " " + msg + "\r\n")
+# define RPL_JOIN(joiner, channel) (":" + joiner + " JOIN " + channel + "\r\n")
+# define RPL_KICK(kicked, channel) (":Command to kick " + kicked + " from " + channel + "\r\n")
+# define RPL_KICK_REASON(kicked, channel, reason) (":Command to kick " + kicked + " from " + channel + " reason \"" + reason + "\"" + "\r\n")
+# define INVITE(nick, invited, channel)	(":nick INVITE " + invited + " " + channel + "\r\n")	
 
 //////////////////////////////RPL MESSAGES///////////////////////////////////////////////////
 # define RPL_WELCOME(nick, user) (": 001 " + nick +  " :Welcome to the ircserv Network, " + nick + "!" + user + "\r\n")
@@ -44,13 +45,13 @@
 # define ERR_NICKNAMEINUSE(oldNick, newNick) (": 433 " + oldNick + " " + newNick + " :Nickname is already in use" + "\r\n")
 # define ERR_USERNOTINCHANNEL(nick, target, channel) (": 441 " + nick + " " + target + " " + channel + " :They aren't on that channel"  + "\r\n")
 # define ERR_NOTONCHANNEL(nick, channel) (": 442 " + nick + " " + channel + " :You're not ont that channel" + "\r\n")
-# define ERR_USERONCHANNEL(nick, invited, channel) (": 443 " + nick + " " + invited + " " + channel + " :is already + "\r\n" on channel")
+# define ERR_USERONCHANNEL(nick, invited, channel) (": 443 " + nick + " " + invited + " " + channel + " :is already  on channel\r\n")
 # define ERR_CHANOPRIVSNEEDED(nick, channel) (": 482 " + nick + " " + channel + " :You're not channel operator" + "\r\n")
 # define ERR_NEEDMOREPARAMS(nick, cmd) (": 461 " + nick + " " + cmd + " : Not enough parameters" + "\r\n")
 # define ERR_ALREADYREGISTERED(nick) (": 462 " + nick + " : You may not be reregister" + "\r\n")
 # define ERR_PASSWDMISMATCH(nick) (": 464 " + nick + "Password incorrect" + "\r\n")
 # define ERR_CHANNELISFULL(nick, channel) (": 471 " + nick + " " + channel + " :Cannot join channel (+l)" + "\r\n")
-# define ERR_INVITEONLYCHAN(nick, channel) (": 473 " + nick + " " + channel " :Cannot join channel (+i)" + "\r\n")
+# define ERR_INVITEONLYCHAN(nick, channel) (": 473 " + nick + " " + channel + " :Cannot join channel (+i)" + "\r\n")
 
 
 #endif
