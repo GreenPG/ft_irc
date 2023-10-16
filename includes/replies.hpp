@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 13:43:58 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/13 17:42:50 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/16 09:21:21 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define REPLIES_HPP
 
 
-#define	RPL_PRIVMSG(sender, target, msg) (":" + sender + " PRIVMSG " + target + " :" + msg + "\r\n")
+#define	RPL_PRIVMSG(sender, target, msg) (":" + sender + " PRIVMSG " + target + " " + msg + "\r\n")
 #define	RPL_JOIN(joiner, channel) (":" + joiner + " JOIN " + channel + "\r\n")
 
 //////////////////////////////RPL MESSAGES///////////////////////////////////////////////////
