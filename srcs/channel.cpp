@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:30:55 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/16 16:20:51 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/16 17:10:05 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,14 @@ int	Channel::is_user_invited(std::string nick) {
 	return (1);
 }
 
+int		Channel::is_mode_active(modes_t mode)  {
+	for (size_t i = 0; i < _modes.size(); i++) {
+		if (_modes[i] == mode)
+			return (0);
+	}
+	return (1);
+}
+
 int		Channel::send_message_to_channel(std::string msg, Server *server)
 {
 	std::size_t	i;
@@ -161,6 +169,25 @@ void Channel::set_invite_only(bool b) {
 	_invite_only = b;
 }
 
+void				Channel::add_mode(modes_t newMode) {
+	for (size_t i = 0; i < _modes.size(); i++) {
+		if (_modes[i] == newMode)
+			return ;
+	}
+	_modes.push_back(newMode);
+}
+
+void				Channel::delete_mode(modes_t mode) {
+	std::vector<modes_t>::iterator	it = _modes.begin();
+
+	while (it != _modes.end()) {
+		if (*it == mode) {
+			_modes.erase(it);
+			return ;
+		}
+	}
+}
+
 std::string &Channel::get_channel_name()
 {
 	return (_channel_name);
@@ -187,4 +214,26 @@ std::vector<User>	&Channel::get_chan_op_list()
 
 bool				&Channel::get_invite_only() {
 	return (_invite_only);
+}
+
+std::string			Channel::get_mode_list() {
+	std::string modeList = "+";
+
+	for (size_t i = 0; i < _modes.size(); i++) {
+		switch (_modes[i]) {
+			case INVITE:
+				modeList.append("i");
+				break;
+			case TOPIC:
+				modeList.append("t");
+				break;
+			case KEY:
+				modeList.append("k");
+				break;
+			case LIMIT:
+				modeList.append("l");
+				break;
+		}
+	}
+	return (modeList);
 }

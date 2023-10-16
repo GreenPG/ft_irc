@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 13:43:58 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/16 16:24:52 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/16 16:43:20 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 
 //////////////////////////////RPL MESSAGES///////////////////////////////////////////////////
 # define RPL_WELCOME(nick, user) (": 001 " + nick +  " :Welcome to the ircserv Network, " + nick + "!" + user + "\r\n")
+# define RPL_CHANNELMODEIS(nick, channel, modes, args) (" 324 " + nick + " " + channel + " " + modes + " " + args + "\r\n")
 # define RPL_NOTOPIC(nick, channel) (": 331 " + nick + " " + channel + " :No topic is set" + "\r\n")
 # define RPL_TOPIC(nick, channel, topic) (": 332 " + nick + " " + channel + " " + topic + "\r\n")
 # define RPL_INVITING(nick, invited, channel) (": 341 " + nick + " " + invited + " " + channel + "\r\n")
@@ -52,6 +53,6 @@
 # define ERR_PASSWDMISMATCH(nick) (": 464 " + nick + "Password incorrect" + "\r\n")
 # define ERR_CHANNELISFULL(nick, channel) (": 471 " + nick + " " + channel + " :Cannot join channel (+l)" + "\r\n")
 # define ERR_INVITEONLYCHAN(nick, channel) (": 473 " + nick + " " + channel + " :Cannot join channel (+i)" + "\r\n")
-
+# define ERR_UMODEUNKNOWNFLAG(nick, flag) (" 501 " + nick + " :Unknown MODE flag :" + flag + "\r\n")
 
 #endif

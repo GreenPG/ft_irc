@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:27:50 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/16 16:20:44 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/16 16:56:04 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 #include "../includes/irc.hpp"
 class	Server;
 class	User;
+
+enum modes_t {INVITE, TOPIC, KEY, LIMIT};	
 
 class Channel
 {
@@ -31,6 +33,7 @@ class Channel
 	int					is_user_op(std::string name);
 	int					is_user_in_channel(std::string name);
 	int					is_user_invited(std::string nick);
+	int					is_mode_active(modes_t mode);
 
 	void				print_every_user();
 	int					send_message_to_channel(std::string msg, Server *server);
@@ -41,20 +44,24 @@ class Channel
 	std::vector<User>	&get_chan_user_list();
 	std::vector<User>	&get_chan_op_list();
 	bool				&get_invite_only();
+	std::string			get_mode_list();
 
 	void				set_channel_name(std::string s);
 	void				set_password(std::string s);
 	void				set_topic(std::string s);
 	void				set_invite_only(bool b);
+	void				add_mode(modes_t newMode);
+	void				delete_mode(modes_t newMode);
 
 	private :
-    std::vector<User>	_user_list;
-    std::vector<User>	_operator_list;
-	std::vector<User>	_invite_list;
-	std::string			_channel_name;
-	std::string			_password;
-	std::string			_topic;
-	bool				_invite_only;
+    std::vector<User>		_user_list;
+    std::vector<User>		_operator_list;
+	std::vector<User>		_invite_list;
+	std::string				_channel_name;
+	std::string				_password;
+	std::string				_topic;
+	bool					_invite_only;
+	std::vector<modes_t>	_modes;
 
 };
 
