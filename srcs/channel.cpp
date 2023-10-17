@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:30:55 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/17 15:38:26 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/17 16:59:59 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,21 @@ void	Channel::add_user_as_invited(User &user) {
 			return ;
 	}
 	_invite_list.push_back(user);
+}
+
+void	Channel::del_user_as_operator(std::string nick) {
+	std::vector<User>::iterator it = _operator_list.begin();
+
+	while (it != _operator_list.end()) {
+		if (it->get_nickname() == nick) {
+			_operator_list.erase(it);
+			return ;
+		}
+	}
+}
+
+void	Channel::del_invite_list(void) {
+	_invite_list.clear();
 }
 
 void	Channel::kick_user_from_channel(std::vector<User> &list, std::string user)
