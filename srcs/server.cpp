@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 10:49:17 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/17 13:54:50 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/17 17:32:39 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,12 +146,40 @@ int	Server::newConnection() {
 }
 
 void	Server::receiveError(const int &nbytes, int &socketFd) {
+
+
 	if (nbytes == 0)
 		printf("selectserver: socket %d hung up\n", socketFd);
 	else 
 		perror("recv:");
 	close(socketFd);
 	FD_CLR(socketFd, &this->_master);
+	if (get_user_pos(&_userList, search_user_by_socket(_userList, socketFd)) != -1)
+		_userList.erase(_userList.begin() + get_user_pos(&_userList, search_user_by_socket(_userList, socketFd)));
+
+	///////////need to also remove him from every channel he is
+	///////////and kick + deop him of every
+}
+
+int		get_user_pos(std::vector<User> *user_list, User *user)
+{
+	size_t					i;
+	std::vector<User>::iterator		list;
+
+	list = user_list->begin();
+
+	i = 0;
+	while (list != user_list->end())
+	{
+		if (user->get_nickname() == list[0].get_nickname())
+			return (i);
+		list++;
+		i++;
+	}
+	if (user->get_nickname() == list[0].get_nickname())
+		return (i);
+	std::cout << "DIDNT QWORDK\n" << std::endl;
+	return (-1);
 }
 
 void	Server::receiveData(int &socketFd) {
