@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 16:29:04 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/17 14:05:29 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/17 18:11:02 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,32 +30,61 @@ void	join(std::string args, Server &server, User &user)
 {
 	std::vector<Channel *>	*list = server.getChannelList();
 	Channel 				*currentChannel;
-	std::string				prefix;
 	std::string				userList;
+	std::string				channelName;
+	std::string				key;
+	unsigned long			idx;
 
+	idx = args.find(" ", 0);
+	if (idx == std::string::npos) {
+		channelName = args;
+		key = "";
+	}
+	else {
+		channelName = args.substr(0, idx);
+		idx = args.find_first_not_of(" ", idx);
+		if (idx == std::string::npos)
+			key = "";
+		else
+			key = args.substr(idx, args.size() - idx);
+	}
 	if (args == "" || args[0] != '#')
 	{
 		sendMessage(ERR_BADCHANMASK(user.get_nickname(), args).c_str(), user);
 		return ;
 	}
-	if (search_if_exist(args, list) == 0) {
-		currentChannel = search_channel_by_name(list, args);
+	if (search_if_exist(channelName, list) == 0) {
+		currentChannel = search_channel_by_name(list, channelName);
 		if (currentChannel->is_mode_active(INVITE) == true && currentChannel->is_user_invited(user.get_nickname()) == 1) {
 			sendMessage(ERR_INVITEONLYCHAN(user.get_nickname(), args).c_str(), user);
 			return;
+		}
+		if (currentChannel->is_mode_active(KEY)) {
+			if (key.empty()) {
+				sendMessage(ERR_NEEDMOREPARAMS(user.get_nickname(), "JOIN").c_str(), user);
+				return ;
+			}
+			if (key != currentChannel->get_password()) {
+				sendMessage(ERR_BADCHANNELKEY(user.get_nickname(), currentChannel->get_channel_name()).c_str(), user);
+				return ;
+			}
+		}
+		if (currentChannel->is_mode_active(LIMIT) && currentChannel->get_user_nb() == currentChannel->get_limit()) {
+			sendMessage(ERR_CHANNELISFULL(user.get_nickname(), currentChannel->get_channel_name()).c_str(), user);
+			return ;
 		}
 		currentChannel->add_user_to_channel(user);
 	}
 	else
 	{
 		currentChannel = new Channel();
-		currentChannel->set_channel_name(args);
+		currentChannel->set_channel_name(channelName);
 		currentChannel->add_user_to_channel(user);
 		currentChannel->add_user_as_operator(user);
 		list->insert(list->end(), currentChannel);
 		std::cout << search_if_exist(args, list) << std::endl;
 	}
-	currentChannel->send_message_to_channel(RPL_JOIN(user.get_nickname(), args));
+	currentChannel->send_message_to_channel(RPL_JOIN(user.get_nickname(), channelName));
 	if (currentChannel->get_topic().empty() == false)
 		sendMessage(RPL_TOPIC(user.get_nickname(), currentChannel->get_channel_name(), currentChannel->get_topic()).c_str(), user);
 	userList = createUserList(currentChannel);

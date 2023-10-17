@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:30:55 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/17 17:07:32 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/17 17:56:43 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -266,4 +266,8 @@ std::string			Channel::get_mode_list() {
 
 int					Channel::get_limit() {
 	return (_limit);
+}
+
+int					Channel::get_user_nb() {
+	return (_user_list.size());
 }

@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:27:50 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/17 17:07:42 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/17 17:56:00 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ class Channel
 		bool				&get_invite_only();
 		std::string			get_mode_list();
 		int					get_limit();
+		int					get_user_nb();
 
 		void				set_channel_name(std::string s);
 		void				set_password(std::string s);
