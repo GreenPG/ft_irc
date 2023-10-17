@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 13:43:58 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/17 14:16:25 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/17 17:20:34 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@
 # define ERR_BADCHANNELKEY(nick, channel) (": 405 " + nick + " " + channel + " :Cannot join channel (+k)" + "\r\n")
 # define ERR_NORECIPIENT(nick, cmd) (": 411 " + nick + " :No recipient given (" + cmd + ")"  + "\r\n")
 # define ERR_NOTEXTTOSEND(nick) (": 412 " + nick + " :No text to send" + "\r\n")
+# define ERR_UNKNOWNCOMMAND(nick, cmd) (" 421 " + nick + " " + cmd + " :Unknown command\r\n")
 # define ERR_NONICKNAMEGIVEN(nick) (": 431 " + nick + " :No nickname given" + "\r\n")
 # define ERR_ERRONEUSNICKNAME(oldNick, newNick) (": 432 " + oldNick + " " + newNick + " :Erroneus nickname" + "\r\n")
 # define ERR_NICKNAMEINUSE(oldNick, newNick) (": 433 " + oldNick + " " + newNick + " :Nickname is already in use" + "\r\n")

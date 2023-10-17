@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 13:33:01 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/16 17:02:21 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/17 17:19:37 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,6 @@ void	parser(const std::string &input, Server &server, User &currentUser) {
 			}
 		}
 		if (j == cmdsVec.size() && currentUser.get_password_check() == 0)
-			std::cout << "Unknown command" << std::endl;
+			sendMessage(ERR_UNKNOWNCOMMAND(currentUser.get_nickname(), cmd).c_str(), currentUser);
 	}
 }
