@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:30:55 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/16 17:11:33 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/17 11:19:58 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ Channel::Channel()
 	_channel_name = "";
 	_password = "";
 	_topic = "";
-	_invite_only = false;
 	return ;
 }
 
@@ -129,22 +128,22 @@ int	Channel::is_user_invited(std::string nick) {
 	return (1);
 }
 
-int		Channel::is_mode_active(modes_t mode)  {
+bool	Channel::is_mode_active(modes_t mode)  {
 	for (size_t i = 0; i < _modes.size(); i++) {
 		if (_modes[i] == mode)
-			return (0);
+			return (true);
 	}
-	return (1);
+	return (false);
 }
 
-int		Channel::send_message_to_channel(std::string msg, Server *server)
+int		Channel::send_message_to_channel(std::string msg)
 {
 	std::size_t	i;
 
 	i = 0;
-	while (i < _user_list.size() && search_user_by_nickname(server->getUserList(), _user_list[i].get_nickname()) != NULL)
+	while (i < _user_list.size())
 	{
-		sendMessage(msg.c_str(), *search_user_by_nickname(server->getUserList(), _user_list[i].get_nickname()));
+		sendMessage(msg.c_str(), _user_list[i]);
 		i++;
 	}
 	return (0);
@@ -178,10 +177,6 @@ void Channel::set_password(std::string s)
 void Channel::set_topic(std::string s)
 {
 	_topic = s;
-}
-
-void Channel::set_invite_only(bool b) {
-	_invite_only = b;
 }
 
 void				Channel::add_mode(modes_t newMode) {
@@ -227,12 +222,8 @@ std::vector<User>	&Channel::get_chan_op_list()
 	return (_operator_list);
 }
 
-bool				&Channel::get_invite_only() {
-	return (_invite_only);
-}
-
 std::string			Channel::get_mode_list() {
-	std::string modeList = "+";
+	std::string modeList;
 
 	for (size_t i = 0; i < _modes.size(); i++) {
 		switch (_modes[i]) {

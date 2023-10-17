@@ -6,13 +6,13 @@
 #    By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/10 16:47:27 by tlarraze          #+#    #+#              #
-#    Updated: 2023/10/16 15:18:11 by tlarraze         ###   ########.fr        #
+#    Updated: 2023/10/17 10:09:04 by gpasquet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	ircserv	
 
-CPPFLAGS	=	-Wall -Werror -Wextra -std=c++98 -g -fno-limit-debug-info
+CPPFLAGS	=	-Wall -Werror -Wextra -std=c++98 -g# -fno-limit-debug-info
 
 DIR_OBJ		=	obj
 

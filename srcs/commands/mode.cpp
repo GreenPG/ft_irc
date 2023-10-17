@@ -6,22 +6,92 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 10:06:16 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/16 17:46:32 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/17 13:27:47 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/irc.hpp"
 
 static void	sendModeList(std::string channelName, Server &server, User &user) {
-	Channel	*channel;
+	Channel		*channel;
+	std::string channelMode;
 
 	if (search_if_exist(channelName, server.getChannelList()) == 1) {
 		sendMessage(ERR_NOSUCHCHANNEL(user.get_nickname(), channelName).c_str(), user);
 		return ;
 	}
 	channel = search_channel_by_name(server.getChannelList(), channelName);
-	sendMessage(RPL_CHANNELMODEIS(user.get_nickname(), channelName, channel->get_mode_list(), "").c_str(), user);
+	channelMode = channel->get_mode_list();
+	if (channelMode.empty() == false)
+		channelMode.insert(0, "");
+	sendMessage(RPL_CHANNELMODEIS(user.get_nickname(), channelName, channelMode, "").c_str(), user);
 }
+
+static int	addOp(std::string nick, Server &server, Channel *channel, User &user) {
+	if (channel->is_user_in_channel(nick)) { 
+		sendMessage(ERR_USERNOTINCHANNEL(user.get_nickname(), nick, channel->get_channel_name()).c_str(), user);
+		return 0;
+	}
+	if (channel->is_user_op(nick))
+		channel->add_user_as_operator(*search_user_by_nickname(server.getUserList(), nick));
+	return (1);
+}
+/*
+static void	addKey() {
+
+}
+
+static void	addLimit() {
+
+}
+*/
+static void	addMode(std::string modeStr, std::string modeArgs, Server &server, Channel *channel, User &user) {
+	std::string		modeRpl = "+";
+	std::string		argsRpl;
+	std::string		unknownFlags;
+	std::string		currentArg;
+	unsigned long	commaIdx = 0;
+
+	if (modeArgs.empty() == false) {
+		commaIdx = modeArgs.find(",", 0);
+		currentArg = modeArgs.substr(0, commaIdx - 1);
+		commaIdx = modeArgs.find(",", commaIdx + 1);
+	}
+	else 
+		currentArg = "";
+	for (size_t i = 0; i < modeStr.size(); i++) {
+		
+		if (modeStr[i] == 'i') {
+			channel->add_mode(INVITE);
+			modeRpl.append("i");
+		}	
+		else if (modeStr[i] == 't') {
+			channel->add_mode(TOPIC);
+			modeRpl.append("t");
+		}	
+		else if (modeStr[i] == 'k') {
+			channel->add_mode(KEY);
+			modeRpl.append("k");
+		}	
+		else if (modeStr[i] == 'l') {
+			channel->add_mode(LIMIT);
+			modeRpl.append("l");
+		}
+		else if (modeStr[i] == 'o') {
+			if (addOp(currentArg, server, channel ,user)) 
+				modeRpl.append("o");
+		}	
+		else
+			unknownFlags.append(modeStr.substr(i, 1));
+	}
+	channel->send_message_to_channel(MODE(user.get_nickname(), channel->get_channel_name(), modeRpl, argsRpl).c_str());
+	if (unknownFlags.empty() == false)
+		sendMessage(ERR_UMODEUNKNOWNFLAG(user.get_nickname(), unknownFlags).c_str(), user);
+}
+/*
+static void	delMode(std::string modeStr, std::string modeArgs, Channel *channel, User &user) {
+
+}*/
 
 static void	changeMode(std::string args, std::string channelName, Server &server, User &user) {
 	Channel			*channel;
@@ -34,7 +104,33 @@ static void	changeMode(std::string args, std::string channelName, Server &server
 		return ;
 	}
 	channel = search_channel_by_name(server.getChannelList(), channelName);
-		
+	if (channel->is_user_in_channel(user.get_nickname()) == 1) {
+		sendMessage(ERR_NOTONCHANNEL(user.get_nickname(), channelName).c_str(), user);
+		return ;
+	}
+	if (channel->is_user_op(user.get_nickname()) == 1) {
+		sendMessage(ERR_CHANOPRIVSNEEDED(user.get_nickname(), channelName).c_str(), user);
+		return ;
+	}
+	idx = args.find(" ", 0);
+	if (idx == std::string::npos) {
+		modeStr = args;
+		modeArgsStr = "";
+	}
+	else {
+		modeStr = args.substr(0, idx);
+		idx = args.find_first_not_of(" ", idx);
+		if (idx == std::string::npos)
+			modeArgsStr = "";
+		else 
+			modeArgsStr = args.substr(idx, args.size() - idx);
+	}
+	if (modeStr[0] == '+')
+		addMode(modeStr.substr(1), modeArgsStr, server, channel, user);
+	// else if (modeStr[0] == '-'){
+		// delMode(modeStr.substr(1), modeArgsStr, channel, user);
+	else 
+		sendMessage(ERR_NEEDMOREPARAMS(user.get_nickname(), "MODE").c_str(), user);
 }
 
 void	mode(std::string args, Server &server, User &currentUser) {
@@ -53,6 +149,7 @@ void	mode(std::string args, Server &server, User &currentUser) {
 		idx = args.find_first_not_of(" ", idx);
 		if (idx == std::string::npos)
 			sendModeList(channelName, server, currentUser);
-		changeMode(args.substr(idx, args.size() - idx), channelName, server, currentUser);
+		else 
+			changeMode(args.substr(idx, args.size() - idx), channelName, server, currentUser);
 	}
 }

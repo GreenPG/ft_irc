@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 10:00:54 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/16 16:14:31 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/17 11:15:36 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	invite(std::string args, Server &server, User &currentUser) {
 		sendMessage(ERR_USERONCHANNEL(currentUser.get_nickname(), nick, channelName).c_str(), currentUser);
 		return ;
 	}
-	if (channel->get_invite_only() == true) {
+	if (channel->is_mode_active(INVITE) == true) {
 		if (channel->is_user_op(currentUser.get_nickname())) {
 			sendMessage(ERR_CHANOPRIVSNEEDED(currentUser.get_nickname(), channelName).c_str(), currentUser);
 			return ;

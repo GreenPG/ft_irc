@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:27:50 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/16 17:30:40 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/17 11:19:54 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ class Channel
 	int					is_user_op(std::string name);
 	int					is_user_in_channel(std::string name);
 	int					is_user_invited(std::string nick);
-	int					is_mode_active(modes_t mode);
+	bool				is_mode_active(modes_t mode);
 
 	void				print_every_user();
-	int					send_message_to_channel(std::string msg, Server *server);
+	int					send_message_to_channel(std::string msg);
 
 	std::string			&get_channel_name();
 	std::string			&get_password();
@@ -60,7 +60,6 @@ class Channel
 	std::string				_channel_name;
 	std::string				_password;
 	std::string				_topic;
-	bool					_invite_only;
 	std::vector<modes_t>	_modes;
 
 };

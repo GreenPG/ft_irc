@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 13:43:58 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/16 16:43:20 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/17 11:23:05 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,12 @@
 # define RPL_JOIN(joiner, channel) (":" + joiner + " JOIN " + channel + "\r\n")
 # define RPL_KICK(kicked, channel) (":Command to kick " + kicked + " from " + channel + "\r\n")
 # define RPL_KICK_REASON(kicked, channel, reason) (":Command to kick " + kicked + " from " + channel + " reason \"" + reason + "\"" + "\r\n")
+# define MODE(nick, channel, modes, args) (":" + nick + " MODE " + modes + " " + args + "\r\n")
 # define INVITE(nick, invited, channel)	(":nick INVITE " + invited + " " + channel + "\r\n")	
 
 //////////////////////////////RPL MESSAGES///////////////////////////////////////////////////
 # define RPL_WELCOME(nick, user) (": 001 " + nick +  " :Welcome to the ircserv Network, " + nick + "!" + user + "\r\n")
-# define RPL_CHANNELMODEIS(nick, channel, modes, args) (" 324 " + nick + " " + channel + " " + modes + " " + args + "\r\n")
+# define RPL_CHANNELMODEIS(nick, channel, modes, args) (": 324 " + nick + " " + channel + " " + modes + " " + args + "\r\n")
 # define RPL_NOTOPIC(nick, channel) (": 331 " + nick + " " + channel + " :No topic is set" + "\r\n")
 # define RPL_TOPIC(nick, channel, topic) (": 332 " + nick + " " + channel + " " + topic + "\r\n")
 # define RPL_INVITING(nick, invited, channel) (": 341 " + nick + " " + invited + " " + channel + "\r\n")

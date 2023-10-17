@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 16:29:04 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/16 16:24:27 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/17 11:15:04 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,10 @@ static std::string	createUserList(Channel *channel) {
 
 void	join(std::string args, Server &server, User &user)
 {
-	int 					i;
 	std::vector<Channel *>	*list = server.getChannelList();
 	Channel 				*currentChannel;
 	std::string				prefix;
 	std::string				userList;
-
-	i = 0;
 
 	if (args == "" || args[0] != '#')
 	{
@@ -43,7 +40,7 @@ void	join(std::string args, Server &server, User &user)
 	}
 	if (search_if_exist(args, list) == 0) {
 		currentChannel = search_channel_by_name(list, args);
-		if (currentChannel->get_invite_only() == true && currentChannel->is_user_invited(user.get_nickname()) == 1) {
+		if (currentChannel->is_mode_active(INVITE) == true && currentChannel->is_user_invited(user.get_nickname()) == 1) {
 			sendMessage(ERR_INVITEONLYCHAN(user.get_nickname(), args).c_str(), user);
 			return;
 		}
@@ -57,7 +54,7 @@ void	join(std::string args, Server &server, User &user)
 		search_channel_by_name(list, args)->add_user_to_channel(user);
 		search_channel_by_name(list, args)->add_user_as_operator(user);
 	}
-	currentChannel->send_message_to_channel(RPL_JOIN(user.get_nickname(), args), &server);
+	currentChannel->send_message_to_channel(RPL_JOIN(user.get_nickname(), args));
 	if (currentChannel->get_topic().empty() == false)
 		sendMessage(RPL_TOPIC(user.get_nickname(), currentChannel->get_channel_name(), currentChannel->get_topic()).c_str(), user);
 	userList = createUserList(currentChannel);
