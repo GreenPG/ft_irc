@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 10:06:16 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/17 15:52:18 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/17 17:07:21 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,16 @@ static int	addOp(std::string nick, Server &server, Channel *channel, User &user)
 	}
 	if (channel->is_user_op(nick))
 		channel->add_user_as_operator(*search_user_by_nickname(server.getUserList(), nick));
+	return (1);
+}
+
+static int	delOp(std::string nick, Channel *channel, User &user) {
+	if (channel->is_user_in_channel(nick)) { 
+		sendMessage(ERR_USERNOTINCHANNEL(user.get_nickname(), nick, channel->get_channel_name()).c_str(), user);
+		return (0);
+	}
+	if (channel->is_user_op(nick) == 0)
+		channel->del_user_as_operator(nick);
 	return (1);
 }
 
@@ -93,7 +103,6 @@ static void	addMode(std::string modeStr, std::string modeArgs, Server &server, C
 	else
 		currentArg = "";
 	for (size_t i = 0; i < modeStr.size(); i++) {
-
 		if (modeStr[i] == 'i') {
 			channel->add_mode(INVITE);
 			modeRpl.append("i");
@@ -138,10 +147,58 @@ static void	addMode(std::string modeStr, std::string modeArgs, Server &server, C
 	if (unknownFlags.empty() == false)
 		sendMessage(ERR_UMODEUNKNOWNFLAG(user.get_nickname(), unknownFlags).c_str(), user);
 }
-/*
-   static void	delMode(std::string modeStr, std::string modeArgs, Channel *channel, User &user) {
 
-   }*/
+static void	delMode(std::string modeStr, std::string modeArgs, Channel *channel, User &user) {
+	std::string		modeRpl = "-";
+	std::string		argsRpl;
+	std::string		unknownFlags;
+	std::string		currentArg;
+	unsigned long	commaIdx = 0;
+	unsigned long	nextArgsIdx = std::string::npos;
+
+	if (modeArgs.empty() == false) {
+		commaIdx = modeArgs.find(",", 0);
+		currentArg = modeArgs.substr(0, commaIdx);
+		nextArgsIdx = modeArgs.find_first_not_of(",", commaIdx);
+	}
+	else 
+		currentArg = "";
+	for(size_t i = 0; i < modeStr.size(); i++) {
+		if (modeStr[i] == 'i') {
+			channel->delete_mode(INVITE);
+			channel->del_invite_list();
+			modeRpl.append("i");
+		}
+		else if (modeStr[i] == 't') {
+			channel->delete_mode(TOPIC);
+			modeRpl.append("t");
+		}
+		else if (modeStr[i] == 'k') {
+			channel->delete_mode(KEY);
+			channel->set_password("");
+			modeRpl.append("k");
+		}
+		else if (modeStr[i] == 'l') {
+			channel->delete_mode(LIMIT);
+			channel->set_limit(-1);
+			modeRpl.append("l");
+		}
+		else if (modeStr[i] == 'o') {
+			if (delOp(currentArg, channel, user)) {
+				modeRpl.append("o");
+				if (modeArgs.empty() == false)
+					modeArgs.append(" ");
+				argsRpl.append(currentArg);
+			}
+			getNextArg(&nextArgsIdx, &commaIdx, modeArgs, currentArg);
+		}
+		else 
+			unknownFlags.append(modeStr.substr(i, 1));
+	}
+	channel->send_message_to_channel(MODE(user.get_nickname(), channel->get_channel_name(), modeRpl, argsRpl).c_str());
+	if (unknownFlags.empty() == false)
+		sendMessage(ERR_UMODEUNKNOWNFLAG(user.get_nickname(), unknownFlags).c_str(), user);
+}
 
 static void	changeMode(std::string args, std::string channelName, Server &server, User &user) {
 	Channel			*channel;
@@ -177,8 +234,8 @@ static void	changeMode(std::string args, std::string channelName, Server &server
 	}
 	if (modeStr[0] == '+')
 		addMode(modeStr.substr(1), modeArgsStr, server, channel, user);
-	// else if (modeStr[0] == '-'){
-	// delMode(modeStr.substr(1), modeArgsStr, channel, user);
+	else if (modeStr[0] == '-')
+		delMode(modeStr.substr(1), modeArgsStr, channel, user);
 	else 
 		sendMessage(ERR_NEEDMOREPARAMS(user.get_nickname(), "MODE").c_str(), user);
 }
