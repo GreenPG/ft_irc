@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:27:50 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/17 11:19:54 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/17 14:52:56 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ class Channel
 						~Channel();
 
 	void				add_user_to_channel(User &user);
-	void				kick_user_from_channel(std::vector<User> list, std::string user);
+	void				kick_user_from_channel(std::vector<User> &list, std::string user);
 	void				add_user_as_operator(User &user);
 	void				add_user_as_invited(User &user);
 	void				del_invited_user(std::string nick);

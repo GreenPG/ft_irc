@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:30:55 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/17 13:29:26 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/17 14:53:00 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,24 +61,23 @@ void	Channel::add_user_as_invited(User &user) {
 	_invite_list.push_back(user);
 }
 
-void	Channel::kick_user_from_channel(std::vector<User> list, std::string user)
+void	Channel::kick_user_from_channel(std::vector<User> &list, std::string user)
 {
 	std::size_t					i;
-	std::vector<User>::iterator	it;
 
-	it = list.begin();
 	i = 0;
 	while (i < list.size())
 	{
+		std::cout << list[i].get_username() << "  " << user << std::endl;
 		if (list[i].get_username() == user)
 		{
-			list.erase(it);
+			list.erase(list.begin() + i);
 			return ;
 		}
-		it++;
 		i++;
 	}
-}
+	std::cout << "not kick" << std::endl;
+} 
 
 void	Channel::print_every_user()
 {

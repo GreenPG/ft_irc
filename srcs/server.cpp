@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 10:49:17 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/16 17:08:37 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/17 13:54:50 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,14 @@
 Server::Server(): _listener(-1), _fdMax(-1) {
 	FD_ZERO(&this->_master);
 	FD_ZERO(&this->_readFds);
+	_listener = -1;
 	_password = "1";
 	_quit = 0;
 }
 
 Server::~Server() {
-	close(this->_listener);
+	if (_listener != -1)
+		close(this->_listener);
 	FD_ZERO(&this->_master);
 	FD_ZERO(&this->_readFds);
 }	
