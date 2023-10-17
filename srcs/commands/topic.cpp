@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 10:06:51 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/16 13:17:01 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/17 16:13:21 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,20 @@ static void	changeTopic(Channel *channel, std::string newTopic) {
 		sendMessage(RPL_TOPIC(userList[i].get_nickname(), channel->get_channel_name(), channel->get_topic()).c_str(), userList[i]);
 }
 
+static int	check_Topic_mode(Channel *channel, User &user)
+{
+	if (channel->is_mode_active(TOPIC) == true && channel->is_user_op(user.get_nickname()) != 0)
+	{
+			sendMessage(ERR_CHANOPRIVSNEEDED(user.get_nickname(), channel->get_channel_name()).c_str(), user);
+			return (1);
+	}
+	return (0);
+}
+
 void	topic(std::string args, Server &server, User &user){
 	std::string	channelName;
 	size_t		idx;
+
 
 	if (args.empty() || args[0] != '#') {
 		sendMessage(ERR_NEEDMOREPARAMS(user.get_nickname(), "TOPIC").c_str(), user);
@@ -50,6 +61,8 @@ void	topic(std::string args, Server &server, User &user){
 		return ;
 	}
 	idx = args.find_first_not_of(" 	", idx);
+	if (check_Topic_mode(search_channel_by_name(server.getChannelList(), channelName), user) == 1)
+		return ;
 	if (idx == std::string::npos)
 		sendTopic(search_channel_by_name(server.getChannelList(), channelName), user);
 	else  {		

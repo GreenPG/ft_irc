@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:30:55 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/17 15:11:18 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/17 16:41:28 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ Channel::Channel()
 	_channel_name = "";
 	_password = "";
 	_topic = "";
+	_limit = -1;
 	return ;
 }
 
@@ -46,7 +47,7 @@ void	Channel::add_user_as_operator(User &user)
 	i = 0;
 	while (i < _operator_list.size())
 	{
-		if (_operator_list[i].get_username() == user.get_username())
+		if (_operator_list[i].get_nickname() == user.get_nickname())
 			return ;
 		i++;
 	}
@@ -68,13 +69,16 @@ void	Channel::kick_user_from_channel(std::vector<User> &list, std::string user)
 	i = 0;
 	while (i < list.size())
 	{
-		if (list[i].get_username() == user)
+		std::cout << list[i].get_nickname() << "  " << user << std::endl;
+		if (list[i].get_nickname() == user)
 		{
+			std::cout << "yep\n" << std::endl;
 			list.erase(list.begin() + i);
 			return ;
 		}
 		i++;
 	}
+
 }
 
 void	Channel::print_every_user()
@@ -176,6 +180,10 @@ void Channel::set_topic(std::string s)
 	_topic = s;
 }
 
+void				Channel::set_limit(int limit) {
+	_limit = limit;
+}
+
 void				Channel::add_mode(modes_t newMode) {
 	for (size_t i = 0; i < _modes.size(); i++) {
 		if (_modes[i] == newMode)
@@ -239,4 +247,8 @@ std::string			Channel::get_mode_list() {
 		}
 	}
 	return (modeList);
+}
+
+int					Channel::get_limit() {
+	return (_limit);
 }
