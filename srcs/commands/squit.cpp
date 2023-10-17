@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 15:15:31 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/16 17:06:40 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/17 13:53:36 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,16 @@ void	squit(std::string args, Server &server, User &currentUser) {
 	while (i < server.getUserList()->size())
 	{
 		sendMessage(":command to close the server\r\n", u_list[i]);
+		close(u_list[i].get_fd_socket());
 		i++;
 	}
-    while (channelList.size() != 0)
+	while (channelList.size() != 0)
 	{
-        delete channelList.back();
-        channelList.pop_back();
-    }
+		delete channelList.back();
+		channelList.pop_back();
+	}
 	server.setQuit();
 	(void)args;
-	(void)server;
 	(void)currentUser;
 }
 

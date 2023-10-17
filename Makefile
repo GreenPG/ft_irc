@@ -6,7 +6,7 @@
 #    By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/10 16:47:27 by tlarraze          #+#    #+#              #
-#    Updated: 2023/10/17 13:29:38 by gpasquet         ###   ########.fr        #
+#    Updated: 2023/10/17 13:36:59 by tlarraze         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,7 @@ SRCS		=	main.cpp \
 				commands/invite.cpp \
 				commands/topic.cpp \
 				commands/squit.cpp \
+				commands/utils.cpp \
 				commands/kick.cpp 
 
 SRCS		:= $(SRCS:%=srcs/%)

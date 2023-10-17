@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 17:16:49 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/17 15:17:24 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/17 15:39:00 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,8 +119,9 @@ void	squit(std::string args, Server &server, User &currentUser);
 
 typedef void	(*cmdFunctions)(std::string args, Server &server, User &currentUser);
 
-
+int			is_num(std::string s);
+int			check_args(int argc, char **argv);
 void		parser(const std::string &input, Server &server, User &currentUser);
 int			sendMessage(const char *message, User &receiver);
-int         get_chan_pos(std::vector<Channel *> *channel_list, Channel *chan);
+int			get_chan_pos(std::vector<Channel *> *channel_list, Channel *chan);
 #endif
