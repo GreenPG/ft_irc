@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:30:55 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/17 14:53:00 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/17 15:11:18 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ void	Channel::kick_user_from_channel(std::vector<User> &list, std::string user)
 	i = 0;
 	while (i < list.size())
 	{
-		std::cout << list[i].get_username() << "  " << user << std::endl;
 		if (list[i].get_username() == user)
 		{
 			list.erase(list.begin() + i);
@@ -76,8 +75,7 @@ void	Channel::kick_user_from_channel(std::vector<User> &list, std::string user)
 		}
 		i++;
 	}
-	std::cout << "not kick" << std::endl;
-} 
+}
 
 void	Channel::print_every_user()
 {

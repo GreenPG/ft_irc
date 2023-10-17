@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 10:03:43 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/17 14:33:18 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/17 15:11:40 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ void	kick(std::string args, Server &server, User &user) {
 	chan = search_channel_by_name(server.getChannelList(), channel_arg);
 	if (chan == NULL)
 	{
-		std::cout << "t" << channel_arg << "t" << std::endl;
 		sendMessage(ERR_NOSUCHCHANNEL(user.get_nickname(), channel_arg).c_str(), user);
 		return ;
 	}
@@ -61,8 +60,8 @@ void	kick(std::string args, Server &server, User &user) {
 	chan->kick_user_from_channel(chan->get_chan_op_list(), user_arg);
 	if (chan->get_chan_user_list().size() == 0 && get_chan_pos(server.getChannelList(), chan) != -1)
 	{
-		delete	chan;
 		server.getChannelList()->erase(server.getChannelList()->begin() + get_chan_pos(server.getChannelList(), chan));
+		delete	chan;
 	}
 	// std::cout << "NEED TO ADD MESSAGE, DIDNT HAVE TIME LAST TIME SORRY" << args << "\n" << std::endl;
 

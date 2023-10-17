@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 17:16:49 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/17 13:41:17 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/17 15:17:26 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@
 class Server;
 class User;
 class Channel;
-
 
 
 User		*search_user_by_socket(std::vector<User> &user_list, int fd);
@@ -113,13 +112,20 @@ void	topic(std::string args, Server &server, User &currentUser);
 void	squit(std::string args, Server &server, User &currentUser);
 
 ////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////UTILS.CPP FUNCTION///////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+int			is_num(std::string s);
+int			check_args(int argc, char **argv);
+
+
+////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////COMMAND POINTER TYPEDEF///////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
 typedef void	(*cmdFunctions)(std::string args, Server &server, User &currentUser);
 
-int			is_num(std::string s);
-int			check_args(int argc, char **argv);
+
 void		parser(const std::string &input, Server &server, User &currentUser);
 int			sendMessage(const char *message, User &receiver);
 int			get_chan_pos(std::vector<Channel *> *channel_list, Channel *chan);
