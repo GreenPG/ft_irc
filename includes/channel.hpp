@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:27:50 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/17 11:19:54 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/17 15:15:09 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,13 @@ class Channel
 	std::vector<User>	&get_chan_op_list();
 	bool				&get_invite_only();
 	std::string			get_mode_list();
+	int					get_limit();
 
 	void				set_channel_name(std::string s);
 	void				set_password(std::string s);
 	void				set_topic(std::string s);
 	void				set_invite_only(bool b);
+	void				set_limit(int limit);
 	void				add_mode(modes_t newMode);
 	void				delete_mode(modes_t newMode);
 
@@ -61,6 +63,7 @@ class Channel
 	std::string				_password;
 	std::string				_topic;
 	std::vector<modes_t>	_modes;
+	int						_limit;
 
 };
 

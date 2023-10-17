@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 17:16:49 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/16 16:29:45 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/17 15:17:24 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 #include <iostream>
 #include <cstdio>
 #include <vector>
+#include <cstdlib>
 #include "user.hpp"
 #include "channel.hpp"
 #include "server.hpp"

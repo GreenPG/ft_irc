@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 13:43:58 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/17 11:23:05 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/17 14:16:25 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # define RPL_JOIN(joiner, channel) (":" + joiner + " JOIN " + channel + "\r\n")
 # define RPL_KICK(kicked, channel) (":Command to kick " + kicked + " from " + channel + "\r\n")
 # define RPL_KICK_REASON(kicked, channel, reason) (":Command to kick " + kicked + " from " + channel + " reason \"" + reason + "\"" + "\r\n")
-# define MODE(nick, channel, modes, args) (":" + nick + " MODE " + modes + " " + args + "\r\n")
+# define MODE(nick, channel, modes, args) (":" + nick + " MODE " + channel + " " + modes + " " + args + "\r\n")
 # define INVITE(nick, invited, channel)	(":nick INVITE " + invited + " " + channel + "\r\n")	
 
 //////////////////////////////RPL MESSAGES///////////////////////////////////////////////////
@@ -55,5 +55,5 @@
 # define ERR_CHANNELISFULL(nick, channel) (": 471 " + nick + " " + channel + " :Cannot join channel (+l)" + "\r\n")
 # define ERR_INVITEONLYCHAN(nick, channel) (": 473 " + nick + " " + channel + " :Cannot join channel (+i)" + "\r\n")
 # define ERR_UMODEUNKNOWNFLAG(nick, flag) (" 501 " + nick + " :Unknown MODE flag :" + flag + "\r\n")
-
+# define ERR_INVALIDMODEPARAM(nick, channel, modeChar, parameter, description) (": 696 " + nick + " " + channel + " " + modeChar + " " + parameter +  " :" + description + "\r\n")
 #endif

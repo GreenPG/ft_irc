@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:30:55 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/17 13:29:26 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/17 15:20:45 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ Channel::Channel()
 	_channel_name = "";
 	_password = "";
 	_topic = "";
+	_limit = -1;
 	return ;
 }
 
@@ -179,6 +180,10 @@ void Channel::set_topic(std::string s)
 	_topic = s;
 }
 
+void				Channel::set_limit(int limit) {
+	_limit = limit;
+}
+
 void				Channel::add_mode(modes_t newMode) {
 	for (size_t i = 0; i < _modes.size(); i++) {
 		if (_modes[i] == newMode)
@@ -242,4 +247,8 @@ std::string			Channel::get_mode_list() {
 		}
 	}
 	return (modeList);
+}
+
+int					Channel::get_limit() {
+	return (_limit);
 }
