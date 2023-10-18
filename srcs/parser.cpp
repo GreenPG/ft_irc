@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 13:33:01 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/18 16:54:45 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/18 17:19:20 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ void	parser(const std::string &input, Server &server, User &currentUser) {
 	unsigned int				j; 
 	int							spaceIdx;
 
-	const std::string			cmdArr[] = {"CAP", "PASS", "NICK", "USER", "PRIVMSG", "JOIN", "MODE", "INVITE", "TOPIC", "KICK", "SKILL", "QUIT"};
+	const std::string			cmdArr[] = {"PASS", "NICK", "USER", "PRIVMSG", "JOIN", "MODE", "INVITE", "TOPIC", "KICK", "SKILL", "QUIT"};
 	std::vector<std::string> 	cmdsVec(cmdArr, cmdArr + sizeof(cmdArr) / sizeof(cmdArr[0]));
-	cmdFunctions				cmds[] = {&cap, &pass, &nick, &user_command, &privmsg, &join, &mode, &invite, &topic, &kick, &skill, &quit};
+	cmdFunctions				cmds[] = {&pass, &nick, &user_command, &privmsg, &join, &mode, &invite, &topic, &kick, &skill, &quit};
 
 	buf.append(input);
 	if (buf[buf.size() - 1] == '\n') {
@@ -51,12 +51,16 @@ void	parser(const std::string &input, Server &server, User &currentUser) {
 			std::cout << "command " << cmd << " from socket: " << currentUser.get_fd_socket() << ", nick: " << currentUser.get_nickname() << std::endl;
 			for (j = 0; j < cmdsVec.size(); j++) { 
 				if (cmdsVec[j] == cmd) {
-					if (currentUser.check_register() == true || cmd == "PASS" || cmd == "NICK" || cmd == "USER")
-							(*cmds[j])(args, server, currentUser);
+					if (currentUser.check_register() == true || cmd == "PASS")
+						(*cmds[j])(args, server, currentUser);
+					else if (currentUser.get_password_check() == 0 && (cmd == "NICK" || cmd == "USER")) 
+						(*cmds[j])(args, server, currentUser);
+					else
+						sendMessage(ERR_NOTREGISTERED(currentUser.get_nickname()).c_str(), currentUser);
 					break;
 				}
 			}
-			if (j == cmdsVec.size() && currentUser.get_password_check() == 0)
+			if (j == cmdsVec.size() && cmd != "WHO" && cmd != "CAP")
 				sendMessage(ERR_UNKNOWNCOMMAND(currentUser.get_nickname(), cmd).c_str(), currentUser);
 		}
 		buf.clear();
