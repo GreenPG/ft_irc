@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 13:33:01 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/18 15:41:30 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/18 16:05:15 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,12 @@ void	parser(const std::string &input, Server &server, User &currentUser) {
 			std::cout << "command " << cmd << " from socket: " << currentUser.get_fd_socket() << ", nick: " << currentUser.get_nickname() << std::endl;
 			for (j = 0; j < cmdsVec.size(); j++) { 
 				if (cmdsVec[j] == cmd) {
-					if (currentUser.check_register() == true || cmd == "PASS" || cmd == "NICK" || cmd == "USER")
-							(*cmds[j])(args, server, currentUser);
+					if (currentUser.check_register() == true || cmd == "PASS")
+						(*cmds[j])(args, server, currentUser);
+					else if (currentUser.get_password_check() == 0 && (cmd == "NICK" || cmd == "USER")) 
+						(*cmds[j])(args, server, currentUser);
+					else
+						sendMessage(ERR_NOTREGISTERED(currentUser.get_nickname()).c_str(), currentUser);
 					break;
 				}
 			}
