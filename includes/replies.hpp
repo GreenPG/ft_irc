@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 13:43:58 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/18 16:33:45 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/18 17:17:57 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 # define RPL_INVITING(nick, invited, channel) (": 341 " + nick + " " + invited + " " + channel + "\r\n")
 # define RPL_NAMREPLY(nick, channel, memberList) (": 353 " + nick + " = " + channel + " :" + userList + "\r\n")
 # define RPL_ENDOFNAMES(nick, channel) (": 366 " + nick + " " + channel + " :End of /NAMES list" + "\r\n")
-
+# define RPL_QUIT(nick, reason) (":" + nick + " QUIT :" + reason + "\r\n")
 
 
 ///////////////////////////////ERRORS MESSAGES/////////////////////////////////////////////

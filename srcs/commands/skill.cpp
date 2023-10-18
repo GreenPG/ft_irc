@@ -6,13 +6,13 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 15:15:31 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/17 13:53:36 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/18 16:34:55 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/irc.hpp"
 
-void	squit(std::string args, Server &server, User &currentUser) {
+void	skill(std::string args, Server &server, User &currentUser) {
 
 	size_t								i;
 	std::vector<User>::iterator			u_list;

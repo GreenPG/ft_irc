@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 17:16:49 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/18 16:41:34 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/18 17:18:54 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,10 +102,16 @@ void	privmsg(std::string args, Server &server, User &currentUser);
 void	topic(std::string args, Server &server, User &currentUser);
 
 ////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////SQUIT.CPP FUNCTION///////////////////////
+////////////////////////////////skill.CPP FUNCTION///////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-void	squit(std::string args, Server &server, User &currentUser);
+void	skill(std::string args, Server &server, User &currentUser);
+
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////skill.CPP FUNCTION///////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+void	quit(std::string args, Server &server, User &currentUser);
 
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////UTILS.CPP FUNCTION///////////////////////
@@ -113,7 +119,6 @@ void	squit(std::string args, Server &server, User &currentUser);
 
 int			is_num(std::string s);
 int			check_args(int argc, char **argv);
-
 
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////COMMAND POINTER TYPEDEF///////////////////////
