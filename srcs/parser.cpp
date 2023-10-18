@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 13:33:01 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/18 16:05:15 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/18 16:16:51 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	parser(const std::string &input, Server &server, User &currentUser) {
 			std::cout << "command " << cmd << " from socket: " << currentUser.get_fd_socket() << ", nick: " << currentUser.get_nickname() << std::endl;
 			for (j = 0; j < cmdsVec.size(); j++) { 
 				if (cmdsVec[j] == cmd) {
-					if (currentUser.check_register() == true || cmd == "PASS")
+					if (currentUser.check_register() == true || cmd == "PASS" || cmd == "CAP")
 						(*cmds[j])(args, server, currentUser);
 					else if (currentUser.get_password_check() == 0 && (cmd == "NICK" || cmd == "USER")) 
 						(*cmds[j])(args, server, currentUser);
@@ -60,7 +60,7 @@ void	parser(const std::string &input, Server &server, User &currentUser) {
 					break;
 				}
 			}
-			if (j == cmdsVec.size() && currentUser.get_password_check() == 0)
+			if (j == cmdsVec.size())
 				sendMessage(ERR_UNKNOWNCOMMAND(currentUser.get_nickname(), cmd).c_str(), currentUser);
 		}
 		buf.clear();
