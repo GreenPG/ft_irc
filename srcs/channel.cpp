@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:30:55 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/18 14:24:36 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/18 14:43:00 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -251,6 +251,11 @@ std::vector<User>	&Channel::get_chan_user_list()
 std::vector<User>	&Channel::get_chan_op_list()
 {
 	return (_operator_list);
+}
+
+std::vector<User>	&Channel::get_chan_inv_list()
+{
+	return (_invite_list);
 }
 
 std::string			Channel::get_mode_list() {

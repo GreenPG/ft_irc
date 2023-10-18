@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:27:50 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/18 14:10:21 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/18 14:43:25 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ class Channel
 		void				add_user_as_operator(User &user);
 		void				add_user_as_invited(User &user);
 		void				del_user_as_operator(std::string nick);
-		void				del_invited_user(std::string nick);
 		void				del_invite_list();
 		int					is_user_op(std::string name);
 		int					is_user_in_channel(std::string name);
@@ -46,6 +45,7 @@ class Channel
 		std::string			&get_topic();
 		std::vector<User>	&get_chan_user_list();
 		std::vector<User>	&get_chan_op_list();
+		std::vector<User>	&get_chan_inv_list();
 		bool				&get_invite_only();
 		std::string			get_mode_list();
 		int					get_limit();

@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 10:49:17 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/18 14:27:34 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/18 14:43:17 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,9 +172,9 @@ void	Server::remove_every_trace_of_user(User *user)
 	{
 		if (_channelList[i]->is_user_op(user->get_nickname()) == 0 && _channelList[i]->get_chan_user_list().size() > 1)
 			_channelList[i]->transfer_op();
-		_channelList[0]->kick_user_from_channel(_channelList[i]->get_chan_user_list(), user->get_nickname());
-		_channelList[0]->kick_user_from_channel(_channelList[i]->get_chan_op_list(), user->get_nickname());
-		_channelList[0]->del_invited_user(user->get_nickname());
+		_channelList[i]->kick_user_from_channel(_channelList[i]->get_chan_user_list(), user->get_nickname());
+		_channelList[i]->kick_user_from_channel(_channelList[i]->get_chan_op_list(), user->get_nickname());
+		_channelList[i]->kick_user_from_channel(_channelList[i]->get_chan_inv_list(), user->get_nickname());
 		i++;
 	}
 }
