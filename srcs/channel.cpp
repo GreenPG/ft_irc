@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:30:55 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/18 10:57:28 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/18 14:24:36 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,16 +84,25 @@ void	Channel::kick_user_from_channel(std::vector<User> &list, std::string user)
 	i = 0;
 	while (i < list.size())
 	{
-		std::cout << list[i].get_nickname() << "  " << user << std::endl;
 		if (list[i].get_nickname() == user)
 		{
-			std::cout << "yep\n" << std::endl;
 			list.erase(list.begin() + i);
 			return ;
 		}
 		i++;
 	}
 
+}
+
+void	Channel::transfer_op()
+{
+	if (_user_list.size() != 1 && _operator_list.size() == 1)
+	{
+		if (is_user_op(_user_list[0].get_nickname()) == 1)
+			add_user_as_operator(_user_list[0]);
+		else if (is_user_op(_user_list[1].get_nickname()) == 1)
+			add_user_as_operator(_user_list[1]);
+	}
 }
 
 void	Channel::print_every_user()
@@ -108,6 +117,7 @@ void	Channel::print_every_user()
 	}
 }
 
+// 0 yes 1 is no
 int		Channel::is_user_op(std::string name)
 {
 	std::size_t						i;

@@ -6,13 +6,14 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 10:49:17 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/18 11:49:57 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/18 14:24:54 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/server.hpp"
 #include <asm-generic/socket.h>
 #include <sys/socket.h>
+#include "../includes/irc.hpp"
 
 Server::Server(): _listener(-1), _fdMax(-1) {
 	FD_ZERO(&this->_master);
@@ -20,7 +21,6 @@ Server::Server(): _listener(-1), _fdMax(-1) {
 	_listener = -1;
 	_password = "1";
 	_quit = 0;
-	_userNb = 0;
 }
 
 Server::~Server() {
@@ -137,12 +137,9 @@ int	Server::newConnection() {
 	newFd = accept(this->_listener, (struct sockaddr *)&remoteAddr, &addrLen);
 	if (newFd == -1) 
 		perror("accept:");
-	else if (this->_userNb == 1000)
-		perror("Server full:");
 	else {
 		std::cout << "newFd: " << newFd << std::endl;
 		FD_SET(newFd, &this->_master);
-		incUser();
 		if (newFd > this->_fdMax)
 			this->_fdMax = newFd;
 	}
@@ -158,13 +155,28 @@ void	Server::receiveError(const int &nbytes, int &socketFd) {
 		perror("recv:");
 	close(socketFd);
 	FD_CLR(socketFd, &this->_master);
-	if (get_user_pos(&_userList, search_user_by_socket(_userList, socketFd)) != -1) {
+	if (get_user_pos(&_userList, search_user_by_socket(_userList, socketFd)) != -1)
+	{
+		remove_every_trace_of_user(search_user_by_socket(_userList, socketFd));
 		_userList.erase(_userList.begin() + get_user_pos(&_userList, search_user_by_socket(_userList, socketFd)));
-		decUser();
-	}
 
-	///////////need to also remove him from every channel he is
-	///////////and kick + deop him of every
+	}
+}
+
+void	Server::remove_every_trace_of_user(User *user)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < _channelList.size())
+	{
+		if (_channelList[i]->is_user_op(user->get_nickname()) == 0 && _channelList[i]->get_chan_user_list().size() > 1)
+			_channelList[i]->transfer_op();
+		_channelList[0]->kick_user_from_channel(_channelList[i]->get_chan_user_list(), user->get_nickname());
+		_channelList[0]->kick_user_from_channel(_channelList[i]->get_chan_op_list(), user->get_nickname());
+		_channelList[0]->del_invited_user(user->get_nickname());
+		i++;
+	}
 }
 
 int		get_user_pos(std::vector<User> *user_list, User *user)
@@ -184,7 +196,6 @@ int		get_user_pos(std::vector<User> *user_list, User *user)
 	}
 	if (user->get_nickname() == list[0].get_nickname())
 		return (i);
-	std::cout << "DIDNT QWORDK\n" << std::endl;
 	return (-1);
 }
 
@@ -200,7 +211,6 @@ void	Server::receiveData(int &socketFd) {
 		new_user.set_fd_socket(newUserFd);
 		this->_userList.insert(this->_userList.end(), new_user);
 		std::cout << "Asking password to " << new_user.get_fd_socket() << std::endl;
-		send(this->_fdMax, "Send password bro\n", 18, 0);
 	}
 	else {
 		currentUser = &identifyUser(socketFd);
@@ -239,12 +249,4 @@ void	Server::setQuit()
 int	Server::getQuit()
 {
 	return (_quit);
-}
-
-void					Server::incUser() {
-	this->_userNb++;
-}
-
-void					Server::decUser() {
-	this->_userNb--;
 }

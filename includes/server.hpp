@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 10:25:28 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/18 11:47:14 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/18 13:24:46 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ class	Server
 		void	receiveError(const int &nbytes, int &socketFd); 
 		void	receiveData(int &socketFd); 
 		void	readLoop();
+		void	remove_every_trace_of_user(User *user);
 
 	public:
 
