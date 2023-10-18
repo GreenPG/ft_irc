@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 10:03:43 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/17 16:34:30 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/18 14:25:14 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,4 @@ void	kick(std::string args, Server &server, User &user) {
 		server.getChannelList()->erase(server.getChannelList()->begin() + get_chan_pos(server.getChannelList(), chan));
 		delete	chan;
 	}
-	// std::cout << "NEED TO ADD MESSAGE, DIDNT HAVE TIME LAST TIME SORRY" << args << "\n" << std::endl;
-
-
-	// std::cout << "FULL ARGS " << args << "\n" << std::endl;
-	// std::cout << "CHANNEL ARGS " << channel_arg << "\n" << std::endl;
-	// std::cout << "USER ARGS " << user_arg << "\n" << std::endl;
-	// std::cout << "MSG ARGS " << msg_arg << "\n" << std::endl;
 }

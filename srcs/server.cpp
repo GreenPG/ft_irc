@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 10:49:17 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/18 14:17:56 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/18 14:24:54 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,7 +211,6 @@ void	Server::receiveData(int &socketFd) {
 		new_user.set_fd_socket(newUserFd);
 		this->_userList.insert(this->_userList.end(), new_user);
 		std::cout << "Asking password to " << new_user.get_fd_socket() << std::endl;
-		send(this->_fdMax, "Send password bro\n", 18, 0);
 	}
 	else {
 		currentUser = &identifyUser(socketFd);
