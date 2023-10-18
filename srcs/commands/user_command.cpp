@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 14:32:19 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/17 16:42:26 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/18 15:14:47 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	user_command(std::string args, Server &server, User &user)
 	int			start;
 
 	(void)server;
-	if (user.get_username().empty() == false)
+	if (user.checkUser() == true)
 		sendMessage(ERR_ALREADYREGISTERED(user.get_nickname()).c_str(), user);
 	end = args.find_first_of(" 	", 0);
 	userName = args.substr(0, end);
@@ -51,6 +51,7 @@ void	user_command(std::string args, Server &server, User &user)
 	start = args.find_first_not_of(" 	", end);
 	if (start == -1) {
 		user.set_username(userName);
+		user.setUserInit();
 		if (user.check_register() == true) 
 			sendMessage(RPL_WELCOME(user.get_nickname(), userName).c_str(), user);
 		return ;
@@ -61,7 +62,8 @@ void	user_command(std::string args, Server &server, User &user)
 	}
 	realName = args.substr(start, args.size() - start);
 	user.set_username(userName);
-	user.set_realname(realName);
+	user.setUserInit();
 	if (user.check_register() == true) 
 		sendMessage(RPL_WELCOME(user.get_nickname(), userName).c_str(), user);
+	user.set_realname(realName);
 }

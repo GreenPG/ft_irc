@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:27:50 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/18 14:15:10 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/18 15:03:11 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ class User
 	void				set_username(std::string s);
 	void				set_realname(std::string s);
 	void				set_password_check();
+	void				setUserInit();
+	void				setNickInit();
 
 	private :
 

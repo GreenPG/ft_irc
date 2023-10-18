@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:30:55 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/18 14:19:53 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/18 15:02:49 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,14 @@ void User::set_username(std::string s)
 void User::set_realname(std::string s)
 {
 	_realname = s;
+}
+
+void	User::setNickInit() {
+	this->_nickInit = true;
+}
+
+void	User::setUserInit() {
+	this->_userInit = true;
 }
 
 int	User::get_fd_socket(void)

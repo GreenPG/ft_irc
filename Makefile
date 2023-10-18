@@ -6,7 +6,7 @@
 #    By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/10 16:47:27 by tlarraze          #+#    #+#              #
-#    Updated: 2023/10/17 17:02:13 by tlarraze         ###   ########.fr        #
+#    Updated: 2023/10/18 15:29:02 by gpasquet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,7 +44,7 @@ CC			:= c++
 all:  $(NAME)
 
 $(NAME): $(OBJS)
-	$(info $(OBJS))
+	# $(info $(OBJS))
 	@$(CC) $(CPPFLAGS) $(OBJS) -o $@
 	@clear
 	@echo ".---..----------------------------------------------------------..----."
@@ -66,7 +66,7 @@ $(NAME): $(OBJS)
 	@echo "________________________________________________________________________"
 
 $(DIR_OBJ)/%.o: %.cpp 
-	$(info $(OBJS))
+	# $(info $(OBJS))
 	@mkdir -p $(@D)
 	@$(CC) $(CPPFLAGS) -c $< -o $@   
 
@@ -78,4 +78,4 @@ fclean: clean
 
 re: clean all
 
-.PHONY: all, clean, fclean, re, libmlx
+.PHONY: all, clean, fclean, re
