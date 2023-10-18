@@ -6,7 +6,7 @@
 #    By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/10 16:47:27 by tlarraze          #+#    #+#              #
-#    Updated: 2023/10/18 15:32:51 by tlarraze         ###   ########.fr        #
+#    Updated: 2023/10/18 16:41:24 by gpasquet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,6 @@ SRCS		=	main.cpp \
 				channel.cpp \
 				sendMessage.cpp \
 				parser.cpp \
-				commands/cap.cpp \
 				commands/join.cpp \
 				commands/pass.cpp \
 				commands/nick.cpp \

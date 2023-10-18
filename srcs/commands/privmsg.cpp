@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 10:06:35 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/18 10:58:03 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/18 16:34:11 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,10 @@ static void	privmsgToChannel(std::string target, std::string msg, User &currentU
 		targetChannel = search_channel_by_name(server.getChannelList(), target);
 	else {
 		sendMessage(ERR_NOSUCHNICK(currentUser.get_nickname(), target).c_str(), currentUser);
+		return ;
+	}
+	if (targetChannel->is_user_in_channel(currentUser.get_nickname()) == 1) {
+		sendMessage(ERR_CANNOTSENDTOCHAN(currentUser.get_nickname(), target).c_str(), currentUser);
 		return ;
 	}
 	if (msg.empty())

@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 13:43:58 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/18 15:57:58 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/18 16:33:45 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,7 @@
 
 # define ERR_NOSUCHNICK(nick, name) (": 401 " + nick + " " + name + " :No such nick/channel" + "\r\n")
 # define ERR_NOSUCHCHANNEL(nick, channel) (": 403 " + nick + " " + channel + " :No such channel" + "\r\n")
-# define ERR_BADCHANMASK(nick, channel) (": 476 " + nick + " " + channel + " :Bad Channel Mask" + "\r\n")
-# define ERR_CANNOTSENDTOCHAN(nick, channel) (": 404 " + nick + " " + channel  " :Cannot send to channel" + "\r\n")
+# define ERR_CANNOTSENDTOCHAN(nick, channel) (": 404 " + nick + " " + channel + " :Cannot send to channel" + "\r\n")
 # define ERR_BADCHANNELKEY(nick, channel) (": 405 " + nick + " " + channel + " :Cannot join channel (+k)" + "\r\n")
 # define ERR_NORECIPIENT(nick, cmd) (": 411 " + nick + " :No recipient given (" + cmd + ")"  + "\r\n")
 # define ERR_NOTEXTTOSEND(nick) (": 412 " + nick + " :No text to send" + "\r\n")
@@ -56,6 +55,7 @@
 # define ERR_PASSWDMISMATCH(nick) (": 464 " + nick + "Password incorrect" + "\r\n")
 # define ERR_CHANNELISFULL(nick, channel) (": 471 " + nick + " " + channel + " :Cannot join channel (+l)" + "\r\n")
 # define ERR_INVITEONLYCHAN(nick, channel) (": 473 " + nick + " " + channel + " :Cannot join channel (+i)" + "\r\n")
+# define ERR_BADCHANMASK(nick, channel) (": 476 " + nick + " " + channel + " :Bad Channel Mask" + "\r\n")
 # define ERR_CHANOPRIVSNEEDED(nick, channel) (": 482 " + nick + " " + channel + " :You're not channel operator" + "\r\n")
 # define ERR_UMODEUNKNOWNFLAG(nick, flag) (": 501 " + nick + " :Unknown MODE flag :" + flag + "\r\n")
 # define ERR_INVALIDMODEPARAM(nick, channel, modeChar, parameter, description) (": 696 " + nick + " " + channel + " " + modeChar + " " + parameter +  " :" + description + "\r\n")
