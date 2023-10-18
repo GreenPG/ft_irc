@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:30:55 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/17 17:56:43 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/18 10:57:28 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,14 +152,15 @@ bool	Channel::is_mode_active(modes_t mode)  {
 	return (false);
 }
 
-int		Channel::send_message_to_channel(std::string msg)
+int		Channel::send_message_to_channel(std::string msg, User *ignoredUser)
 {
 	std::size_t	i;
 
 	i = 0;
 	while (i < _user_list.size())
 	{
-		sendMessage(msg.c_str(), _user_list[i]);
+		if (!ignoredUser || _user_list[i].get_nickname() != ignoredUser->get_nickname())
+			sendMessage(msg.c_str(), _user_list[i]);
 		i++;
 	}
 	return (0);

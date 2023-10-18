@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 10:06:16 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/17 17:07:21 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/18 10:59:09 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ static void	addMode(std::string modeStr, std::string modeArgs, Server &server, C
 		else
 			unknownFlags.append(modeStr.substr(i, 1));
 	}
-	channel->send_message_to_channel(MODE(user.get_nickname(), channel->get_channel_name(), modeRpl, argsRpl).c_str());
+	channel->send_message_to_channel(MODE(user.get_nickname(), channel->get_channel_name(), modeRpl, argsRpl).c_str(), NULL);
 	if (unknownFlags.empty() == false)
 		sendMessage(ERR_UMODEUNKNOWNFLAG(user.get_nickname(), unknownFlags).c_str(), user);
 }
@@ -195,7 +195,7 @@ static void	delMode(std::string modeStr, std::string modeArgs, Channel *channel,
 		else 
 			unknownFlags.append(modeStr.substr(i, 1));
 	}
-	channel->send_message_to_channel(MODE(user.get_nickname(), channel->get_channel_name(), modeRpl, argsRpl).c_str());
+	channel->send_message_to_channel(MODE(user.get_nickname(), channel->get_channel_name(), modeRpl, argsRpl).c_str(), NULL);
 	if (unknownFlags.empty() == false)
 		sendMessage(ERR_UMODEUNKNOWNFLAG(user.get_nickname(), unknownFlags).c_str(), user);
 }

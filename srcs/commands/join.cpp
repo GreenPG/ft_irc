@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 16:29:04 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/17 18:11:02 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/18 10:58:36 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	join(std::string args, Server &server, User &user)
 		list->insert(list->end(), currentChannel);
 		std::cout << search_if_exist(args, list) << std::endl;
 	}
-	currentChannel->send_message_to_channel(RPL_JOIN(user.get_nickname(), channelName));
+	currentChannel->send_message_to_channel(RPL_JOIN(user.get_nickname(), channelName), NULL);
 	if (currentChannel->get_topic().empty() == false)
 		sendMessage(RPL_TOPIC(user.get_nickname(), currentChannel->get_channel_name(), currentChannel->get_topic()).c_str(), user);
 	userList = createUserList(currentChannel);
