@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:27:50 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/13 16:54:31 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/18 14:15:10 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ class User
 	std::string			get_username();
 	std::string			get_realname();
 	int					get_password_check();
+	bool				checkNick();
+	bool				checkUser();
 
 	void				set_fd_socket(int &fd);
 	void				set_nickname(std::string s);
@@ -42,6 +44,8 @@ class User
 	std::string			_nickname;
 	std::string			_username;
 	std::string			_realname;
+	bool				_nickInit;
+	bool				_userInit;
 
 };
 #endif
