@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 10:49:17 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/18 14:43:17 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/18 16:59:06 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,7 +159,7 @@ void	Server::receiveError(const int &nbytes, int &socketFd) {
 	{
 		remove_every_trace_of_user(search_user_by_socket(_userList, socketFd));
 		_userList.erase(_userList.begin() + get_user_pos(&_userList, search_user_by_socket(_userList, socketFd)));
-
+		//sendMessageToServer()
 	}
 }
 

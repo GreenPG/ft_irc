@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 13:33:01 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/18 15:41:30 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/18 16:54:45 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ void	parser(const std::string &input, Server &server, User &currentUser) {
 	unsigned int				j; 
 	int							spaceIdx;
 
-	const std::string			cmdArr[] = {"CAP", "PASS", "NICK", "USER", "PRIVMSG", "JOIN", "MODE", "INVITE", "TOPIC", "KICK", "SQUIT"};
+	const std::string			cmdArr[] = {"CAP", "PASS", "NICK", "USER", "PRIVMSG", "JOIN", "MODE", "INVITE", "TOPIC", "KICK", "SKILL", "QUIT"};
 	std::vector<std::string> 	cmdsVec(cmdArr, cmdArr + sizeof(cmdArr) / sizeof(cmdArr[0]));
-	cmdFunctions				cmds[] = {&cap, &pass, &nick, &user_command, &privmsg, &join, &mode, &invite, &topic, &kick, &squit};
+	cmdFunctions				cmds[] = {&cap, &pass, &nick, &user_command, &privmsg, &join, &mode, &invite, &topic, &kick, &skill, &quit};
 
 	buf.append(input);
 	if (buf[buf.size() - 1] == '\n') {
