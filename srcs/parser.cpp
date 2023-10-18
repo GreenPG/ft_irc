@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 13:33:01 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/17 17:19:37 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/18 13:30:50 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	parser(const std::string &input, Server &server, User &currentUser) {
 	std::vector<std::string>	cmdList;
 	std::string 				cmd;
 	std::string					args;
+	static std::string			buf;
 	unsigned int				j; 
 	int							spaceIdx;
 
@@ -37,23 +38,27 @@ void	parser(const std::string &input, Server &server, User &currentUser) {
 	std::vector<std::string> 	cmdsVec(cmdArr, cmdArr + sizeof(cmdArr) / sizeof(cmdArr[0]));
 	cmdFunctions				cmds[] = {&cap, &pass, &nick, &user_command, &privmsg, &join, &mode, &invite, &topic, &kick, &squit};
 
-	cmdList = splitInput(input);
-	for (unsigned int i = 0; i < cmdList.size(); i++) {
-		spaceIdx = cmdList[i].find(' ');
-		cmd = cmdList[i].substr(0, spaceIdx);
-		if (spaceIdx == -1)
-			args = "";
-		else 
-			args = cmdList[i].substr(spaceIdx + 1, input.size() - spaceIdx);
-		std::cout << "command " << cmd << " from socket: " << currentUser.get_fd_socket() << ", nick: " << currentUser.get_nickname() << std::endl;
-		for (j = 0; j < cmdsVec.size(); j++) { 
-			if (cmdsVec[j] == cmd) {
-				if (cmd == "PASS" || currentUser.get_password_check() == 0)
-					(*cmds[j])(args, server, currentUser);
-						break;
+	buf.append(input);
+	if (buf[buf.size() - 1] == '\n') {
+		cmdList = splitInput(buf);
+		for (unsigned int i = 0; i < cmdList.size(); i++) {
+			spaceIdx = cmdList[i].find(' ');
+			cmd = cmdList[i].substr(0, spaceIdx);
+			if (spaceIdx == -1)
+				args = "";
+			else 
+				args = cmdList[i].substr(spaceIdx + 1, input.size() - spaceIdx);
+			std::cout << "command " << cmd << " from socket: " << currentUser.get_fd_socket() << ", nick: " << currentUser.get_nickname() << std::endl;
+			for (j = 0; j < cmdsVec.size(); j++) { 
+				if (cmdsVec[j] == cmd) {
+					if (cmd == "PASS" || currentUser.get_password_check() == 0)
+						(*cmds[j])(args, server, currentUser);
+					break;
+				}
 			}
+			if (j == cmdsVec.size() && currentUser.get_password_check() == 0)
+				sendMessage(ERR_UNKNOWNCOMMAND(currentUser.get_nickname(), cmd).c_str(), currentUser);
 		}
-		if (j == cmdsVec.size() && currentUser.get_password_check() == 0)
-			sendMessage(ERR_UNKNOWNCOMMAND(currentUser.get_nickname(), cmd).c_str(), currentUser);
+		buf.clear();
 	}
 }
