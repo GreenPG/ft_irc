@@ -6,13 +6,14 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 10:49:17 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/17 17:43:23 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/18 13:29:36 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/server.hpp"
 #include <asm-generic/socket.h>
 #include <sys/socket.h>
+#include "../includes/irc.hpp"
 
 Server::Server(): _listener(-1), _fdMax(-1) {
 	FD_ZERO(&this->_master);
@@ -155,10 +156,26 @@ void	Server::receiveError(const int &nbytes, int &socketFd) {
 	close(socketFd);
 	FD_CLR(socketFd, &this->_master);
 	if (get_user_pos(&_userList, search_user_by_socket(_userList, socketFd)) != -1)
+	{
+		remove_every_trace_of_user(search_user_by_socket(_userList, socketFd));
 		_userList.erase(_userList.begin() + get_user_pos(&_userList, search_user_by_socket(_userList, socketFd)));
+
+	}
 
 	///////////need to also remove him from every channel he is
 	///////////and kick + deop him of every channel AND invite list
+}
+
+void	Server::remove_every_trace_of_user(User *user)
+{
+	int	i;
+
+	i = 0;
+	if (_channelList.size() > 0)
+	{
+		_channelList[i]->kick_user_from_channel;		
+
+	}
 }
 
 int		get_user_pos(std::vector<User> *user_list, User *user)

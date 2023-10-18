@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 10:25:28 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/16 17:07:33 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/18 13:24:46 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ class	Server
 		int						_quit;
 		int						_listener;
 		int						_fdMax;
+		int						_userNb;
 		fd_set					_master;
 		fd_set					_readFds;
 		std::string				_password;
@@ -37,6 +38,7 @@ class	Server
 		void	receiveError(const int &nbytes, int &socketFd); 
 		void	receiveData(int &socketFd); 
 		void	readLoop();
+		void	remove_every_trace_of_user(User *user);
 
 	public:
 
@@ -54,6 +56,8 @@ class	Server
 
 		void					setQuit();
 		void					setPassword(std::string Pass);
+		void					incUser();
+		void					decUser();
 		void					initServer(const char *portNb);
 		void					listenLoop();
 };

@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 10:06:35 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/17 10:10:15 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/18 10:58:03 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	privmsgToChannel(std::string target, std::string msg, User &currentU
 	if (msg.empty())
 		sendMessage(ERR_NOTEXTTOSEND(currentUser.get_nickname()).c_str(), currentUser);
 	else
-		targetChannel->send_message_to_channel(RPL_PRIVMSG(currentUser.get_nickname(), target, msg).c_str());
+		targetChannel->send_message_to_channel(RPL_PRIVMSG(currentUser.get_nickname(), target, msg).c_str(), &currentUser);
 }
 
 static void	privmsgToUser(std::string target, std::string msg, User &currentUser, std::vector<User> *userList) {
