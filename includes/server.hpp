@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 10:25:28 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/18 11:47:14 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/18 13:52:17 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ class	Server
 		void					decUser();
 		void					initServer(const char *portNb);
 		void					listenLoop();
+		void					sendMessageToServer(std::string msg);
 };
 
 #endif

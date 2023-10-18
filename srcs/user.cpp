@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:30:55 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/16 17:12:02 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/18 14:19:53 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,12 @@
 
 User::User()
 {
+	_nickname = "*";
+	_username = "*";
+	_realname = "*";
 	_password_check = -1;
+	_nickInit = false;
+	_userInit = false;
 	return ;
 }
 
@@ -26,7 +31,7 @@ User::~User()
 
 bool	User::check_register()
 {
-	if (_nickname.empty() || _username.empty() || _password_check == -1) 
+	if (_nickInit == false || _userInit == false || _password_check == -1) 
 		return (false);
 	return (true);
 }
@@ -101,6 +106,14 @@ std::string User::get_username()
 std::string User::get_realname()
 {
 	return (_realname);
+}
+
+bool		User::checkNick() {
+	return (this->_nickInit);
+}
+
+bool		User::checkUser() {
+	return (this->_userInit);
 }
 
 void	User::set_password_check()

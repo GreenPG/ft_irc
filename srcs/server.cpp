@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 10:49:17 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/18 11:49:57 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/18 13:51:23 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,6 +218,12 @@ void	Server::readLoop() {
 	for (int i = 0; i <= this->_fdMax; i++) {
 		if (FD_ISSET(i, &this->_readFds))
 			receiveData(i);
+	}
+}
+
+void	Server::sendMessageToServer(std::string msg) {
+	for (size_t i = 0; i < this->_userList.size(); i++) {
+		sendMessage(msg.c_str(), _userList[i]);
 	}
 }
 
