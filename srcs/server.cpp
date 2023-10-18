@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 10:49:17 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/17 17:32:39 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/18 11:48:33 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,9 +136,12 @@ int	Server::newConnection() {
 	newFd = accept(this->_listener, (struct sockaddr *)&remoteAddr, &addrLen);
 	if (newFd == -1) 
 		perror("accept:");
+	else if (this->_userNb == 1000)
+		perror("Server full:");
 	else {
 		std::cout << "newFd: " << newFd << std::endl;
 		FD_SET(newFd, &this->_master);
+		incUser();
 		if (newFd > this->_fdMax)
 			this->_fdMax = newFd;
 	}
@@ -154,8 +157,10 @@ void	Server::receiveError(const int &nbytes, int &socketFd) {
 		perror("recv:");
 	close(socketFd);
 	FD_CLR(socketFd, &this->_master);
-	if (get_user_pos(&_userList, search_user_by_socket(_userList, socketFd)) != -1)
+	if (get_user_pos(&_userList, search_user_by_socket(_userList, socketFd)) != -1) {
 		_userList.erase(_userList.begin() + get_user_pos(&_userList, search_user_by_socket(_userList, socketFd)));
+		decUser();
+	}
 
 	///////////need to also remove him from every channel he is
 	///////////and kick + deop him of every
@@ -233,4 +238,12 @@ void	Server::setQuit()
 int	Server::getQuit()
 {
 	return (_quit);
+}
+
+void					Server::incUser() {
+	this->_userNb++;
+}
+
+void					Server::decUser() {
+	this->_userNb--;
 }
