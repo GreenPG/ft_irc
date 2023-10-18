@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 10:49:17 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/18 13:29:36 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/18 14:17:56 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,20 +161,21 @@ void	Server::receiveError(const int &nbytes, int &socketFd) {
 		_userList.erase(_userList.begin() + get_user_pos(&_userList, search_user_by_socket(_userList, socketFd)));
 
 	}
-
-	///////////need to also remove him from every channel he is
-	///////////and kick + deop him of every channel AND invite list
 }
 
 void	Server::remove_every_trace_of_user(User *user)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
-	if (_channelList.size() > 0)
+	while (i < _channelList.size())
 	{
-		_channelList[i]->kick_user_from_channel;		
-
+		if (_channelList[i]->is_user_op(user->get_nickname()) == 0 && _channelList[i]->get_chan_user_list().size() > 1)
+			_channelList[i]->transfer_op();
+		_channelList[0]->kick_user_from_channel(_channelList[i]->get_chan_user_list(), user->get_nickname());
+		_channelList[0]->kick_user_from_channel(_channelList[i]->get_chan_op_list(), user->get_nickname());
+		_channelList[0]->del_invited_user(user->get_nickname());
+		i++;
 	}
 }
 
@@ -195,7 +196,6 @@ int		get_user_pos(std::vector<User> *user_list, User *user)
 	}
 	if (user->get_nickname() == list[0].get_nickname())
 		return (i);
-	std::cout << "DIDNT QWORDK\n" << std::endl;
 	return (-1);
 }
 

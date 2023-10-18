@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:27:50 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/18 10:57:46 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/18 14:10:21 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ class Channel
 		int					is_user_in_channel(std::string name);
 		int					is_user_invited(std::string nick);
 		bool				is_mode_active(modes_t mode);
+		void				transfer_op();
 
 		void				print_every_user();
 		int					send_message_to_channel(std::string msg, User *ignoredUser);
