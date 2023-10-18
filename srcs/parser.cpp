@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 13:33:01 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/18 13:30:50 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/18 15:41:30 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ void	parser(const std::string &input, Server &server, User &currentUser) {
 			std::cout << "command " << cmd << " from socket: " << currentUser.get_fd_socket() << ", nick: " << currentUser.get_nickname() << std::endl;
 			for (j = 0; j < cmdsVec.size(); j++) { 
 				if (cmdsVec[j] == cmd) {
-					if (cmd == "PASS" || currentUser.get_password_check() == 0)
-						(*cmds[j])(args, server, currentUser);
+					if (currentUser.check_register() == true || cmd == "PASS" || cmd == "NICK" || cmd == "USER")
+							(*cmds[j])(args, server, currentUser);
 					break;
 				}
 			}
