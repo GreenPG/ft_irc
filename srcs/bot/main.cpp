@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 14:14:27 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/19 16:25:43 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/19 16:27:34 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@
 static void	make_joke(std::string msg, int fd);
 static void	send_random_joke(std::string user, std::string chan, int fd);
 static std::string	get_start_message(std::string name);
+#define LOGIN_QUERY(password, nick) ("PASS " + password + "\r\nUSER bot\r\nNICK " + nick + "\r\n")
+#define	NICK_QUERY(nick) ("NICK " + nick + "\r\n")
 
 int	initSocket() {
 	struct addrinfo	hints;
@@ -64,8 +66,34 @@ int	initSocket() {
 }
 
 int loginToServ(int socketFd) {
-	send(socketFd, "PASS 1\r\nNICK bot\r\nUSER bot\r\n", 29, 0);
-	return (1);
+	std::string	password;
+	std::string nick;
+	std::string	response;
+	int			size;
+	char	buf[256];
+	int nbytes;
+
+	std::cout << "Enter server password: ";
+	std::cin >> password;
+	std::cout << "Enter bot nickname: ";
+	std::cin >> nick;
+	size = 24 + nick.size() + password.size();
+	send(socketFd, LOGIN_QUERY(password, nick).c_str(), size, 0);
+	while (1) {
+		if ((nbytes = recv(socketFd, buf, sizeof(buf) - 1, 0)) <= 0) {
+			std::cerr << "Error: receive" << std::endl;
+			return (-1);
+		}
+		response = buf;
+		if (response.substr(0, 5) == ": 001") {
+			std::cout << "The bot is connected to the server" << std::endl;
+			return (1);
+		}
+		std::cout << "Nickname already used. Enter another nickname :";
+		std::cin >> nick;
+		size = 24 + nick.size() + password.size();
+		send(socketFd, NICK_QUERY(nick).c_str(), size, 0);
+	}
 }
 
 void	readLoop(int socketFd) {
