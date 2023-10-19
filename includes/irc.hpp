@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 17:16:49 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/18 17:18:54 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/19 12:09:41 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ int			check_args(int argc, char **argv);
 typedef void	(*cmdFunctions)(std::string args, Server &server, User &currentUser);
 
 
-void		parser(const std::string &input, Server &server, User &currentUser);
+void		parser(const std::string input, Server &server, User &currentUser);
 int			sendMessage(const char *message, User &receiver);
 int			get_chan_pos(std::vector<Channel *> *channel_list, Channel *chan);
 #endif
