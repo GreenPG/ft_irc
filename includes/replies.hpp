@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 13:43:58 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/18 17:17:57 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/19 13:31:05 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # define RPL_KICK_REASON(kicked, channel, reason) (":Command to kick " + kicked + " from " + channel + " reason \"" + reason + "\"" + "\r\n")
 # define RPL_NICK(oldNick, username, newNick) (":" + oldNick + "!" + username + " NICK :" + newNick + "\r\n")
 # define MODE(nick, channel, modes, args) (":" + nick + " MODE " + channel + " " + modes + " " + args + "\r\n")
-# define INVITE(nick, invited, channel)	(":nick INVITE " + invited + " " + channel + "\r\n")	
+# define INVITE(nick, invited, channel)	(":" + nick + " INVITE " + invited + " " + channel + "\r\n")	
 
 //////////////////////////////RPL MESSAGES///////////////////////////////////////////////////
 # define RPL_WELCOME(nick, user) (": 001 " + nick +  " :Welcome to the ircserv Network, " + nick + "!" + user + "\r\n")
