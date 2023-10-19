@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 14:14:27 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/19 17:06:21 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/19 17:12:56 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,14 @@ void	readLoop(int socketFd) {
 		std::cout << buf;
 		}
 	}
+}
+
+void	parser(std::string buf, int fd)
+{
+	// if (buf.substr(0, 7) == "INVITE ")
+	// 	invite(buf, fd);
+	if (buf.substr(0, 9) == "PRIVMSG ")
+		make_joke(buf, fd);
 }
 
 int	main(void) {
