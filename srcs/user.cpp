@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:30:55 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/18 15:02:49 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/19 10:01:09 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,10 @@ void	User::setUserInit() {
 	this->_userInit = true;
 }
 
+void	User::setBuffer(std::string buf) {
+	_inputBuffer = buf;
+}
+
 int	User::get_fd_socket(void)
 {
 	return (_fd_socket);
@@ -132,4 +136,8 @@ void	User::set_password_check()
 int		User::get_password_check()
 {
 	return (_password_check);
+}
+
+std::string	User::get_buffer() {
+	return (_inputBuffer);
 }

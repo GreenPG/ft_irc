@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 13:33:01 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/18 17:22:29 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/19 10:08:26 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	parser(const std::string &input, Server &server, User &currentUser) {
 	std::vector<std::string>	cmdList;
 	std::string 				cmd;
 	std::string					args;
-	static std::string			buf;
+	std::string					buf;
 	unsigned int				j; 
 	int							spaceIdx;
 
@@ -38,6 +38,7 @@ void	parser(const std::string &input, Server &server, User &currentUser) {
 	std::vector<std::string> 	cmdsVec(cmdArr, cmdArr + sizeof(cmdArr) / sizeof(cmdArr[0]));
 	cmdFunctions				cmds[] = {&pass, &nick, &user_command, &privmsg, &join, &mode, &invite, &topic, &kick, &skill, &quit};
 
+	buf = currentUser.get_buffer();
 	buf.append(input);
 	if (buf[buf.size() - 1] == '\n') {
 		cmdList = splitInput(buf);
@@ -48,7 +49,7 @@ void	parser(const std::string &input, Server &server, User &currentUser) {
 			if (spaceIdx == -1)
 				args = "";
 			else 
-				args = cmdList[i].substr(spaceIdx, input.size() - spaceIdx);
+				args = cmdList[i].substr(spaceIdx, buf.size() - spaceIdx);
 			std::cout << "command " << cmd << " from socket: " << currentUser.get_fd_socket() << ", nick: " << currentUser.get_nickname() << std::endl;
 			for (j = 0; j < cmdsVec.size(); j++) { 
 				if (cmdsVec[j] == cmd) {
@@ -66,4 +67,5 @@ void	parser(const std::string &input, Server &server, User &currentUser) {
 		}
 		buf.clear();
 	}
+	currentUser.setBuffer(buf);
 }
