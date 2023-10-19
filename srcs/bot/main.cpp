@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 14:14:27 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/19 17:12:56 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/19 17:24:45 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,13 @@
 #include <sys/time.h>
 #include <vector>
 
-static void	make_joke(std::string msg, int fd);
-static void	send_random_joke(std::string chan, int fd);
+void				parser(std::string buf, int fd);
+void				invite(std::string msg, int fd);
+static void			make_joke(std::string msg, int fd);
+static void			send_random_joke(std::string chan, int fd);
 static std::string	get_start_message(std::string name);
-#define LOGIN_QUERY(password, nick) ("PASS " + password + "\r\nUSER bot\r\nNICK " + nick + "\r\n")
-#define	NICK_QUERY(nick) ("NICK " + nick + "\r\n")
+#define 			LOGIN_QUERY(password, nick) ("PASS " + password + "\r\nUSER bot\r\nNICK " + nick + "\r\n")
+#define				NICK_QUERY(nick) ("NICK " + nick + "\r\n")
 
 int	initSocket() {
 	struct addrinfo	hints;
@@ -116,7 +118,7 @@ void	readLoop(int socketFd) {
 		if ((nbytes = recv(socketFd, buf, sizeof(buf) - 1, 0) <= 0))
 			std::cerr << "Error: receive" << std::endl;
 		else {
-			make_joke(buf, socketFd);
+			parser(buf, socketFd);
 		std::cout << buf;
 		}
 	}
@@ -124,10 +126,19 @@ void	readLoop(int socketFd) {
 
 void	parser(std::string buf, int fd)
 {
-	// if (buf.substr(0, 7) == "INVITE ")
-	// 	invite(buf, fd);
+	if (buf.substr(0, 7) == "INVITE ")
+		invite(buf, fd);
 	if (buf.substr(0, 9) == "PRIVMSG ")
 		make_joke(buf, fd);
+}
+
+//:USER INVITE bot #CHAN
+void	invite(std::string msg, int fd)
+{
+	msg.erase(msg.begin(), msg.begin() + msg.find(' ') + 1);
+	std::cout << "t" << msg << "t\r\n" << std::endl;
+	(void)msg;
+	(void)fd;
 }
 
 int	main(void) {
@@ -158,11 +169,11 @@ void	make_joke(std::string msg, int fd)
 	chan = chan.substr(0, chan.find(' '));
 	msg.erase(msg.begin(),msg.begin() + msg.find(' ') + 1);
 	msg = msg.substr(0, msg.length() - 2);
-	 std::cout << msg << "z\n" << std::endl;
-	 std::cout << user << "t\n" << std::endl;
-	 std::cout << chan << "t\n" << std::endl;
 	if (msg == "!joke" || msg == "!joke\n")
 		send_random_joke(chan, fd);
+	//  std::cout << msg << "z\n" << std::endl;
+	//  std::cout << user << "t\n" << std::endl;
+	//  std::cout << chan << "t\n" << std::endl;
 }
 
 int	sendMessage(const char *message, int fd) {
