@@ -6,11 +6,11 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 14:32:19 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/19 11:21:19 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/19 14:24:26 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/irc.hpp"
+#include "../../../includes/irc.hpp"
 
 int		checkNick(std::string nick) {
 	if (nick[0] == '#' || nick[0] == ':')

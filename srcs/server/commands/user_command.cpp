@@ -6,11 +6,11 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 14:32:19 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/19 11:22:43 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/19 14:25:15 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/irc.hpp"
+#include "../../../includes/irc.hpp"
 
 int handleMidParams(std::string args, int *start, int *end) {
 	std::string tmp;

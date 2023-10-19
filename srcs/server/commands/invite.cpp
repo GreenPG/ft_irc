@@ -6,11 +6,11 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 10:00:54 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/18 17:11:11 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/19 14:24:04 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/irc.hpp"
+#include "../../../includes/irc.hpp"
 
 void	invite(std::string args, Server &server, User &currentUser) {
 	std::string		nick;

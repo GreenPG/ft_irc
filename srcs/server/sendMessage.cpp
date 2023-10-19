@@ -6,11 +6,11 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 17:15:42 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/13 16:58:31 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/19 14:23:11 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/irc.hpp"
+#include "../../includes/irc.hpp"
 
 int	sendMessage(const char *message, User &receiver) {
 	int	messageSize;

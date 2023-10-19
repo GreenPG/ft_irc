@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gpasquet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/09 17:16:22 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/17 13:50:41 by tlarraze         ###   ########.fr       */
+/*   Created: 2023/10/19 14:14:27 by gpasquet          #+#    #+#             */
+/*   Updated: 2023/10/19 14:31:01 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/irc.hpp"
+#include <sys/types.h>
+#include <netinet/in.h>
+#include <sys/socket.h>
+#include <string>
 
-int main(int argc, char **argv) {
-	Server	server;	
-
-	if (check_args(argc, argv) == 1)
-		return (1);
-	server.setPassword(argv[2]);
-	server.initServer(argv[1]);
-	server.listenLoop();
-	return (0);
+int	main(void) {
+	std::string		portNb;
+	std::string		password;
+	std::string		nick;
+	int				socketfd;
+	struct addrinfo	
 }

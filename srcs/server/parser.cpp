@@ -6,11 +6,11 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 13:33:01 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/19 12:08:48 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/19 14:23:03 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/irc.hpp"
+#include "../../includes/irc.hpp"
 
 static std::vector<std::string>	splitInput(std::string input) {
 	size_t						end;

@@ -6,11 +6,11 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 13:34:54 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/18 16:41:14 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/19 14:25:21 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/irc.hpp"
+#include "../../../includes/irc.hpp"
 
 int is_num(std::string s)
 {

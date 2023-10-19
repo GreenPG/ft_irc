@@ -6,12 +6,12 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:30:55 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/19 10:01:09 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/19 14:23:37 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
-# include "../includes/irc.hpp"
+# include "../../includes/irc.hpp"
 
 User::User()
 {

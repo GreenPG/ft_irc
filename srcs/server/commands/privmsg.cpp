@@ -6,11 +6,11 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 10:06:35 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/18 16:34:11 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/19 14:24:43 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/irc.hpp"
+#include "../../../includes/irc.hpp"
 
 static void	privmsgToChannel(std::string target, std::string msg, User &currentUser, Server &server) {
 	Channel	*targetChannel;

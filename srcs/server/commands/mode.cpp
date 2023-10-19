@@ -6,11 +6,11 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 10:06:16 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/18 10:59:09 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/19 14:24:18 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/irc.hpp"
+#include "../../../includes/irc.hpp"
 
 static void	sendModeList(std::string channelName, Server &server, User &user) {
 	Channel		*channel;

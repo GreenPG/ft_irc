@@ -6,11 +6,11 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 10:03:43 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/18 14:25:14 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/19 14:24:12 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/irc.hpp"
+#include "../../../includes/irc.hpp"
 
 void	kick(std::string args, Server &server, User &user) {
 	std::string		channel_arg;

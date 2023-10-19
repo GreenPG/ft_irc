@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   squit.cpp                                          :+:      :+:    :+:   */
+/*   skill.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 15:15:31 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/18 16:34:55 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/19 14:25:02 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/irc.hpp"
+#include "../../../includes/irc.hpp"
 
 void	skill(std::string args, Server &server, User &currentUser) {
 

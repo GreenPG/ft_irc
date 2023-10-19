@@ -1,26 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pass.cpp                                           :+:      :+:    :+:   */
+/*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/11 14:32:19 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/17 15:42:43 by tlarraze         ###   ########.fr       */
+/*   Created: 2023/10/09 17:16:22 by gpasquet          #+#    #+#             */
+/*   Updated: 2023/10/19 14:22:45 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/irc.hpp"
 
-void	pass(std::string args, Server &server, User &user)
-{
-	if (user.get_password_check() == 0)
-		sendMessage(ERR_ALREADYREGISTERED(user.get_nickname()).c_str(), user);
-	else if (args != server.getPassword())
-	{
-		sendMessage(ERR_PASSWDMISMATCH(user.get_nickname()).c_str(), user);
-		return ;
-	}
-	else if (user.get_password_check() != 0)
-		user.set_password_check();
+int main(int argc, char **argv) {
+	Server	server;	
+
+	if (check_args(argc, argv) == 1)
+		return (1);
+	server.setPassword(argv[2]);
+	server.initServer(argv[1]);
+	server.listenLoop();
+	return (0);
 }

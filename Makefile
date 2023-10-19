@@ -6,11 +6,13 @@
 #    By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/10 16:47:27 by tlarraze          #+#    #+#              #
-#    Updated: 2023/10/18 17:16:27 by tlarraze         ###   ########.fr        #
+#    Updated: 2023/10/19 14:22:25 by gpasquet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	ircserv	
+
+BOT_NAME	= bot
 
 CPPFLAGS	=	-Wall -Werror -Wextra -std=c++98 -g# -fno-limit-debug-info
 
@@ -35,9 +37,15 @@ SRCS		=	main.cpp \
 				commands/quit.cpp \
 				commands/kick.cpp 
 
-SRCS		:= $(SRCS:%=srcs/%)
+SRCS		:= $(SRCS:%=srcs/server/%)
 
 OBJS		:=	$(addprefix $(DIR_OBJ)/, $(SRCS:%.cpp=%.o))
+
+SRCS_BOT	= 	main.cpp
+
+SRCS_BOT	:= $(SRCS_BOT:%=srcs/bot/%)
+
+OBJS_BOT	:= $(addprefix $(DIR_OBJ)/, $(SRCS_BOT:%.cpp=%.o))
 
 CC			:= c++
 
@@ -67,6 +75,11 @@ $(NAME): $(OBJS)
 $(DIR_OBJ)/%.o: %.cpp 
 	@mkdir -p $(@D)
 	@$(CC) $(CPPFLAGS) -c $< -o $@   
+
+bonus: $(BOT_NAME)
+
+$(BOT_NAME): $(NAME) $(OBJS_BOT)
+	@$(CC) $(CPPFLAGS) $(OBJS_BOT) -o $@
 
 clean: 
 	@rm -rf $(DIR_OBJ) 

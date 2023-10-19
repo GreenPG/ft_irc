@@ -6,15 +6,14 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 10:49:17 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/19 13:55:55 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/19 14:23:29 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/server.hpp"
 #include <asm-generic/socket.h>
 #include <cstring>
 #include <sys/socket.h>
-#include "../includes/irc.hpp"
+#include "../../includes/irc.hpp"
 
 Server::Server(): _listener(-1), _fdMax(-1) {
 	FD_ZERO(&this->_master);
