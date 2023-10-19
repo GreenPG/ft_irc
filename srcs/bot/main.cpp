@@ -6,7 +6,8 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 14:14:27 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/19 17:27:39 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/19 17:30:27 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/19 17:24:45 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +26,10 @@
 #include <sys/time.h>
 #include <vector>
 
-static void	make_joke(std::string msg, int fd);
-static void	send_random_joke(std::string user, std::string chan, int fd);
+void				parser(std::string buf, int fd);
+void				invite(std::string msg, int fd);
+static void			make_joke(std::string msg, int fd);
+static void			send_random_joke(std::string chan, int fd);
 static std::string	get_start_message(std::string name);
 #define	NICK_QUERY(nick) ("NICK " + nick + "\r\nUSER bot\r\n")
 #define	PASS_QUERY(pass) ("PASS " + pass + "\r\n")
@@ -144,9 +147,27 @@ void	readLoop(int socketFd) {
 			exit(1);
 		}
 		else {
-			make_joke(buf, socketFd);
+			parser(buf, socketFd);
+		std::cout << buf;
 		}
 	}
+}
+
+void	parser(std::string buf, int fd)
+{
+	if (buf.substr(0, 7) == "INVITE ")
+		invite(buf, fd);
+	if (buf.substr(0, 9) == "PRIVMSG ")
+		make_joke(buf, fd);
+}
+
+//:USER INVITE bot #CHAN
+void	invite(std::string msg, int fd)
+{
+	msg.erase(msg.begin(), msg.begin() + msg.find(' ') + 1);
+	std::cout << "t" << msg << "t\r\n" << std::endl;
+	(void)msg;
+	(void)fd;
 }
 
 int	main(void) {
@@ -174,8 +195,12 @@ void	make_joke(std::string msg, int fd)
 	chan = msg;
 	chan = chan.substr(0, chan.find(' '));
 	msg.erase(msg.begin(),msg.begin() + msg.find(' ') + 1);
-	if (msg == "!joke")
-		send_random_joke(user, chan, fd);
+	msg = msg.substr(0, msg.length() - 2);
+	if (msg == "!joke" || msg == "!joke\n")
+		send_random_joke(chan, fd);
+	//  std::cout << msg << "z\n" << std::endl;
+	//  std::cout << user << "t\n" << std::endl;
+	//  std::cout << chan << "t\n" << std::endl;
 }
 
 int	sendMessage(const char *message, int fd) {
@@ -202,7 +227,7 @@ int	sendMessage(const char *message, int fd) {
 }
 
 
-void	send_random_joke(std::string user, std::string chan, int fd)
+void	send_random_joke(std::string chan, int fd)
 {
 	struct timeval				time;
 	int							i;
@@ -212,23 +237,17 @@ void	send_random_joke(std::string user, std::string chan, int fd)
 	gettimeofday(&time, NULL);
 	i = time.tv_usec % 21 + 1;
 
-	if (chan[0] != '#')
-	{
-		msg = get_start_message(user);
-		msg.append("hey ");
-		msg.append(user);
-		msg.append("\n");
-		sendMessage(msg.c_str(), fd);
-		msg = get_start_message(user);
-		msg.append(bott._tab[i].substr(0, bott._tab[i].find('\n') + 1));
-		sendMessage(msg.c_str(), fd);
-		msg = get_start_message(user);
-		msg.append(bott._tab[i].substr(bott._tab[i].find('\n') + 1, bott._tab[i].size()));
-		sendMessage(msg.c_str(), fd);
-		sendMessage("dwqdwqdwqdwq", fd);
-	}
-	(void)user;
-	(void)chan;
+	msg = get_start_message(chan);
+	msg.append("hey ");
+	msg.append(chan);
+	msg.append("\r\n");
+	sendMessage(msg.c_str(), fd);
+	msg = get_start_message(chan);
+	msg.append(bott._tab[i].substr(0, bott._tab[i].find('\n') + 1));
+	sendMessage(msg.c_str(), fd);
+	msg = get_start_message(chan);
+	msg.append(bott._tab[i].substr(bott._tab[i].find('\n') + 1, bott._tab[i].size()));
+	sendMessage(msg.c_str(), fd);
 }
 
 std::string	get_start_message(std::string name)
