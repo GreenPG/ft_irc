@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:30:55 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/18 14:43:00 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/19 11:31:21 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ void	Channel::del_user_as_operator(std::string nick) {
 			_operator_list.erase(it);
 			return ;
 		}
+		it++;
 	}
 }
 

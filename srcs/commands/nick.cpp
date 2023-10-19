@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 14:32:19 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/18 15:12:46 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/19 11:21:19 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ void	changeNick(std::string newNick, Server &server, User &currentUser) {
 	currentUser.set_nickname(newNick);
 	currentUser.setNickInit();
 	server.sendMessageToServer(RPL_NICK(oldNick, currentUser.get_username(), newNick));
-	if (currentUser.check_register() == true)
-		sendMessage(RPL_WELCOME(currentUser.get_nickname(), currentUser.get_username()).c_str(), currentUser);
 }
 
 void	nick(std::string args, Server &server, User &currentUser)

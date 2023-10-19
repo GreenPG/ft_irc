@@ -6,12 +6,13 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 10:49:17 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/18 16:59:06 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/19 12:33:00 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/server.hpp"
 #include <asm-generic/socket.h>
+#include <cstring>
 #include <sys/socket.h>
 #include "../includes/irc.hpp"
 
@@ -206,6 +207,7 @@ void	Server::receiveData(int &socketFd) {
 	User				new_user;
 	User				*currentUser;
 
+	memset(&buf, 0, 256);
 	if (socketFd == this->_listener) {
 		newUserFd = newConnection();
 		new_user.set_fd_socket(newUserFd);

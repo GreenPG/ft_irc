@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 14:32:19 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/18 15:14:47 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/19 11:22:43 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,10 @@ void	user_command(std::string args, Server &server, User &user)
 	int			start;
 
 	(void)server;
-	if (user.checkUser() == true)
-		sendMessage(ERR_ALREADYREGISTERED(user.get_nickname()).c_str(), user);
+	if (user.checkUser() == true) {
+		sendMessage(ERR_ALREADYREGISTERED(user.get_nickname()).c_str(), user); 
+		return ;
+	}
 	end = args.find_first_of(" 	", 0);
 	userName = args.substr(0, end);
 	if (userName == "0") {
