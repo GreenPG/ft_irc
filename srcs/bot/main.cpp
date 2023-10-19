@@ -6,7 +6,7 @@
 /*   By: gpasquet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 14:14:27 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/19 16:15:38 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/19 16:25:02 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,14 @@ int	initSocket() {
 	struct addrinfo	*servinfo;
 	struct addrinfo	*p;
 	int				socketFd;
+	std::string		port;
 	
 	memset(&hints, 0, sizeof(hints));
 	hints.ai_family = AF_UNSPEC;
 	hints.ai_socktype = SOCK_STREAM;
-
-	if (getaddrinfo(NULL, "6697", &hints, &servinfo) != 0) {
+	std::cout << "Enter server port: ";
+	std::cin >> port;
+	if (getaddrinfo(NULL, port.c_str(), &hints, &servinfo) != 0) {
 		std::cerr << "Error: getaddrinfo" << std::endl;
 		exit(1);
 	}
@@ -105,8 +107,10 @@ void	readLoop(int socketFd) {
 			exit(1);
 		}
 		memset(buf, 0, sizeof(buf));
-		if ((nbytes = recv(socketFd, buf, sizeof(buf) - 1, 0) <= 0))
-			std::cerr << "Error: receive" << std::endl;
+		if ((nbytes = recv(socketFd, buf, sizeof(buf) - 1, 0) <= 0)) {
+				std::cerr << "Error: receive" << std::endl;
+				exit(1);
+		}
 		else {
 			std::cout << buf;
 			// parser(buf);
