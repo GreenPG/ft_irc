@@ -6,7 +6,7 @@
 #    By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/10 16:47:27 by tlarraze          #+#    #+#              #
-#    Updated: 2023/10/19 14:22:25 by gpasquet         ###   ########.fr        #
+#    Updated: 2023/10/19 15:30:00 by tlarraze         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,7 @@ SRCS		:= $(SRCS:%=srcs/server/%)
 
 OBJS		:=	$(addprefix $(DIR_OBJ)/, $(SRCS:%.cpp=%.o))
 
-SRCS_BOT	= 	main.cpp
+SRCS_BOT	= 	main.cpp bot.cpp
 
 SRCS_BOT	:= $(SRCS_BOT:%=srcs/bot/%)
 

@@ -6,16 +6,13 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 14:15:23 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/19 14:27:07 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/19 15:36:02 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #ifndef JOKE_DATABASE_HPP
 # define JOKE_DATABASE_HPP
-
-
-
 
 # define JOKE1() ("Why do programmers prefer dark mode? \nBecause the light attracts bugs!\n\r");
 # define JOKE2() ("Why did the programmer quit his job? \nHe didn't get arrays.\n\r");

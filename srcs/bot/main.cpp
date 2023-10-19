@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpasquet <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 14:14:27 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/19 16:25:02 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/19 17:27:39 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,16 @@
 #include <cstdlib>
 #include <iostream>
 
-#define LOGIN_QUERY(password, nick) ("PASS " + password + "\r\nUSER bot\r\nNICK " + nick + "\r\n")
-#define	NICK_QUERY(nick) ("NICK " + nick + "\r\n")
+#include "../../includes/joke_database.hpp"
+#include "../../includes/bot.hpp"
+#include <sys/time.h>
+#include <vector>
+
+static void	make_joke(std::string msg, int fd);
+static void	send_random_joke(std::string user, std::string chan, int fd);
+static std::string	get_start_message(std::string name);
+#define	NICK_QUERY(nick) ("NICK " + nick + "\r\nUSER bot\r\n")
+#define	PASS_QUERY(pass) ("PASS " + pass + "\r\n")
 
 int	initSocket() {
 	struct addrinfo	hints;
@@ -59,35 +67,59 @@ int	initSocket() {
 	return (socketFd);
 }
 
-int loginToServ(int socketFd) {
+void	sendPass(int socketFd) {
 	std::string	password;
-	std::string nick;
 	std::string	response;
 	int			size;
-	char	buf[256];
-	int nbytes;
 
 	std::cout << "Enter server password: ";
 	std::cin >> password;
+	size = 7 + password.size();
+	send(socketFd, PASS_QUERY(password).c_str(), size, 0);
+}
+
+int sendNickAndUser(int socketFd) {
+	std::string nick;
+	std::string	response;
+	int			size;
+	int			nbytes;
+	char		buf[256];
+
+	memset(&buf, 0, 256);
 	std::cout << "Enter bot nickname: ";
 	std::cin >> nick;
-	size = 24 + nick.size() + password.size();
-	send(socketFd, LOGIN_QUERY(password, nick).c_str(), size, 0);
-	while (1) {
+	size = 17 + nick.size();
+	send(socketFd, NICK_QUERY(nick).c_str(), size, 0);
+	while(1) {
 		if ((nbytes = recv(socketFd, buf, sizeof(buf) - 1, 0)) <= 0) {
-			std::cerr << "Error: receive" << std::endl;
-			return (-1);
+			std::cerr << "Error: recv" << std::endl;
+			return (0);
 		}
 		response = buf;
 		if (response.substr(0, 5) == ": 001") {
 			std::cout << "The bot is connected to the server" << std::endl;
 			return (1);
 		}
-		std::cout << "Nickname already used. Enter another nickname :";
-		std::cin >> nick;
-		size = 24 + nick.size() + password.size();
-		send(socketFd, NICK_QUERY(nick).c_str(), size, 0);
+		else if (response.substr(0, 5) == ": 464") {
+			std::cout << "Wrong password" << std::endl;
+			sendPass(socketFd);
+			sendNickAndUser(socketFd);
+		}
+		else  if (response.substr(0, 5) == ": 433") {
+			std::cout << "Nickname already used. Enter another nickname :";
+			std::cin >> nick;
+			size = 7 + nick.size();
+			send(socketFd, NICK_QUERY(nick).c_str(), size, 0);
+		}
 	}
+	return (0);
+}
+
+void loginToServ(int socketFd) {
+	sendPass(socketFd);
+	if (sendNickAndUser(socketFd) == 0)
+		exit(1);
+	std::cout << "Bot successfuly connected to the server" << std::endl;
 }
 
 void	readLoop(int socketFd) {
@@ -95,7 +127,7 @@ void	readLoop(int socketFd) {
 	fd_set			readFds;
 	char	buf[256];
 	int nbytes;
-	
+
 	FD_ZERO(&master);
 	FD_ZERO(&readFds);
 	FD_SET(socketFd, &master);
@@ -108,12 +140,11 @@ void	readLoop(int socketFd) {
 		}
 		memset(buf, 0, sizeof(buf));
 		if ((nbytes = recv(socketFd, buf, sizeof(buf) - 1, 0) <= 0)) {
-				std::cerr << "Error: receive" << std::endl;
-				exit(1);
+			std::cerr << "Error: receive" << std::endl;
+			exit(1);
 		}
 		else {
-			std::cout << buf;
-			// parser(buf);
+			make_joke(buf, socketFd);
 		}
 	}
 }
@@ -125,7 +156,88 @@ int	main(void) {
 	int				socketFd;
 
 	socketFd = initSocket();
-	if (loginToServ(socketFd))
-		readLoop(socketFd);
+	loginToServ(socketFd);
+	readLoop(socketFd);
 	return (0);
+}
+
+void	make_joke(std::string msg, int fd)
+{
+	std::string	user;
+	std::string	chan;
+
+	msg.erase(msg.begin(), msg.begin() + 1);
+
+	user = msg.substr(0, msg.find(' '));
+	msg.erase(msg.begin(),msg.begin() + msg.find(' ') + 1);
+	msg.erase(msg.begin(),msg.begin() + msg.find(' ') + 1);
+	chan = msg;
+	chan = chan.substr(0, chan.find(' '));
+	msg.erase(msg.begin(),msg.begin() + msg.find(' ') + 1);
+	if (msg == "!joke")
+		send_random_joke(user, chan, fd);
+}
+
+int	sendMessage(const char *message, int fd) {
+	int	messageSize;
+	int	total;
+	int	bytesleft;
+	int	n;
+
+	total = 0;
+	messageSize = strlen(message);
+	bytesleft = messageSize;
+	while (total < messageSize) {
+		n = send(fd, message + total, bytesleft, 0);
+		if (n == -1)
+			break;
+		total += n;
+		bytesleft -=n;
+	}
+
+	if (n == -1)
+		return (n);
+	else
+		return (total);
+}
+
+
+void	send_random_joke(std::string user, std::string chan, int fd)
+{
+	struct timeval				time;
+	int							i;
+	bot							bott;
+	std::string					msg;
+
+	gettimeofday(&time, NULL);
+	i = time.tv_usec % 21 + 1;
+
+	if (chan[0] != '#')
+	{
+		msg = get_start_message(user);
+		msg.append("hey ");
+		msg.append(user);
+		msg.append("\n");
+		sendMessage(msg.c_str(), fd);
+		msg = get_start_message(user);
+		msg.append(bott._tab[i].substr(0, bott._tab[i].find('\n') + 1));
+		sendMessage(msg.c_str(), fd);
+		msg = get_start_message(user);
+		msg.append(bott._tab[i].substr(bott._tab[i].find('\n') + 1, bott._tab[i].size()));
+		sendMessage(msg.c_str(), fd);
+		sendMessage("dwqdwqdwqdwq", fd);
+	}
+	(void)user;
+	(void)chan;
+}
+
+std::string	get_start_message(std::string name)
+{
+	std::string					msg;
+
+	msg = "PRIVMSG";
+	msg.append(" ");
+	msg.append(name);
+	msg.append(" ");
+	return (msg);
 }
