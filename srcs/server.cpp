@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 10:49:17 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/19 12:33:00 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/19 13:55:55 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,8 +216,8 @@ void	Server::receiveData(int &socketFd) {
 	}
 	else {
 		currentUser = &identifyUser(socketFd);
-		if ((nbytes = recv(socketFd, buf, sizeof(buf), 0)) <= 0)
-			receiveError(nbytes, socketFd);
+		if ((nbytes = recv(socketFd, buf, sizeof(buf) - 1, 0)) <= 0)
+			receiveError(nbytes, socketFd); 
 		else {
 			parser(buf, *this, *currentUser);
 			std::cout << buf << std::endl;
