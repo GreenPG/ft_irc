@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 16:29:04 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/20 14:53:25 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/20 15:05:30 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ void	join(std::string args, Server &server, User &user)
 			sendMessage(ERR_CHANNELISFULL(user.get_nickname(), currentChannel->get_channel_name()).c_str(), user);
 			return ;
 		}
+		if (currentChannel->is_user_in_channel(user.get_nickname()) == 0)
+			return ;
 		currentChannel->add_user_to_channel(user);
 	}
 	else
