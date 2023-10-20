@@ -6,7 +6,7 @@
 #    By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/10 16:47:27 by tlarraze          #+#    #+#              #
-#    Updated: 2023/10/20 12:17:04 by gpasquet         ###   ########.fr        #
+#    Updated: 2023/10/20 15:18:19 by gpasquet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -85,7 +85,7 @@ clean:
 	@rm -rf $(DIR_OBJ) 
 
 fclean: clean 
-	@rm -f $(NAME)
+	@rm -f $(NAME) $(BOT_NAME)
 
 re: clean all
 

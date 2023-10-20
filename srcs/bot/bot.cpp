@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 15:25:25 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/20 14:10:38 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/20 15:11:50 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,8 +199,8 @@ bool	Bot::make_joke(std::string msg) const
 		return (false);
 	}
 	else {
-		std::cout << UNKNOWN_REPLY(sender) << std::endl;
-		sendMessage(UNKNOWN_REPLY(sender).c_str());
+		if (target[0] != '#')
+			sendMessage(UNKNOWN_REPLY(sender).c_str());
 	}
 	return (true);
 }
