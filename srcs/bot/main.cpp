@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 14:14:27 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/19 17:30:27 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/20 11:08:44 by gpasquet         ###   ########.fr       */
 /*   Updated: 2023/10/19 17:24:45 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -26,13 +26,15 @@
 #include <sys/time.h>
 #include <vector>
 
-void				parser(std::string buf, int fd);
+bool				parser(std::string buf, int fd);
 void				invite(std::string msg, int fd);
 static void			make_joke(std::string msg, int fd);
 static void			send_random_joke(std::string chan, int fd);
 static std::string	get_start_message(std::string name);
+int	sendMessage(const char *message, int fd);
 #define	NICK_QUERY(nick) ("NICK " + nick + "\r\nUSER bot\r\n")
 #define	PASS_QUERY(pass) ("PASS " + pass + "\r\n")
+#define	JOIN_QUERY(chan) ("JOIN " + chan + "\r\n")
 
 int	initSocket() {
 	struct addrinfo	hints;
@@ -128,13 +130,15 @@ void loginToServ(int socketFd) {
 void	readLoop(int socketFd) {
 	fd_set			master;
 	fd_set			readFds;
-	char	buf[256];
-	int nbytes;
+	char			buf[256];
+	int 			nbytes;
+	bool			serverState;
 
 	FD_ZERO(&master);
 	FD_ZERO(&readFds);
 	FD_SET(socketFd, &master);
-	while(1) {
+	serverState = true;
+	while(serverState) {
 		readFds = master;
 		if (select(socketFd + 1, &readFds, NULL, NULL, NULL) == -1) {
 			std::cerr << "Error: select" << std::endl;
@@ -143,31 +147,46 @@ void	readLoop(int socketFd) {
 		}
 		memset(buf, 0, sizeof(buf));
 		if ((nbytes = recv(socketFd, buf, sizeof(buf) - 1, 0) <= 0)) {
-			std::cerr << "Error: receive" << std::endl;
+			if (nbytes < 0)
+				std::cerr << "Error: receive" << std::endl;
+			else 
+				std::cerr << "Server has stopped. Stopping the bot" << std::endl;
+			close(socketFd);
 			exit(1);
 		}
 		else {
-			parser(buf, socketFd);
+			serverState = parser(buf, socketFd);
 		std::cout << buf;
 		}
 	}
 }
 
-void	parser(std::string buf, int fd)
+bool	parser(std::string buf, int fd)
 {
-	if (buf.substr(0, 7) == "INVITE ")
+	unsigned long	start;
+
+	if (buf == ":command to close the server\r\n") {
+		std::cout << "Server was closed, stopping the bot" << std::endl;
+		close(fd);
+		return (false);
+	}
+	start = buf.find(" ", 0);
+	start = buf.find_first_not_of(" ", start);
+	if (buf.substr(start, 6) == "INVITE")
 		invite(buf, fd);
-	if (buf.substr(0, 9) == "PRIVMSG ")
+	if (buf.substr(start, 7) == "PRIVMSG")
 		make_joke(buf, fd);
+	return (true);
 }
 
-//:USER INVITE bot #CHAN
 void	invite(std::string msg, int fd)
 {
-	msg.erase(msg.begin(), msg.begin() + msg.find(' ') + 1);
-	std::cout << "t" << msg << "t\r\n" << std::endl;
-	(void)msg;
-	(void)fd;
+	std::string		chan;
+	unsigned long	idx;
+
+	idx = msg.find_last_of(" ");
+	chan = msg.substr(idx, msg.size() - idx);
+	sendMessage(JOIN_QUERY(chan).c_str(), fd);
 }
 
 int	main(void) {
@@ -184,23 +203,26 @@ int	main(void) {
 
 void	make_joke(std::string msg, int fd)
 {
-	std::string	user;
-	std::string	chan;
+	std::string	sender;
+	std::string	target;
 
 	msg.erase(msg.begin(), msg.begin() + 1);
-
-	user = msg.substr(0, msg.find(' '));
+	sender = msg.substr(0, msg.find(' '));
 	msg.erase(msg.begin(),msg.begin() + msg.find(' ') + 1);
 	msg.erase(msg.begin(),msg.begin() + msg.find(' ') + 1);
-	chan = msg;
-	chan = chan.substr(0, chan.find(' '));
+	target = msg.substr(0, msg.find(' '));
 	msg.erase(msg.begin(),msg.begin() + msg.find(' ') + 1);
-	msg = msg.substr(0, msg.length() - 2);
-	if (msg == "!joke" || msg == "!joke\n")
-		send_random_joke(chan, fd);
-	//  std::cout << msg << "z\n" << std::endl;
-	//  std::cout << user << "t\n" << std::endl;
-	//  std::cout << chan << "t\n" << std::endl;
+	if (msg[0] == ':')
+		msg.erase(0, 1);
+	if (msg == "!joke\n" || msg == "!joke\r\n") {
+		if (target[0] == '#')
+			send_random_joke(target, fd);
+		else
+			send_random_joke(sender, fd);
+	}/*
+	if (msg == "!kill\r\n" || msg == "!kill\r\n"){
+		kill();
+	}*/
 }
 
 int	sendMessage(const char *message, int fd) {
