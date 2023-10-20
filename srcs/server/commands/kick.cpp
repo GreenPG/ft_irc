@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 10:03:43 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/20 13:52:42 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/20 14:09:57 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,19 @@ void	kick(std::string args, Server &server, User &user) {
 	std::string		user_arg;
 	std::string		msg_arg;
 	Channel			*chan;
+	unsigned long	idx;
 	size_t			i;
 	
 	i = 0;
 	channel_arg = args;
 	user_arg = args;
-	channel_arg.resize(channel_arg.find(' ', 0));
-	user_arg.erase(0, user_arg.find(' ', 0) + 1);
+	idx = args.find(' ', 0);
+	if (idx == std::string::npos) {
+		sendMessage(ERR_NEEDMOREPARAMS(user.get_nickname(), "KICK").c_str(), user);
+		return ; 
+	}
+	channel_arg.resize(idx);
+	user_arg.erase(0, idx + 1);
 	msg_arg = user_arg;
 	if (user_arg.find(' ', 0) != std::string::npos)
 	{

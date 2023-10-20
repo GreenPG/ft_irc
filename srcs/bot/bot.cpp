@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 15:25:25 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/20 13:50:59 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/20 13:55:01 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ int	Bot::initSocket() {
 		}
 		if (connect(this->_socketFd, p->ai_addr, p->ai_addrlen) == -1) {
 			close(this->_socketFd);
-			std::cerr << "Error: connect" << std::endl;
 			continue;
 		}
 		break;
