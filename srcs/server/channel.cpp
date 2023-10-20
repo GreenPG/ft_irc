@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:30:55 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/20 16:44:23 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/20 17:19:03 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,10 +99,14 @@ void	Channel::transfer_op()
 {
 	if (_user_list.size() != 1 && _operator_list.size() == 1)
 	{
-		if (_user_list[0] != NULL && is_user_op(_user_list[0]->get_nickname()) == 1)
+		if (_user_list[0] != NULL && is_user_op(_user_list[0]->get_nickname()) == 1){
 			add_user_as_operator(*_user_list[0]);
+		}
 		else if (_user_list[0] != NULL && is_user_op(_user_list[1]->get_nickname()) == 1)
+		{
 			add_user_as_operator(*_user_list[1]);
+			this->send_message_to_channel(MODE("localhost", this->get_channel_name(), "+o", _user_list[1]->get_nickname()).c_str(), 0);
+		}
 	}
 }
 
