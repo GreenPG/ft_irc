@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 15:27:14 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/20 12:05:16 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/20 12:19:09 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@
 # define	NICK_QUERY(nick) ("NICK " + nick + "\r\nUSER Bot\r\n")
 # define	PASS_QUERY(pass) ("PASS " + pass + "\r\n")
 # define	JOIN_QUERY(chan) ("JOIN " + chan + "\r\n")
-# define	KILL_MSG(nick) ("PRIMVSG" + nick + " JokeBot has been stopped\r\n")
-
+# define	KILL_MSG(nick) ("PRIVMSG" + nick + " JokeBot has been stopped\r\n")
+# define	UNKNOWN_REPLY(nick) ("PRIVMSG " + nick + " JokeBot only understand !joke and !kill\r\n")
 
 class Bot
 {
