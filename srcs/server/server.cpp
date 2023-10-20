@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 10:49:17 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/19 17:22:05 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/20 13:58:47 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ std::vector<Channel *>	*Server::getChannelList() {
 	return (&_channelList);
 }
 
-void					Server::initServer(const char *portNb) {
+int						Server::initServer(const char *portNb) {
 	struct addrinfo	 hints;
 	struct addrinfo	 *servinfo;
 	struct addrinfo *p;
@@ -78,15 +78,16 @@ void					Server::initServer(const char *portNb) {
 	freeaddrinfo(servinfo);
 	if (p == NULL) {
 		std::cout << ("bind error");
-		exit(1);
+		return (1);
 	}
 
 	if (listen(this->_listener, 10) == -1) {
 		std::perror("listen:");
-		exit(1);
+		return (1);
 	}
 	FD_SET(this->_listener, &this->_master);
 	this->_fdMax = this->_listener;
+	return (0);
 }
 
 void	Server::listenLoop() {
@@ -94,7 +95,7 @@ void	Server::listenLoop() {
 		this->_readFds = this->_master;
 		if (select(this->_fdMax + 1, &this->_readFds, NULL, NULL, NULL) == -1) {
 			perror("Select:");
-			exit(1);
+			return ;
 		}
 		this->readLoop();
 	}

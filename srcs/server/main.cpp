@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 17:16:22 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/19 14:22:45 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/20 13:58:23 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ int main(int argc, char **argv) {
 	if (check_args(argc, argv) == 1)
 		return (1);
 	server.setPassword(argv[2]);
-	server.initServer(argv[1]);
+	if (server.initServer(argv[1]) == 1)
+		return (1);
 	server.listenLoop();
 	return (0);
 }
