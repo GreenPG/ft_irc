@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 15:15:31 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/19 14:25:02 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/20 16:46:13 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,3 @@ void	skill(std::string args, Server &server, User &currentUser) {
 	(void)args;
 	(void)currentUser;
 }
-

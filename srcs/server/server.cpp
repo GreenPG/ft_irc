@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 10:49:17 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/20 16:49:27 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/20 17:04:31 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,7 @@ int	Server::newConnection() {
 }
 
 void	Server::receiveError(const int &nbytes, int &socketFd) {
-
+	User	*leavingUser;
 
 	if (nbytes == 0)
 		printf("selectserver: socket %d hung up\n", socketFd);
@@ -158,6 +158,8 @@ void	Server::receiveError(const int &nbytes, int &socketFd) {
 	FD_CLR(socketFd, &this->_master);
 	if (get_user_pos(&_userList, search_user_by_socket(_userList, socketFd)) != -1)
 	{
+		leavingUser = search_user_by_socket(this->_userList, socketFd);
+		sendMessageToServer(RPL_QUIT(leavingUser->get_nickname(), "Client interrupted").c_str());
 		remove_every_trace_of_user(search_user_by_socket(_userList, socketFd));
 		_userList.erase(_userList.begin() + get_user_pos(&_userList, search_user_by_socket(_userList, socketFd)));
 	}
