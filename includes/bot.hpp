@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 15:27:14 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/20 12:19:09 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/20 13:47:16 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ class Bot
 		~Bot();
 
 		int		initSocket();
-		void	loginToServ() const;
-		void	readLoop() const; 
+		int		loginToServ() const;
+		int		readLoop() const; 
 
 	private:
 
