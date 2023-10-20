@@ -6,65 +6,11 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 15:25:25 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/20 12:18:30 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/20 13:35:12 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/bot.hpp"
-
-Bot::Bot()
-{
-	std::string s;
-
-	s = JOKE1();
-	_tab.push_back(s);
-	s = JOKE2();
-	_tab.push_back(s);
-	s = JOKE3();
-	_tab.push_back(s);
-	s = JOKE4();
-	_tab.push_back(s);
-	s = JOKE5();
-	_tab.push_back(s);
-	s = JOKE6();
-	_tab.push_back(s);
-	s = JOKE7();
-	_tab.push_back(s);
-	s = JOKE8();
-	_tab.push_back(s);
-	s = JOKE9();
-	_tab.push_back(s);
-	s = JOKE10();
-	_tab.push_back(s);
-	s = JOKE11();
-	_tab.push_back(s);
-	s = JOKE12();
-	_tab.push_back(s);
-	s = JOKE13();
-	_tab.push_back(s);
-	s = JOKE14();
-	_tab.push_back(s);
-	s = JOKE15();
-	_tab.push_back(s);
-	s = JOKE16();
-	_tab.push_back(s);
-	s = JOKE17();
-	_tab.push_back(s);
-	s = JOKE18();
-	_tab.push_back(s);
-	s = JOKE19();
-	_tab.push_back(s);
-	s = JOKE20();
-	_tab.push_back(s);
-	s = JOKE21();
-	_tab.push_back(s);
-	s = JOKE22();
-	_tab.push_back(s);
-}
-
-Bot::~Bot()
-{
-}
 
 int	Bot::initSocket() {
 	struct addrinfo	hints;
@@ -312,4 +258,58 @@ std::string	Bot::get_start_message(std::string name) const
 	msg.append(name);
 	msg.append(" ");
 	return (msg);
+}
+
+Bot::Bot()
+{
+	std::string s;
+
+	s = JOKE1();
+	_tab.push_back(s);
+	s = JOKE2();
+	_tab.push_back(s);
+	s = JOKE3();
+	_tab.push_back(s);
+	s = JOKE4();
+	_tab.push_back(s);
+	s = JOKE5();
+	_tab.push_back(s);
+	s = JOKE6();
+	_tab.push_back(s);
+	s = JOKE7();
+	_tab.push_back(s);
+	s = JOKE8();
+	_tab.push_back(s);
+	s = JOKE9();
+	_tab.push_back(s);
+	s = JOKE10();
+	_tab.push_back(s);
+	s = JOKE11();
+	_tab.push_back(s);
+	s = JOKE12();
+	_tab.push_back(s);
+	s = JOKE13();
+	_tab.push_back(s);
+	s = JOKE14();
+	_tab.push_back(s);
+	s = JOKE15();
+	_tab.push_back(s);
+	s = JOKE16();
+	_tab.push_back(s);
+	s = JOKE17();
+	_tab.push_back(s);
+	s = JOKE18();
+	_tab.push_back(s);
+	s = JOKE19();
+	_tab.push_back(s);
+	s = JOKE20();
+	_tab.push_back(s);
+	s = JOKE21();
+	_tab.push_back(s);
+	s = JOKE22();
+	_tab.push_back(s);
+}
+
+Bot::~Bot()
+{
 }
