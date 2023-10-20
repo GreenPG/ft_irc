@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 14:14:27 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/20 13:30:22 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/20 13:45:48 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
 int	main(void) {
 	Bot	bot;
 
-	bot.initSocket();
+	if (bot.initSocket() == 1)
+		return (1);
 	bot.loginToServ();
 	bot.readLoop();
 	return (0);

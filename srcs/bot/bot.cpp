@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 15:25:25 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/20 13:35:12 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/20 13:50:59 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ int	Bot::initSocket() {
 	std::cin >> port;
 	if (getaddrinfo(NULL, port.c_str(), &hints, &servinfo) != 0) {
 		std::cerr << "Error: getaddrinfo" << std::endl;
-		exit(1);
+		freeaddrinfo(servinfo);
+		return (1);
 	}
 	for (p = servinfo; p != NULL; p = p->ai_next) {
 		if ((this->_socketFd = socket(p->ai_family, p->ai_socktype, p->ai_protocol)) == -1) {
@@ -41,7 +42,8 @@ int	Bot::initSocket() {
 	} 
 	if (p == NULL) {
 		std::cerr << "Error: failed to connect" << std::endl;
-		exit(1);
+		freeaddrinfo(servinfo);
+		return (1);
 	}
 	freeaddrinfo(servinfo);
 	return (this->_socketFd);
@@ -95,14 +97,15 @@ int Bot::sendNickAndUser() const {
 	return (0);
 }
 
-void Bot::loginToServ() const {
+int Bot::loginToServ() const {
 	sendPass();
 	if (sendNickAndUser() == 0)
-		exit(1);
+		return (1);
 	std::cout << "Bot successfuly connected to the server" << std::endl;
+	return (0);
 }
 
-void	Bot::readLoop() const {
+int	Bot::readLoop() const {
 	fd_set			master;
 	fd_set			readFds;
 	char			buf[256];
@@ -118,7 +121,7 @@ void	Bot::readLoop() const {
 		if (select(this->_socketFd + 1, &readFds, NULL, NULL, NULL) == -1) {
 			std::cerr << "Error: select" << std::endl;
 			close(this->_socketFd);
-			exit(1);
+			return (1);
 		}
 		memset(buf, 0, sizeof(buf));
 		if ((nbytes = recv(this->_socketFd, buf, sizeof(buf) - 1, 0) <= 0)) {
@@ -127,12 +130,13 @@ void	Bot::readLoop() const {
 			else 
 				std::cerr << "Server has stopped. Stopping the Bot" << std::endl;
 			close(this->_socketFd);
-			exit(1);
+			return (1);
 		}
 		else {
 			serverState = parser(buf);
 		}
 	}
+	return (0);
 }
 
 bool	Bot::parser(std::string buf) const
