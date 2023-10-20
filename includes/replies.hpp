@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 13:43:58 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/20 13:51:14 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/20 17:21:47 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # define RPL_KICK(nick, channel, kicked) (":" + nick + " KICK " + channel + " " + kicked + "\r\n")
 # define RPL_KICK_REASON(nick, channel, kicked, reason) (":" + nick + " KICK " + channel + " " + kicked + " :" + reason + "\r\n")
 # define RPL_NICK(oldNick, username, newNick) (":" + oldNick + "!" + username + " NICK :" + newNick + "\r\n")
-# define MODE(nick, channel, modes, args) (":" + nick + " MODE " + channel + " " + modes + " " + args + "\r\n")
+# define MODE(nick, channel, modes, args) (std::string(":") + nick + " MODE " + channel + " " + modes + " " + args + "\r\n")
 # define INVITE(nick, invited, channel)	(":" + nick + " INVITE " + invited + " " + channel + "\r\n")	
 
 //////////////////////////////RPL MESSAGES///////////////////////////////////////////////////
