@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 13:43:58 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/19 13:31:05 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/20 13:51:14 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 
 # define RPL_PRIVMSG(sender, target, msg) (":" + sender + " PRIVMSG " + target + " " + msg + "\r\n")
 # define RPL_JOIN(joiner, channel) (":" + joiner + " JOIN " + channel + "\r\n")
-# define RPL_KICK(kicked, channel) (":Command to kick " + kicked + " from " + channel + "\r\n")
-# define RPL_KICK_REASON(kicked, channel, reason) (":Command to kick " + kicked + " from " + channel + " reason \"" + reason + "\"" + "\r\n")
+# define RPL_KICK(nick, channel, kicked) (":" + nick + " KICK " + channel + " " + kicked + "\r\n")
+# define RPL_KICK_REASON(nick, channel, kicked, reason) (":" + nick + " KICK " + channel + " " + kicked + " :" + reason + "\r\n")
 # define RPL_NICK(oldNick, username, newNick) (":" + oldNick + "!" + username + " NICK :" + newNick + "\r\n")
 # define MODE(nick, channel, modes, args) (":" + nick + " MODE " + channel + " " + modes + " " + args + "\r\n")
 # define INVITE(nick, invited, channel)	(":" + nick + " INVITE " + invited + " " + channel + "\r\n")	
