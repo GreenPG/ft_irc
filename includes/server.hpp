@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 10:25:28 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/19 15:27:50 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/20 13:56:55 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ class	Server
 		void					setPassword(std::string Pass);
 		void					incUser();
 		void					decUser();
-		void					initServer(const char *portNb);
+		int						initServer(const char *portNb);
 		void					listenLoop();
 		void					sendMessageToServer(std::string msg);
 		void					remove_every_trace_of_user(User *user);

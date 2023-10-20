@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 13:34:54 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/20 13:33:47 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/20 14:04:50 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,10 @@ int	check_args(int argc, char **argv)
 	}
 	if (is_num(argv[1]) == 1) {
 		std::cout << "Port can only be numbers" << std::endl;
+		return (1);
+	}
+	if (atoi(argv[1]) < 1024 || atoi(argv[1]) > 65535) {
+		std::cout << "Port number can only be between 1024 and 65535" << std::endl;
 		return (1);
 	}
 	return (0);
