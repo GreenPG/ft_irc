@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 14:14:27 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/20 11:08:44 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/20 11:51:26 by gpasquet         ###   ########.fr       */
 /*   Updated: 2023/10/19 17:24:45 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -28,13 +28,14 @@
 
 bool				parser(std::string buf, int fd);
 void				invite(std::string msg, int fd);
-static void			make_joke(std::string msg, int fd);
+static bool			make_joke(std::string msg, int fd);
 static void			send_random_joke(std::string chan, int fd);
 static std::string	get_start_message(std::string name);
 int	sendMessage(const char *message, int fd);
 #define	NICK_QUERY(nick) ("NICK " + nick + "\r\nUSER bot\r\n")
 #define	PASS_QUERY(pass) ("PASS " + pass + "\r\n")
 #define	JOIN_QUERY(chan) ("JOIN " + chan + "\r\n")
+#define	KILL_MSG(nick) ("PRIMVSG" + nick + " JokeBot has been stopped\r\n")
 
 int	initSocket() {
 	struct addrinfo	hints;
@@ -156,7 +157,6 @@ void	readLoop(int socketFd) {
 		}
 		else {
 			serverState = parser(buf, socketFd);
-		std::cout << buf;
 		}
 	}
 }
@@ -164,7 +164,9 @@ void	readLoop(int socketFd) {
 bool	parser(std::string buf, int fd)
 {
 	unsigned long	start;
-
+	bool			state;
+	
+	state = true;
 	if (buf == ":command to close the server\r\n") {
 		std::cout << "Server was closed, stopping the bot" << std::endl;
 		close(fd);
@@ -175,8 +177,8 @@ bool	parser(std::string buf, int fd)
 	if (buf.substr(start, 6) == "INVITE")
 		invite(buf, fd);
 	if (buf.substr(start, 7) == "PRIVMSG")
-		make_joke(buf, fd);
-	return (true);
+		state = make_joke(buf, fd);
+	return (state);
 }
 
 void	invite(std::string msg, int fd)
@@ -201,7 +203,14 @@ int	main(void) {
 	return (0);
 }
 
-void	make_joke(std::string msg, int fd)
+void	killBot(std::string nick, int socketFd) {
+	sendMessage(KILL_MSG(nick).c_str(), socketFd);
+	close(socketFd);
+	std::cout << "The bot has been stopped by " << nick << std::endl;
+}
+
+
+bool	make_joke(std::string msg, int fd)
 {
 	std::string	sender;
 	std::string	target;
@@ -219,10 +228,12 @@ void	make_joke(std::string msg, int fd)
 			send_random_joke(target, fd);
 		else
 			send_random_joke(sender, fd);
-	}/*
+	}
 	if (msg == "!kill\r\n" || msg == "!kill\r\n"){
-		kill();
-	}*/
+		killBot(sender, fd);
+		return (false);
+	}
+	return (true);
 }
 
 int	sendMessage(const char *message, int fd) {
