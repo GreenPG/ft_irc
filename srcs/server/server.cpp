@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 10:49:17 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/19 14:49:28 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/19 17:22:05 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,7 +220,6 @@ void	Server::receiveData(int &socketFd) {
 			parser(buf, *this, *currentUser);
 			std::cout << buf << std::endl;
 			}
-		memset(&buf, 0, 256);
 	}
 }
 
