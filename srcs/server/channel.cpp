@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:30:55 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/19 17:18:10 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/20 14:52:16 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,11 @@ void	Channel::add_user_to_channel(User &user)
 	i = 0;
 	while (i < _user_list.size())
 	{
-		if (_user_list[i].get_nickname() == user.get_nickname())
+		if (_user_list[i]->get_nickname() == user.get_nickname())
 			return ;
 		i++;
 	}
-	_user_list.insert(_user_list.end(), user);
+	_user_list.insert(_user_list.end(), &user);
 }
 
 void	Channel::add_user_as_operator(User &user)
@@ -47,26 +47,26 @@ void	Channel::add_user_as_operator(User &user)
 	i = 0;
 	while (i < _operator_list.size())
 	{
-		if (_operator_list[i].get_nickname() == user.get_nickname())
+		if (_operator_list[i]->get_nickname() == user.get_nickname())
 			return ;
 		i++;
 	}
-	_operator_list.insert(_operator_list.end(), user);
+	_operator_list.insert(_operator_list.end(), &user);
 }
 
 void	Channel::add_user_as_invited(User &user) {
 	for(size_t i = 0; i < _invite_list.size(); i++) {
-		if (_invite_list[i].get_nickname() == user.get_nickname())
+		if (_invite_list[i]->get_nickname() == user.get_nickname())
 			return ;
 	}
-	_invite_list.push_back(user);
+	_invite_list.push_back(&user);
 }
 
 void	Channel::del_user_as_operator(std::string nick) {
-	std::vector<User>::iterator it = _operator_list.begin();
+	std::vector<User *>::iterator it = _operator_list.begin();
 
 	while (it != _operator_list.end()) {
-		if (it->get_nickname() == nick) {
+		if ((*it)->get_nickname() == nick) {
 			_operator_list.erase(it);
 			return ;
 		}
@@ -78,14 +78,14 @@ void	Channel::del_invite_list(void) {
 	_invite_list.clear();
 }
 
-void	Channel::kick_user_from_channel(std::vector<User> &list, std::string user)
+void	Channel::kick_user_from_channel(std::vector<User *> &list, std::string user)
 {
 	std::size_t					i;
 
 	i = 0;
 	while (i < list.size())
 	{
-		if (list[i].get_nickname() == user)
+		if (list[i]->get_nickname() == user)
 		{
 			list.erase(list.begin() + i);
 			return ;
@@ -99,10 +99,10 @@ void	Channel::transfer_op()
 {
 	if (_user_list.size() != 1 && _operator_list.size() == 1)
 	{
-		if (is_user_op(_user_list[0].get_nickname()) == 1)
-			add_user_as_operator(_user_list[0]);
-		else if (is_user_op(_user_list[1].get_nickname()) == 1)
-			add_user_as_operator(_user_list[1]);
+		if (is_user_op(_user_list[0]->get_nickname()) == 1)
+			add_user_as_operator(*_user_list[0]);
+		else if (is_user_op(_user_list[1]->get_nickname()) == 1)
+			add_user_as_operator(*_user_list[1]);
 	}
 }
 
@@ -113,7 +113,7 @@ void	Channel::print_every_user()
 	i = 0;
 	while (i < _user_list.size())
 	{
-		std::cout << _user_list[i].get_nickname() << std::endl;
+		std::cout << _user_list[i]->get_nickname() << std::endl;
 		i++;
 	}
 }
@@ -126,7 +126,7 @@ int		Channel::is_user_op(std::string name)
 	i = 0;
 	while (i < _operator_list.size())
 	{
-		if (_operator_list[i].get_nickname() == name)
+		if (_operator_list[i]->get_nickname() == name)
 			return (0);
 		i++;
 	}
@@ -140,7 +140,7 @@ int	Channel::is_user_in_channel(std::string name)
 	i = 0;
 	while (i < _user_list.size())
 	{
-		if (_user_list[i].get_nickname() == name)
+		if (_user_list[i]->get_nickname() == name)
 			return (0);
 		i++;
 	}
@@ -149,7 +149,7 @@ int	Channel::is_user_in_channel(std::string name)
 
 int	Channel::is_user_invited(std::string nick) {
 	for (size_t i = 0; i < _invite_list.size(); i++) {
-		if (_invite_list[i].get_nickname() == nick)
+		if (_invite_list[i]->get_nickname() == nick)
 			return (0);
 	}
 	return (1);
@@ -170,8 +170,8 @@ int		Channel::send_message_to_channel(std::string msg, User *ignoredUser)
 	i = 0;
 	while (i < _user_list.size())
 	{
-		if (!ignoredUser || _user_list[i].get_nickname() != ignoredUser->get_nickname())
-			sendMessage(msg.c_str(), _user_list[i]);
+		if (!ignoredUser || _user_list[i]->get_nickname() != ignoredUser->get_nickname())
+			sendMessage(msg.c_str(), *_user_list[i]);
 		i++;
 	}
 	return (0);
@@ -244,19 +244,23 @@ std::string	&Channel::get_topic()
 {
 	return (_topic);
 }
-std::vector<User>	&Channel::get_chan_user_list()
+std::vector<User *>	&Channel::get_chan_user_list()
 {
-	return (_user_list);
+	std::vector<User *> *tmp = &_user_list;
+
+	return (*tmp);
 }
 
-std::vector<User>	&Channel::get_chan_op_list()
+std::vector<User *>	&Channel::get_chan_op_list()
 {
-	return (_operator_list);
+	std::vector<User *> *tmp = &_operator_list;
+	return (*tmp);
 }
 
-std::vector<User>	&Channel::get_chan_inv_list()
+std::vector<User *>	&Channel::get_chan_inv_list()
 {
-	return (_invite_list);
+	std::vector<User *> *tmp = &_invite_list;
+	return (*tmp);
 }
 
 std::string			Channel::get_mode_list() {

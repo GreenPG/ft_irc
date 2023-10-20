@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 16:29:04 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/19 14:23:58 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/20 14:53:25 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 static std::string	createUserList(Channel *channel) {
 	std::string			list;
-	std::vector<User>	userList = channel->get_chan_user_list();
+	std::vector<User *>	userList = channel->get_chan_user_list();
 
 	for (size_t i = 0; i < userList.size(); i++) {
-		if (channel->is_user_op(userList[i].get_nickname()) == 0)
+		if (channel->is_user_op(userList[i]->get_nickname()) == 0)
 			list.append("@");
-		list.append(userList[i].get_nickname());
+		list.append(userList[i]->get_nickname());
 		if (i < userList.size() - 1)
 			list.append(" ");
 	}

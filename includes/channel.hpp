@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:27:50 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/18 14:43:25 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/20 14:47:47 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ class Channel
 		~Channel();
 
 		void				add_user_to_channel(User &user);
-		void				kick_user_from_channel(std::vector<User> &list, std::string user);
+		void				kick_user_from_channel(std::vector<User *> &list, std::string user);
 		void				add_user_as_operator(User &user);
 		void				add_user_as_invited(User &user);
 		void				del_user_as_operator(std::string nick);
@@ -43,9 +43,9 @@ class Channel
 		std::string			&get_channel_name();
 		std::string			&get_password();
 		std::string			&get_topic();
-		std::vector<User>	&get_chan_user_list();
-		std::vector<User>	&get_chan_op_list();
-		std::vector<User>	&get_chan_inv_list();
+		std::vector<User *>	&get_chan_user_list();
+		std::vector<User *>	&get_chan_op_list();
+		std::vector<User *>	&get_chan_inv_list();
 		bool				&get_invite_only();
 		std::string			get_mode_list();
 		int					get_limit();
@@ -60,9 +60,9 @@ class Channel
 		void				delete_mode(modes_t newMode);
 
 	private :
-		std::vector<User>		_user_list;
-		std::vector<User>		_operator_list;
-		std::vector<User>		_invite_list;
+		std::vector<User *>		_user_list;
+		std::vector<User *>		_operator_list;
+		std::vector<User *>		_invite_list;
 		std::string				_channel_name;
 		std::string				_password;
 		std::string				_topic;

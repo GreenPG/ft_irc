@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 10:06:51 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/19 14:25:09 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/20 14:54:08 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	sendTopic(Channel *channel, User &user) {
 }
 
 static void	changeTopic(Channel *channel, std::string newTopic) {
-	std::vector<User>	userList = channel->get_chan_user_list();	
+	std::vector<User *>	userList = channel->get_chan_user_list();	
 
 	if (newTopic[0] == ':')
 		newTopic.erase(0, 1);
@@ -29,7 +29,7 @@ static void	changeTopic(Channel *channel, std::string newTopic) {
 	else
 		channel->set_topic(newTopic);
 	for (size_t i = 0; i < userList.size(); i++)
-		sendMessage(RPL_TOPIC(userList[i].get_nickname(), channel->get_channel_name(), channel->get_topic()).c_str(), userList[i]);
+		sendMessage(RPL_TOPIC(userList[i]->get_nickname(), channel->get_channel_name(), channel->get_topic()).c_str(), *userList[i]);
 }
 
 static int	check_Topic_mode(Channel *channel, User &user)

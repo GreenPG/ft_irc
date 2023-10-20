@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 10:03:43 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/20 14:09:57 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/20 14:55:01 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,10 @@ void	kick(std::string args, Server &server, User &user) {
 	while (i < chan->get_chan_user_list().size())
 	{
 		if (msg_arg == "") {
-			sendMessage(RPL_KICK(user.get_nickname(), channel_arg, user_arg).c_str(), chan->get_chan_user_list()[i]); 
+			sendMessage(RPL_KICK(user.get_nickname(), channel_arg, user_arg).c_str(), *chan->get_chan_user_list()[i]); 
 		}
 		else {
-			sendMessage(RPL_KICK_REASON(user.get_nickname(), channel_arg, user_arg, msg_arg).c_str(), chan->get_chan_user_list()[i]);
+			sendMessage(RPL_KICK_REASON(user.get_nickname(), channel_arg, user_arg, msg_arg).c_str(), *chan->get_chan_user_list()[i]);
 		}
 		i++;
 	}
