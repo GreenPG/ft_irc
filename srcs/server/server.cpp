@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 10:49:17 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/20 17:22:56 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/23 10:37:31 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ Server::Server(): _listener(-1), _fdMax(-1) {
 	FD_ZERO(&this->_master);
 	FD_ZERO(&this->_readFds);
 	_listener = -1;
-	_password = "1";
 	_quit = 0;
 }
 
@@ -212,7 +211,7 @@ void	Server::receiveData(int &socketFd) {
 	if (socketFd == this->_listener) {
 		newUserFd = newConnection();
 		new_user.set_fd_socket(newUserFd);
-		this->_userList.insert(this->_userList.end(), new_user);
+		this->_userList.push_back(new_user);
 		std::cout << "Asking password to " << new_user.get_fd_socket() << std::endl;
 	}
 	else {

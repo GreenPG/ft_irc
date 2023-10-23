@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:30:55 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/20 17:19:03 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/23 10:23:37 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	Channel::add_user_to_channel(User &user)
 			return ;
 		i++;
 	}
-	_user_list.insert(_user_list.end(), &user);
+	_user_list.push_back(&user);
 }
 
 void	Channel::add_user_as_operator(User &user)
@@ -51,7 +51,7 @@ void	Channel::add_user_as_operator(User &user)
 			return ;
 		i++;
 	}
-	_operator_list.insert(_operator_list.end(), &user);
+	_operator_list.push_back(&user);
 }
 
 void	Channel::add_user_as_invited(User &user) {
