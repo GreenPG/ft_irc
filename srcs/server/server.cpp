@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 10:49:17 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/23 10:37:31 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/23 10:58:55 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ fd_set					&Server::getReadFds() {
 	return (this->_readFds);
 }
 
-std::vector<User>		*Server::getUserList() {
+std::vector<User *>		*Server::getUserList() {
 	return (&_userList);
 }
 
@@ -102,18 +102,18 @@ void	Server::listenLoop() {
 
 User	&Server::identifyUser(const int userFd) {
 
-	std::vector<User>::iterator		list;
+	std::vector<User *>::iterator		list;
 	std::size_t						i;
 
 	i = 0;
 	list = _userList.begin();
 	while (i < _userList.size())
 	{
-		if (list[i].get_fd_socket() == userFd)
-			return (list[i]);
+		if (list[i]->get_fd_socket() == userFd)
+			return (*list[i]);
 		i++;
 	}
-	return (list[i]);
+	return (*list[i]);
 }
 
 struct addrinfo Server::initHints(void) {
@@ -155,12 +155,12 @@ void	Server::receiveError(const int &nbytes, int &socketFd) {
 		perror("recv:");
 	close(socketFd);
 	FD_CLR(socketFd, &this->_master);
-	if (get_user_pos(&_userList, search_user_by_socket(_userList, socketFd)) != -1)
+	if (get_user_pos(_userList, search_user_by_socket(_userList, socketFd)) != -1)
 	{
 		leavingUser = search_user_by_socket(this->_userList, socketFd);
 		sendMessageToServer(RPL_QUIT(leavingUser->get_nickname(), "Client interrupted").c_str());
 		remove_every_trace_of_user(search_user_by_socket(_userList, socketFd));
-		_userList.erase(_userList.begin() + get_user_pos(&_userList, search_user_by_socket(_userList, socketFd)));
+		_userList.erase(_userList.begin() + get_user_pos(_userList, search_user_by_socket(_userList, socketFd)));
 	}
 }
 
@@ -180,23 +180,12 @@ void	Server::remove_every_trace_of_user(User *user)
 	}
 }
 
-int		get_user_pos(std::vector<User> *user_list, User *user)
+int		get_user_pos(std::vector<User *> &user_list, User *user)
 {
-	size_t					i;
-	std::vector<User>::iterator		list;
-
-	list = user_list->begin();
-
-	i = 0;
-	while (list != user_list->end())
-	{
-		if (user->get_nickname() == list[0].get_nickname())
+	for (size_t i = 0; i < user_list.size(); i++) {
+		if (user->get_nickname() == user_list[i]->get_nickname())
 			return (i);
-		list++;
-		i++;
 	}
-	if (user->get_nickname() == list[0].get_nickname())
-		return (i);
 	return (-1);
 }
 
@@ -204,15 +193,15 @@ void	Server::receiveData(int &socketFd) {
 	int 				nbytes;
 	int 				newUserFd;
 	char				buf[256];
-	User				new_user;
+	User				*new_user;
 	User				*currentUser;
 
 	memset(&buf, 0, 256);
 	if (socketFd == this->_listener) {
 		newUserFd = newConnection();
-		new_user.set_fd_socket(newUserFd);
+		new_user = new User(newUserFd);
 		this->_userList.push_back(new_user);
-		std::cout << "Asking password to " << new_user.get_fd_socket() << std::endl;
+		std::cout << "Asking password to " << new_user->get_fd_socket() << std::endl;
 	}
 	else {
 		currentUser = &identifyUser(socketFd);
@@ -234,7 +223,7 @@ void	Server::readLoop() {
 
 void	Server::sendMessageToServer(std::string msg) {
 	for (size_t i = 0; i < this->_userList.size(); i++) {
-		sendMessage(msg.c_str(), _userList[i]);
+		sendMessage(msg.c_str(), *_userList[i]);
 	}
 }
 

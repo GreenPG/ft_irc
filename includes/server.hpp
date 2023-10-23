@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 10:25:28 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/20 13:56:55 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/23 10:49:45 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ class	Server
 		fd_set					_master;
 		fd_set					_readFds;
 		std::string				_password;
-		std::vector<User>		_userList;
+		std::vector<User *>		_userList;
 		std::vector<Channel *>	_channelList;
 
 		User	&identifyUser(const int userFd); 
@@ -50,7 +50,7 @@ class	Server
 		fd_set					&getMaster();
 		fd_set					&getReadFds();
 		std::string				&getPassword();
-		std::vector<User>		*getUserList();
+		std::vector<User *>		*getUserList();
 		std::vector<Channel *>	*getChannelList();
 
 		void					setQuit();

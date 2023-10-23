@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 17:16:49 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/19 14:28:53 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/23 11:02:08 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ class User;
 class Channel;
 
 
-User		*search_user_by_socket(std::vector<User> &user_list, int fd);
-User		*search_user_by_nickname(std::vector<User> *user_list, std::string name);
-int			get_user_pos(std::vector<User> *user_list, User *user);
+User		*search_user_by_socket(std::vector<User *> &user_list, int fd);
+User		*search_user_by_nickname(std::vector<User *> &user_list, std::string name);
+int			get_user_pos(std::vector<User *> &user_list, User *user);
 
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////JOIN.CPP FUNCTION///////////////////////////////

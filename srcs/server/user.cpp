@@ -6,14 +6,23 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:30:55 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/19 14:23:37 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/23 10:54:06 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 # include "../../includes/irc.hpp"
 
-User::User()
+User::User() {
+	_nickname = "*";
+	_username = "*";
+	_realname = "*";
+	_password_check = -1;
+	_nickInit = false;
+	_userInit = false;
+}
+
+User::User(int socketFd): _fd_socket(socketFd)
 {
 	_nickname = "*";
 	_username = "*";
@@ -21,7 +30,6 @@ User::User()
 	_password_check = -1;
 	_nickInit = false;
 	_userInit = false;
-	return ;
 }
 
 User::~User()
@@ -36,34 +44,20 @@ bool	User::check_register()
 	return (true);
 }
 
-User	*search_user_by_socket(std::vector<User> &user_list, const int fd)
+User	*search_user_by_socket(std::vector<User *> &user_list, const int fd)
 {
-	std::vector<User>::iterator	list;
-	std::size_t						i;
-
-	i = 0;
-	list = user_list.begin();
-	while (i < user_list.size())
-	{
-		if (list[i].get_fd_socket() == fd)
-			return (&list[i]);
-		i++;
+	for (size_t i = 0; i < user_list.size(); i++) {
+		if (user_list[i]->get_fd_socket() == fd)
+			return (user_list[i]);
 	}
-	return (&list[i]);
+	return (NULL);
 }
 
-User	*search_user_by_nickname(std::vector<User> *user_list, std::string name)
+User	*search_user_by_nickname(std::vector<User *> &user_list, std::string name)
 {
-	std::vector<User>::iterator	list;
-	std::size_t						i;
-
-	i = 0;
-	list = user_list->begin();
-	while (i < user_list->size())
-	{
-		if (list[i].get_nickname() == name)
-			return (&list[i]);
-		i++;
+	for (size_t i = 0; i < user_list.size(); i++) {
+		if (user_list[i]->get_nickname() == name)
+			return (user_list[i]);
 	}
 	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 10:00:54 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/19 14:24:04 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/23 11:03:35 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	invite(std::string args, Server &server, User &currentUser) {
 		sendMessage(ERR_NOSUCHCHANNEL(currentUser.get_nickname(), channelName).c_str(), currentUser);
 		return;
 	}
-	if (search_user_by_nickname(server.getUserList(), nick) == NULL) {
+	if (search_user_by_nickname(*server.getUserList(), nick) == NULL) {
 		sendMessage(ERR_NOSUCHNICK(currentUser.get_nickname(), nick).c_str(), currentUser);
 		return ;
 	}
@@ -53,8 +53,8 @@ void	invite(std::string args, Server &server, User &currentUser) {
 			return ;
 		}
 		else 
-			channel->add_user_as_invited(*search_user_by_nickname(server.getUserList(), nick));
+			channel->add_user_as_invited(*search_user_by_nickname(*server.getUserList(), nick));
 	}
 	sendMessage(RPL_INVITING(currentUser.get_nickname(), nick, channelName).c_str(), currentUser);
-	sendMessage(INVITE(currentUser.get_nickname(), nick, channelName).c_str(), *search_user_by_nickname(server.getUserList(), nick));
+	sendMessage(INVITE(currentUser.get_nickname(), nick, channelName).c_str(), *search_user_by_nickname(*server.getUserList(), nick));
 }

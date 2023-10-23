@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 10:06:16 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/23 10:24:21 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/23 11:03:49 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	addOp(std::string nick, Server &server, Channel *channel, User &user)
 		return 0;
 	}
 	if (channel->is_user_op(nick))
-		channel->add_user_as_operator(*search_user_by_nickname(server.getUserList(), nick));
+		channel->add_user_as_operator(*search_user_by_nickname(*server.getUserList(), nick));
 	return (1);
 }
 

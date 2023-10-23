@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:27:50 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/19 10:00:52 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/23 10:41:12 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 class User
 {
 	public :
-						User();
+						User(int socketFd);
 						~User();
 
 	bool				check_register();
@@ -42,6 +42,7 @@ class User
 	void				setBuffer(std::string buf);
 
 	private :
+						User();
 
 	int					_password_check; // -1 if not check || 0 if checked
 	int					_fd_socket;

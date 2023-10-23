@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 10:06:35 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/19 14:24:43 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/23 11:02:45 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ static void	privmsgToChannel(std::string target, std::string msg, User &currentU
 		targetChannel->send_message_to_channel(RPL_PRIVMSG(currentUser.get_nickname(), target, msg).c_str(), &currentUser);
 }
 
-static void	privmsgToUser(std::string target, std::string msg, User &currentUser, std::vector<User> *userList) {
+static void	privmsgToUser(std::string target, std::string msg, User &currentUser, std::vector<User *> *userList) {
 	User	*targetUser;
 
-	if ((targetUser = search_user_by_nickname(userList, target)) == NULL)
+	if ((targetUser = search_user_by_nickname(*userList, target)) == NULL)
 		sendMessage(ERR_NOSUCHNICK(currentUser.get_nickname(), target).c_str(), currentUser);
 	else {
 		if (msg.empty()) 

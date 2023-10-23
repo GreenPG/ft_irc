@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 14:32:19 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/19 14:24:26 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/23 11:02:20 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	nick(std::string args, Server &server, User &currentUser)
 		sendMessage(ERR_NONICKNAMEGIVEN(currentUser.get_nickname()).c_str(), currentUser);
 		return ;
 	}
-	if (search_user_by_nickname(server.getUserList(), args)) {
+	if (search_user_by_nickname(*server.getUserList(), args)) {
 		sendMessage(ERR_NICKNAMEINUSE(currentUser.get_nickname(), args).c_str(), currentUser);
 		return ;
 	}
