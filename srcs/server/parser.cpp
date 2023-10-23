@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 13:33:01 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/19 14:23:03 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/23 14:33:36 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,5 +67,6 @@ void	parser(const std::string input, Server &server, User &currentUser) {
 		}
 		buf.clear();
 	}
-	currentUser.setBuffer(buf);
+	else 
+		currentUser.setBuffer(buf);
 }
