@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 13:33:01 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/23 16:18:58 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/23 16:26:40 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ void	parser(const std::string input, Server &server, User &currentUser) {
 			if (j == cmdsVec.size() && cmd != "WHO" && cmd != "CAP")
 				sendMessage(ERR_UNKNOWNCOMMAND(currentUser.get_nickname(), cmd).c_str(), currentUser);
 		}
-		buf.clear();
 		currentUser.setBuffer("");
 	}
 	else 
