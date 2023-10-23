@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 16:29:04 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/23 10:23:56 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/23 12:48:41 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	join(std::string args, Server &server, User &user)
 				return ;
 			}
 		}
-		if (currentChannel->is_mode_active(LIMIT) && currentChannel->get_user_nb() == currentChannel->get_limit()) {
+		if (currentChannel->is_mode_active(LIMIT) && currentChannel->get_user_nb() >= currentChannel->get_limit()) {
 			sendMessage(ERR_CHANNELISFULL(user.get_nickname(), currentChannel->get_channel_name()).c_str(), user);
 			return ;
 		}
