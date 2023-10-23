@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 15:25:25 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/20 15:11:50 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/23 14:46:56 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	Bot::initSocket() {
 	std::cin >> port;
 	if (getaddrinfo(NULL, port.c_str(), &hints, &servinfo) != 0) {
 		std::cerr << "Error: getaddrinfo" << std::endl;
-		freeaddrinfo(servinfo);
+		// freeaddrinfo(servinfo);
 		return (1);
 	}
 	for (p = servinfo; p != NULL; p = p->ai_next) {
