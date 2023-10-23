@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 10:49:17 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/23 11:22:00 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/23 14:06:12 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,6 +166,7 @@ void	Server::receiveError(const int &nbytes, int &socketFd) {
 		leavingUser = search_user_by_socket(this->_userList, socketFd);
 		sendMessageToServer(RPL_QUIT(leavingUser->get_nickname(), "Client interrupted").c_str());
 		remove_every_trace_of_user(search_user_by_socket(_userList, socketFd));
+		delete leavingUser;
 		_userList.erase(_userList.begin() + get_user_pos(_userList, search_user_by_socket(_userList, socketFd)));
 	}
 }
