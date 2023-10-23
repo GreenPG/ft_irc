@@ -6,31 +6,18 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 15:15:31 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/23 10:55:05 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/23 11:20:09 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/irc.hpp"
 
 void	skill(std::string args, Server &server, User &currentUser) {
+	std::vector<User *>		u_list = *server.getUserList();
 
-	size_t								i;
-	std::vector<User *>::iterator			u_list;
-	std::vector<Channel *>	channelList = *server.getChannelList();
-
-	i = 0;
-	u_list = server.getUserList()->begin();
-
-	while (i < server.getUserList()->size())
+	for(size_t i = 0; i< server.getUserList()->size(); i++)
 	{
 		sendMessage(":command to close the server\r\n", *u_list[i]);
-		close(u_list[i]->get_fd_socket());
-		i++;
-	}
-	while (channelList.size() != 0)
-	{
-		delete channelList.back();
-		channelList.pop_back();
 	}
 	server.setQuit();
 	(void)args;

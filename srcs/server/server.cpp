@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 10:49:17 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/23 10:58:55 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/23 11:22:00 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,12 @@ Server::~Server() {
 		close(this->_listener);
 	FD_ZERO(&this->_master);
 	FD_ZERO(&this->_readFds);
+	for (size_t i = 0; i < _userList.size(); i++) {
+		close(_userList[i]->get_fd_socket());
+		delete _userList[i];
+	}
+	for( size_t i = 0; i < _channelList.size(); i++) 
+		delete _channelList[i];
 }	
 
 int						&Server::getListener() {
