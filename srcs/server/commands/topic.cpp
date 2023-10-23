@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 10:06:51 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/20 16:48:17 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/23 12:55:23 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,11 @@ void	topic(std::string args, Server &server, User &user){
 		return ;
 	}
 	idx = args.find_first_not_of(" 	", idx);
-	if (check_Topic_mode(search_channel_by_name(server.getChannelList(), channelName), user) == 1)
-		return ;
 	if (idx == std::string::npos)
 		sendTopic(search_channel_by_name(server.getChannelList(), channelName), user);
 	else  {		
+		if (check_Topic_mode(search_channel_by_name(server.getChannelList(), channelName), user) == 1)
+			return ;
 		changeTopic(search_channel_by_name(server.getChannelList(), channelName), args.substr(idx, args.size() - idx));
 	}
 }
