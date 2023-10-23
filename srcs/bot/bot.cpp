@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 15:25:25 by tlarraze          #+#    #+#             */
-/*   Updated: 2023/10/23 14:46:56 by gpasquet         ###   ########.fr       */
+/*   Updated: 2023/10/23 16:02:28 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ int	Bot::initSocket() {
 	std::cin >> port;
 	if (getaddrinfo(NULL, port.c_str(), &hints, &servinfo) != 0) {
 		std::cerr << "Error: getaddrinfo" << std::endl;
-		// freeaddrinfo(servinfo);
 		return (1);
 	}
 	for (p = servinfo; p != NULL; p = p->ai_next) {
@@ -59,6 +58,15 @@ void	Bot::sendPass() const {
 	send(this->_socketFd, PASS_QUERY(password).c_str(), size, 0);
 }
 
+static void	getNextRpl(std::string &response) {
+	unsigned long	idx;
+
+	idx = response.find('\n');
+	if (idx == std::string::npos) 
+		return ;
+	response.erase(0, idx + 1);
+}
+
 int Bot::sendNickAndUser() const {
 	std::string nick;
 	std::string	response;
@@ -71,27 +79,35 @@ int Bot::sendNickAndUser() const {
 	std::cin >> nick;
 	size = 17 + nick.size();
 	send(this->_socketFd, NICK_QUERY(nick).c_str(), size, 0);
+	if ((nbytes = recv(this->_socketFd, buf, sizeof(buf) - 1, 0)) <= 0) {
+		std::cerr << "Error: recv" << std::endl;
+		return (0);
+	}
+	response = buf;
 	while(1) {
-		if ((nbytes = recv(this->_socketFd, buf, sizeof(buf) - 1, 0)) <= 0) {
-			std::cerr << "Error: recv" << std::endl;
-			return (0);
-		}
-		response = buf;
+		std::cout << response << std::endl;
+		if (response.empty()) 
+			return(sendNickAndUser());
 		if (response.substr(0, 5) == ": 001") {
 			std::cout << "The Bot is connected to the server" << std::endl;
 			return (1);
 		}
-		else if (response.substr(0, 5) == ": 464") {
+		if (response.substr(0, 5) == ": 464") {
+			memset(&buf, 0, 256);
 			std::cout << "Wrong password" << std::endl;
 			sendPass();
-			sendNickAndUser();
+			response.clear();
+			// return(sendNickAndUser());
+			
 		}
-		else  if (response.substr(0, 5) == ": 433") {
+		if (response.substr(0, 5) == ": 433") {
 			std::cout << "Nickname already used. Enter another nickname :";
 			std::cin >> nick;
 			size = 7 + nick.size();
 			send(this->_socketFd, NICK_QUERY(nick).c_str(), size, 0);
 		}
+		else
+			getNextRpl(response);
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 13:43:58 by gpasquet          #+#    #+#             */
-/*   Updated: 2023/10/20 17:25:51 by tlarraze         ###   ########.fr       */
+/*   Updated: 2023/10/23 15:03:31 by gpasquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@
 # define ERR_USERNOTINCHANNEL(nick, target, channel) (": 441 " + nick + " " + target + " " + channel + " :They aren't on that channel"  + "\r\n")
 # define ERR_NOTONCHANNEL(nick, channel) (": 442 " + nick + " " + channel + " :You're not ont that channel" + "\r\n")
 # define ERR_USERONCHANNEL(nick, invited, channel) (": 443 " + nick + " " + invited + " " + channel + " :is already  on channel\r\n")
-# define ERR_NOTREGISTERED(nick) (":451 " + nick + " :You have not registered\r\n")
+# define ERR_NOTREGISTERED(nick) (": 451 " + nick + " :You have not registered\r\n")
 # define ERR_NEEDMOREPARAMS(nick, cmd) (": 461 " + nick + " " + cmd + " : Not enough parameters" + "\r\n")
 # define ERR_ALREADYREGISTERED(nick) (": 462 " + nick + " : You may not reregister" + "\r\n")
 # define ERR_PASSWDMISMATCH(nick) (": 464 " + nick + "Password incorrect" + "\r\n")
